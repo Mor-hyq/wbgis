@@ -1,0 +1,96 @@
+@media print{@page {size:landscape}}
+* {
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.outer {
+    width: 1092px;
+    margin: auto;
+}
+.number-input {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    margin-bottom: 5px;
+}
+.number-input .thead {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate3d(-50%,0,0);
+    margin: 0;
+}
+.number-input .ipt {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+}
+.table-container {
+    display: flex;
+    width: 100%;
+    margin: auto;
+}
+.table-container .left-container {
+    flex: 1;
+    margin-right: 10px;
+}
+.table-container .right-container {
+    flex: 1;
+}
+.asset-table {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+    color: #333;
+    font-size: 12px;
+}
+.asset-table>* {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3px;
+    min-height: 40px;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.asset-table .width1 {
+    flex: 0 0 90px;
+    width: 90px;
+    overflow-x: hidden;
+}
+.asset-table .width2 {
+    flex: 0 0 270px;
+    width: 270px;
+    overflow-x: hidden;
+}
+.asset-table .flex1 {
+    flex: 1;
+}
+.asset-table .split {
+    display: block;
+    height: 0;
+    width: 90px;
+    margin: auto;
+    border-top: 1px solid #000;
+}
+.asset-table /deep/ .el-date-editor.el-input,
+.asset-table /deep/ .el-input {
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+}
+.asset-table /deep/ .el-input__inner {
+    text-align: center;
+    padding: 0 5px;
+}
+.asset-table /deep/ .el-radio {
+padding: 3px 0 3px 3px;
+margin-right: 0;
+}
+.asset-table .r-radio {
+    padding: 3px 0 3px 3px;
+    margin-left: 10px;
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="&#x56FE;&#x5C42;_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
+<g>
+	<g>
+		<path style="fill:#FFFFFF;" d="M110.493,128.243H18.027c-9.653,0-17.507-7.854-17.507-17.507V44.55
+			c0-9.652,7.853-17.507,17.507-17.507h20.537V39.67H18.027c-2.692,0-4.88,2.189-4.88,4.88v66.186c0,2.691,2.188,4.88,4.88,4.88
+			h92.466c2.692,0,4.88-2.189,4.88-4.88V44.55c0-2.691-2.188-4.88-4.88-4.88H89.662V27.044h20.832
+			c9.653,0,17.507,7.854,17.507,17.507v66.186C128,120.389,120.147,128.243,110.493,128.243z"/>
+	</g>
+	<g>
+		<path style="fill:#FFFFFF;" d="M102.302,70.343H26.221c-3.762,0-6.813-3.05-6.813-6.813c0-3.763,3.051-6.813,6.813-6.813h76.081
+			c3.762,0,6.813,3.05,6.813,6.813C109.115,67.293,106.064,70.343,102.302,70.343z"/>
+	</g>
+	<defs>
+		<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="33.101" y="0.264" width="63.266" height="70.08">
+			
+				<feColorMatrix  type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0" color-interpolation-filters="sRGB" result="source"/>
+			<feFlood  style="flood-color:white;flood-opacity:1" result="back"/>
+			<feBlend  in="source" in2="back" mode="normal"/>
+		</filter>
+	</defs>
+	<mask maskUnits="userSpaceOnUse" x="33.101" y="0.264" width="63.266" height="70.08" id="SVGID_1_">
+		<g style="filter:url(#Adobe_OpacityMaskFilter);">
+			<g>
+				
+					<line style="fill:none;stroke:#FFFFFF;stroke-width:9.7333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="49.647" y1="34.33" x2="60.354" y2="45.037"/>
+				
+					<line style="fill:none;stroke:#FFFFFF;stroke-width:9.7333;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" x1="60.354" y1="45.037" x2="79.82" y2="25.57"/>
+			</g>
+		</g>
+	</mask>
+	<g style="mask:url(#SVGID_1_);">
+		<path style="fill:#FFFFFF;" d="M90.742,70.343H38.726c-3.094,0-5.625-2.531-5.625-5.625V5.889c0-3.094,2.531-5.625,5.625-5.625
+			h52.016c3.094,0,5.625,2.531,5.625,5.625v58.83C96.367,67.812,93.836,70.343,90.742,70.343z"/>
+	</g>
+</g>
+</svg>

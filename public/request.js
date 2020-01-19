@@ -1,0 +1,1 @@
+window.$requestHttp = 'http://112.17.128.30:8089/'

@@ -1,0 +1,163 @@
+// cover some element-ui styles
+
+.el-breadcrumb__inner,
+.el-breadcrumb__inner a {
+  color: #666;
+  font-weight: 400 !important;
+}
+
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+
+// to fixed https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto 50px;
+}
+
+// refine element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+// dropdown
+.el-dropdown-menu {
+  a {
+    display: block
+  }
+}
+.el-tree-node__content {
+  .el-checkbox:last-of-type {
+    margin-right: 8px;
+  }
+
+}
+
+.el-message-box__message p {
+  white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.custom-class {
+  .el-input.is-disabled .el-input__inner,
+  .el-textarea.is-disabled .el-textarea__inner {
+   background-color: transparent;
+   border-color: transparent;
+   color: inherit;
+   cursor: default;
+   padding-left: 0;
+ }
+ .el-input.is-disabled .el-input__inner::-webkit-input-placeholder,
+ .el-textarea.is-disabled .el-textarea__inner::-webkit-input-placeholder,
+ .el-range-editor.is-disabled input::-webkit-input-placeholder {
+   visibility: hidden;
+ }
+ .el-radio__input.is-disabled+span.el-radio__label,
+ .el-checkbox__input.is-disabled+span.el-checkbox__label {
+   color: inherit;
+ }
+ .el-checkbox__input.is-disabled.is-checked .el-checkbox__inner {
+   border-color: #409EFF;
+   background: #409EFF;
+   &::after {
+     border-color: #F5F7FA;
+   }
+ }
+ .el-radio__input.is-disabled.is-checked .el-radio__inner {
+   border-color: #409EFF;
+   background: #409EFF;
+   &::after {
+     background-color: #F5F7FA;
+   }
+ }
+ .el-color-picker--medium .el-color-picker__mask {
+   visibility: hidden;
+ }
+ .el-slider__runway.disabled .el-slider__bar {
+   background-color: #409EFF;
+ }
+  .el-switch.is-disabled {
+   opacity: 1;
+ }
+  .el-select .el-input.is-disabled .el-select__caret,
+  .el-input.is-disabled .el-input__prefix,
+  .el-input.is-disabled .el-input__suffix {
+   display: none;
+ }
+  .el-button.is-disabled {
+   display: none;
+ }
+
+}
+.dialog-custom {
+  .el-dialog__body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    max-height: 60vh;
+    overflow: auto;
+  }
+  &.fixed-height {
+    top: 50%;
+    margin-bottom: 0;
+    margin-top: 0!important;
+    transform: translate3d(0,-50%,0);
+    .el-dialog__body {
+      max-height: initial;
+      height: 540px;
+    }
+  }
+}
+.scrollbar-wrapper>.el-scrollbar__view>.el-menu>.menu-wrapper>.el-submenu>.el-menu>.nest-menu>a>.el-menu-item {
+  font-size: 15px;
+}
+
+.amap-logo,
+.amap-copyright {
+  display: none;
+  opacity:0;
+}
+.custom-warning-notify {
+  background-color: #E6A23C;
+}
+.custom-error-notify {
+  background-color: #F56C6C;
+}
+.custom-warning-notify,
+.custom-error-notify {
+  box-shadow: none;
+  .el-notification__title {
+    color: #fff;
+  }
+  .el-notification__content {
+    color: #fff;
+    cursor: pointer;
+    word-break: break-all;
+    &:hover {
+      color: #e2dede;
+    }
+    .underline {
+      text-decoration: underline;
+      margin-right: 5px;
+    }
+  }
+  .el-notification__closeBtn {
+    color: #fff;
+  }
+}
