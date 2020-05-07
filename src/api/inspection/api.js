@@ -61,6 +61,8 @@ const api = {
 
   // 维修数据趋势分析 故障类型分类统计 设备故障统计 工单统计 设备管理分析图表
   echartsData: 'admin/assetService',
+  // 设备完好率图表
+  getIntactChart: 'admin/asset',
   // 设备台账
   getAssetAccount: 'admin/asset'
 }

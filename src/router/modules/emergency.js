@@ -1,5 +1,5 @@
 import Layout from '@/layout'
-import MainContainer from '@/components/MainContainer'
+// import MainContainer from '@/components/MainContainer'
 
 const emergency = {
   path: '/emergency',

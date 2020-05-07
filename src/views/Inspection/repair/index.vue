@@ -38,8 +38,8 @@
           <el-form-item prop="title" :label="mylang.repairTitle">
             <el-input v-model="searchForm.title" :placeholder="`请输入${mylang.repairTitle}`" clearable />
           </el-form-item>
-          <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
-            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
+          <el-form-item prop="field_value_id_2" :label="mylang.equipmentType">
+            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentType}`" clearable />
           </el-form-item>
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
         </el-form>
@@ -209,6 +209,10 @@ export default {
           this.handleSearch()
         })
       } else {
+        // 从首页跳转来且携带了设备名称的查询参数
+        if (this.$route.query.s_name) {
+          this.searchForm.field_value_id_2 = this.$route.query.s_name
+        }
         // 获取路由管道信息后 需要设置默认值
         this.getPipeOptions(true)
         // this.initTableData()

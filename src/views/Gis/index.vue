@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="outer">
-        <h3 class="title">故障设备统计</h3>
+        <h3 class="title">设备完好率</h3>
         <div class="inner">
           <div class="chart">
             <!-- <div :id="chartId1" class="column-chart" /> -->
@@ -103,22 +103,28 @@
         </div>
       </div>
       <div class="outer">
-        <h3 class="title">设备维修效率</h3>
+        <h3 class="title">设备故障率</h3>
         <div class="inner">
           <div class="chart1 chart2">
-            <template v-if="chart2Data.length > 0">
-              <div
+            <template v-if="!isNoRepaire && chart2Data.length > 0">
+              <template
                 v-for="(item,ind) in chart2Data"
-                :key="ind"
-                class="progress-box"
               >
-                <p class="tit" :title="item.name">{{ item.name }}</p>
-                <div class="progress">
-                  <span class="name" :title="item.ratio+'%'">{{ item.ratio }}%</span>
-                  <em class="pro" :style="barStyle(item)" />
+                <div
+                  v-if="+item.ratio > 0"
+                  :key="ind"
+                  class="progress-box"
+                  @click="goAssetPage(item.name)"
+                >
+                  <p class="tit" :title="item.name">{{ item.name }}</p>
+                  <div class="progress">
+                    <span class="name" :title="item.ratio+'%'">{{ item.ratio }}%</span>
+                    <em class="pro" :style="barStyle(item)" />
+                  </div>
                 </div>
-              </div>
+              </template>
             </template>
+            <p v-else class="tips">无维修设备</p>
           </div>
         </div>
       </div>
@@ -146,7 +152,8 @@ import {
   getAssetTypeState,
   getAssetNameState,
   getRepaireProgressChart,
-  getFaultTypeChart
+  getIntactChart
+  // getFaultTypeChart
 } from '@/api/inspection'
 import { getAssetChart, getPipeDetail } from '@/api/equipmentInfo'
 import { getGis } from '@/api/gis'
@@ -161,7 +168,7 @@ export default {
   data() {
     return {
       chartId1: 'chartNums',
-      chartId2: 'chartMaintain',
+      chartId2: 'chartMaintain', // 设备完好率
       chartId3: 'chartFaultType',
       charts1: null,
       charts2: null,
@@ -198,7 +205,8 @@ export default {
       chart2Data: [],
       chartColors: ['#f56c6c', '#e6a23c', '#5cb87a', '#1989fa', '#6f7ad3'],
       lines: {},
-      polyname: 'polyline'
+      polyname: 'polyline',
+      isNoRepaire: true // 是否有维修数据
     }
   },
   created() {
@@ -630,6 +638,7 @@ export default {
       }
     },
     initCharts1() {
+      // 管道概况图表
       // this.charts1 = echarts.init(document.getElementById(this.chartId1))
       this.setOptions1()
     },
@@ -751,42 +760,95 @@ export default {
       }
     },
     initCharts2() {
+      // 设备完好率图表
       this.charts2 = echarts.init(document.getElementById(this.chartId2))
       this.setOptions2()
     },
     async setOptions2() {
       try {
-        const { code, data } = await getFaultTypeChart()
+        const { code, data } = await getIntactChart()
+        // 多层嵌套图表 改为扇形图表
+        // if (code === 200) {
+        //   const series1 = []
+        //   const series2 = []
+        //   const length = data.xData.length
+        //   let innerLen = 1
+        //   if (length > 6) {
+        //     innerLen = 3
+        //   } else {
+        //     innerLen = Math.ceil(length / 2)
+        //   }
+        //   data.xData.forEach((v, i) => {
+        //     const obj = {}
+        //     obj.name = v
+        //     obj.value = data.series[i]
+        //     if (i < innerLen) {
+        //       series1.push(obj)
+        //     } else {
+        //       series2.push(obj)
+        //     }
+        //   })
+
+        //   this.charts2.setOption({
+        //     // title: {
+        //     //   text: '故障设备统计',
+        //     //   x: 'center',
+        //     //   textStyle: {
+        //     //     fontSize: 14,
+        //     //     textAlign: 'center'
+        //     //   }
+        //     // },
+        //     tooltip: {
+        //       trigger: 'item',
+        //       formatter: '{b}:{c} ({d}%)'
+        //     },
+        //     legend: {
+        //       orient: 'vertical',
+        //       x: 'left',
+        //       data: data.xData
+        //     },
+        //     // series: [{
+        //     //   data: series,
+        //     //   type: 'pie',
+        //     //   radius: '50%',
+        //     //   center: ['50%', '40%'],
+        //     //   animationDuration: 1000
+        //     // }]
+        //     series: [
+        //       {
+        //         type: 'pie',
+        //         selectedMode: 'single',
+        //         radius: [0, '30%'],
+        //         center: ['50%', '60%'],
+        //         label: {
+        //           normal: {
+        //             position: 'inner'
+        //           }
+        //         },
+        //         labelLine: {
+        //           normal: {
+        //             show: false
+        //           }
+        //         },
+        //         data: series1
+        //       },
+        //       {
+        //         type: 'pie',
+        //         radius: ['40%', '55%'],
+        //         center: ['50%', '60%'],
+        //         data: series2
+        //       }
+        //     ]
+        //   })
+        // }
         if (code === 200) {
-          const series1 = []
-          const series2 = []
-          const length = data.xData.length
-          let innerLen = 1
-          if (length > 6) {
-            innerLen = 3
-          } else {
-            innerLen = Math.ceil(length / 2)
-          }
-          data.xData.forEach((v, i) => {
+          const series = data.xData.map((v, i) => {
             const obj = {}
             obj.name = v
             obj.value = data.series[i]
-            if (i < innerLen) {
-              series1.push(obj)
-            } else {
-              series2.push(obj)
-            }
+            return obj
           })
-
           this.charts2.setOption({
-            // title: {
-            //   text: '故障设备统计',
-            //   x: 'center',
-            //   textStyle: {
-            //     fontSize: 14,
-            //     textAlign: 'center'
-            //   }
-            // },
             tooltip: {
               trigger: 'item',
               formatter: '{b}:{c} ({d}%)'
@@ -794,40 +856,31 @@ export default {
             legend: {
               orient: 'vertical',
               x: 'left',
+              itemWidth: 5,
+              itemHeight: 5,
+              itemGap: 6,
+              textStyle: {
+                fontSize: 11
+              },
               data: data.xData
             },
-            // series: [{
-            //   data: series,
-            //   type: 'pie',
-            //   radius: '50%',
-            //   center: ['50%', '40%'],
-            //   animationDuration: 1000
-            // }]
-            series: [
-              {
-                type: 'pie',
-                selectedMode: 'single',
-                radius: [0, '30%'],
-                center: ['50%', '60%'],
-                label: {
-                  normal: {
-                    position: 'inner'
+            series: [{
+              data: series,
+              type: 'pie',
+              itemStyle: {
+                color: function(params) {
+                  const colors = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3']
+                  if (params.name === '正常设备') {
+                    return '#67C23A'
+                  } else {
+                    return colors[params.dataIndex]
                   }
-                },
-                labelLine: {
-                  normal: {
-                    show: false
-                  }
-                },
-                data: series1
+                }
               },
-              {
-                type: 'pie',
-                radius: ['40%', '55%'],
-                center: ['50%', '60%'],
-                data: series2
-              }
-            ]
+              radius: '50%',
+              center: ['50%', '50%'],
+              animationDuration: 1000
+            }]
           })
         }
       } catch (error) {
@@ -835,6 +888,7 @@ export default {
       }
     },
     initCharts3() {
+      // 设备维修效率 暨设备故障率
       // this.charts3 = echarts.init(document.getElementById(this.chartId3))
       this.setOptions3()
     },
@@ -844,22 +898,44 @@ export default {
         if (code === 200) {
           const xData = data.xData || []
           const yData = data.series || []
-          const percent = data.percent || []
+          if (yData.length < 2) {
+            // 如果返回的series数据小于两条 则数据有问题
+            this.isNoRepaire = true // 是否有维修数据
+            return
+          }
+          const finishData = [] // series中二维数组相减后得到已完成维修的数据 [0]已完成+维修中 [1]维修中
+          for (let i = 0; i < yData[0].length; i++) {
+            const sum = (+yData[0][i]) - (+yData[1][i])
+            finishData.push(sum)
+          }
+          // 若已完成数据都是0 则显示无维修提示
+          if (finishData.findIndex(v => +v > 0) < 0) {
+            this.isNoRepaire = true
+            return
+          }
+          this.isNoRepaire = false
+          const percent = finishData.map((x, j) => {
+            const y = +yData[0][j]
+            if (y === 0) {
+              return 0
+            }
+            return ((x / +yData[0][j]) * 100).toFixed(2)
+          })
           const initData = []
           const chartData = xData.map((v, i) => {
             const colori = i % this.chartColors.length
             const obj = {}
             const init = {}
             init.name = v
-            init.ratio = 0
+            init.ratio = +percent[i] > 0 ? 1 : 0
             init.color = this.chartColors[colori]
             obj.name = v
-            obj.num = yData[i]
             obj.color = this.chartColors[colori]
             obj.ratio = percent[i] || 0
             initData.push(init)
             return obj
           })
+          // 为了有过渡效果 先显示初始数据
           this.chart2Data = initData
           setTimeout(() => {
             this.chart2Data = chartData
@@ -868,6 +944,14 @@ export default {
       } catch (error) {
         console.log(error)
       }
+    },
+    goAssetPage(name) {
+      this.$router.push({
+        name: 'EquipmentRepair',
+        query: {
+          s_name: name
+        }
+      })
     }
 
   }
@@ -1033,12 +1117,16 @@ export default {
           margin-bottom: 3px;
           color: #666;
           font-size: 12px;
+          cursor: pointer;
+
         }
         .progress {
           height: 12px;
           background-color: #E2E2E2;
           border-radius: 12px;
           margin: 0;
+          cursor: pointer;
+
           .name {
             line-height: 12px;
             font-size: 12px;
@@ -1065,5 +1153,9 @@ export default {
     bottom: 120px;
   }
 }
-
+.tips {
+  text-align: center;
+  font-size: 15px;
+  color: #666;
+}
 </style>

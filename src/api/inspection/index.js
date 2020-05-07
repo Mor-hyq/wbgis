@@ -502,13 +502,23 @@ export function getFaultChart({
     }
   })
 }
-// 设备维修进度统计图
+// 设备维修进度统计图暨设备故障率
 export function getRepaireProgressChart() {
   return request({
     url: api.echartsData,
     method: 'get',
     params: {
       target: 'equipmentRepair'
+    }
+  })
+}
+// 设备完好率图表
+export function getIntactChart() {
+  return request({
+    url: api.getIntactChart,
+    method: 'get',
+    params: {
+      type: 'intact'
     }
   })
 }
