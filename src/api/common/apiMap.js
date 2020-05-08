@@ -28,7 +28,9 @@ const api = {
   // 获取维护表单下拉列表
   getMaintainSelect: 'admin/table?target=list',
   // 维护|报警弹窗提示
-  getWarinig: 'admin/attention'
+  getWarinig: 'admin/attention',
+  // 获取风险等级下拉
+  getAccidentLevelSelect: 'admin/accidentLevel'
 }
 
 // local模式接口添加 debug=cross

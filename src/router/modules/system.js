@@ -17,7 +17,6 @@ const system = {
       path: 'pipeManage',
       name: 'PipeManage',
       component: MainContainer,
-      // alwaysShow: true,
       meta: {
         level: '1-1',
         title: '管线信息管理',
@@ -128,6 +127,40 @@ const system = {
             activeMenu: '/system/pipeManage/tunnelRouter',
             noCache: true
           }
+        },
+        {
+          path: 'tunnelRiskRouter',
+          name: 'TunnelRiskRouter',
+          component: () => import('@/views/equipmentInfo/risk/index'),
+          meta: {
+            level: '1-1-3',
+            title: '风险线路管理',
+            noCache: false
+          }
+        },
+        {
+          path: 'tunnelRiskRouterDetail/:id',
+          name: 'TunnelRiskRouterDetail',
+          component: () => import('@/views/equipmentInfo/risk/detail'),
+          hidden: true,
+          meta: {
+            level: '1-1-3-1',
+            title: '风险路由详情',
+            activeMenu: '/system/pipeManage/tunnelRiskRouter',
+            noCache: true
+          }
+        },
+        {
+          path: 'tunnelRiskRouterManage/:id',
+          name: 'TunnelRiskRouterManage',
+          component: () => import('@/views/equipmentInfo/risk/manage'),
+          hidden: true,
+          meta: {
+            level: '1-1-3-2',
+            title: '风险路由管理',
+            activeMenu: '/system/pipeManage/tunnelRiskRouter',
+            noCache: true
+          }
         }
       ]
     },
@@ -135,7 +168,6 @@ const system = {
       path: 'companyManage',
       name: 'CompanyManage',
       component: MainContainer,
-      // alwaysShow: true,
       meta: {
         level: '1-2',
         title: '单位信息管理',
@@ -169,7 +201,6 @@ const system = {
       path: 'authorityManage',
       name: 'RoleAuthorityManage',
       component: MainContainer,
-      // alwaysShow: true,
       meta: {
         level: '1-3',
         title: '角色权限管理',

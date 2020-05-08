@@ -112,6 +112,14 @@ export function getWarinig() {
   })
 }
 
+// 获取风险等级下拉
+export function getAccidentLevelSelect() {
+  return request({
+    url: api.getAccidentLevelSelect,
+    method: 'get'
+  })
+}
+
 // export function downFile(sha1) {
 //   return request({
 //     url: api.downFile,

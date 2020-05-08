@@ -974,3 +974,133 @@ export function deleteExercisePlan({
     }
   })
 }
+
+// 事故等级管理
+// 列表
+export function getAccidentLevelList({
+  page = 1,
+  paginate = 10,
+  level = ''
+} = {}) {
+  return request({
+    url: api.getAccidentLevelList,
+    method: 'get',
+    params: {
+      page,
+      paginate,
+      level
+    }
+  })
+}
+// 详情
+export function getAccidentLevelDetail({
+  id
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getAccidentLevelDetail, { id }),
+    method: 'get'
+  })
+}
+// 创建
+export function addAccidentLevel({
+  level
+} = {}) {
+  return request({
+    url: api.addAccidentLevel,
+    method: 'post',
+    data: {
+      level
+    }
+  })
+}
+// 更新
+export function editAccidentLevel({
+  id,
+  level
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.editAccidentLevel, { id }),
+    method: 'put',
+    data: {
+      level
+    }
+  })
+}
+// 删除
+export function deleteAccidentLevel({
+  id = 1,
+  ids
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.deleteAccidentLevel, { id }),
+    method: 'delete',
+    params: {
+      ids
+    }
+  })
+}
+
+// 事故类型管理
+// 列表
+export function getAccidentTypeList({
+  page = 1,
+  paginate = 10,
+  type = ''
+} = {}) {
+  return request({
+    url: api.getAccidentTypeList,
+    method: 'get',
+    params: {
+      page,
+      paginate,
+      type
+    }
+  })
+}
+// 详情
+export function getAccidentTypeDetail({
+  id
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getAccidentTypeDetail, { id }),
+    method: 'get'
+  })
+}
+// 创建
+export function addAccidentType({
+  type
+} = {}) {
+  return request({
+    url: api.addAccidentType,
+    method: 'post',
+    data: {
+      type
+    }
+  })
+}
+// 更新
+export function editAccidentType({
+  id,
+  type
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.editAccidentType, { id }),
+    method: 'put',
+    data: {
+      type
+    }
+  })
+}
+// 删除
+export function deleteAccidentType({
+  id = 1,
+  ids
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.deleteAccidentType, { id }),
+    method: 'delete',
+    params: {
+      ids
+    }
+  })
+}

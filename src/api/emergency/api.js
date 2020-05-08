@@ -116,7 +116,31 @@ const api = {
   // 修改接口
   editExercisePlan: 'admin/drillPlan/:id?target=edit',
   // 删除接口
-  deleteExercisePlan: 'admin/drillPlan/1?target=delete'
+  deleteExercisePlan: 'admin/drillPlan/1?target=delete',
+
+  // 事故等级管理
+  // 列表
+  getAccidentLevelList: 'admin/accidentLevel',
+  // 详情
+  getAccidentLevelDetail: 'admin/accidentLevel/:id',
+  // 创建
+  addAccidentLevel: 'admin/accidentLevel',
+  // 编辑
+  editAccidentLevel: 'admin/accidentLevel/:id',
+  // 删除
+  deleteAccidentLevel: 'admin/accidentLevel/:id',
+
+  // 事故类型管理
+  // 列表
+  getAccidentTypeList: 'admin/accidentType',
+  // 详情
+  getAccidentTypeDetail: 'admin/accidentType/:id',
+  // 创建
+  addAccidentType: 'admin/accidentType',
+  // 编辑
+  editAccidentType: 'admin/accidentType/:id',
+  // 删除
+  deleteAccidentType: 'admin/accidentType/:id'
 }
 if (mode === 'local') {
   for (const k in api) {

@@ -353,6 +353,28 @@ const emergency = {
         activeMenu: '/emergency/results',
         noCache: true
       }
+    },
+    {
+      path: 'accidentType',
+      name: 'AccidentType',
+      component: () => import('@/views/emergency/accidentType/index'),
+      meta: {
+        level: '1-10',
+        title: '事故类型管理',
+        icon: 'svg-role',
+        noCache: false
+      }
+    },
+    {
+      path: 'accidentLevel',
+      name: 'AccidentLevel',
+      component: () => import('@/views/emergency/accidentLevel/index'),
+      meta: {
+        level: '1-11',
+        title: '事故等级管理',
+        icon: 'svg-role',
+        noCache: false
+      }
     }
   ]
 }

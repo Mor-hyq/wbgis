@@ -4,7 +4,7 @@ import {
   getAccidentType, getAccidentLevel,
   getResultPlanType, getExercisePlanState,
   getInspectTypeState, getFaultTypeState,
-  getMaintainSelect
+  getMaintainSelect, getAccidentLevelSelect
 } from '@/api/common'
 import { getCompanySelet } from '@/api/system'
 const state = {
@@ -29,7 +29,8 @@ const state = {
     }
   ], // 账户状态
   assetTab: '0', // 应急管理的选中tab数据
-  maintainTab: '1' // 维护页面选中tab数据
+  maintainTab: '1', // 维护页面选中tab数据
+  riskLevelSelect: [] // 风险等级下拉数据
 }
 
 const mutations = {
@@ -68,6 +69,9 @@ const mutations = {
   },
   SET_MAINTAINSELECT: (state, data) => {
     state.maintainSelect = data
+  },
+  SET_RISKLEVELSELECT: (state, data) => {
+    state.riskLevelSelect = data
   }
 }
 
@@ -170,6 +174,16 @@ const actions = {
       }
     } catch (error) {
       commit('SET_MAINTAINSELECT', [])
+    }
+  },
+  async setRiskLevelSelect({ commit }) {
+    try {
+      const { code, data } = await getAccidentLevelSelect()
+      if (code === 200) {
+        commit('SET_RISKLEVELSELECT', data || [])
+      }
+    } catch (error) {
+      commit('SET_RISKLEVELSELECT', [])
     }
   }
 }

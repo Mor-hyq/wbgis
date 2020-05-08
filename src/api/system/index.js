@@ -419,3 +419,153 @@ export function getLogList({
     }
   })
 }
+
+// 风险管理
+// 列表
+export function getRiskList({
+  page = 1,
+  paginate = 10,
+  name = ''
+} = {}) {
+  return request({
+    url: api.getRiskList,
+    method: 'get',
+    params: {
+      page,
+      paginate,
+      name
+    }
+  })
+}
+// 详情
+export function getRiskDetail({
+  id
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getRiskDetail, { id }),
+    method: 'get'
+  })
+}
+// 创建
+export function addRisk({
+  name,
+  level,
+  mileage
+} = {}) {
+  return request({
+    url: api.addRisk,
+    method: 'post',
+    data: {
+      name,
+      level,
+      mileage
+    }
+  })
+}
+// 更新
+export function editRisk({
+  id,
+  name,
+  level,
+  mileage
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.editRisk, { id }),
+    method: 'put',
+    data: {
+      name,
+      level,
+      mileage
+    }
+  })
+}
+// 删除
+export function deleteRisk({
+  id = 1,
+  ids
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.deleteRisk, { id }),
+    method: 'delete',
+    params: {
+      ids
+    }
+  })
+}
+
+// 风险路由管理
+// 列表
+export function getRiskRouteList({
+  page = 1,
+  paginate = 10,
+  risk_id = ''
+} = {}) {
+  return request({
+    url: api.getRiskRouteList,
+    method: 'get',
+    params: {
+      page,
+      paginate,
+      risk_id
+    }
+  })
+}
+// 详情
+export function getRiskRouteDetail({
+  id
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getRiskRouteDetail, { id }),
+    method: 'get'
+  })
+}
+// 创建
+export function addRiskRoute({
+  risk_id,
+  sort,
+  lng,
+  lat
+} = {}) {
+  return request({
+    url: api.addRiskRoute,
+    method: 'post',
+    data: {
+      risk_id,
+      sort,
+      lng,
+      lat
+    }
+  })
+}
+// 更新
+export function editRiskRoute({
+  id,
+  risk_id,
+  sort,
+  lng,
+  lat
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.editRiskRoute, { id }),
+    method: 'put',
+    data: {
+      risk_id,
+      sort,
+      lng,
+      lat
+    }
+  })
+}
+// 删除
+export function deleteRiskRoute({
+  id = 1,
+  ids
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.deleteRiskRoute, { id }),
+    method: 'delete',
+    params: {
+      ids
+    }
+  })
+}

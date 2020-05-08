@@ -58,7 +58,31 @@ const api = {
 
   // 日志管理
   // 获取日志列表
-  getLogList: 'admin/log'
+  getLogList: 'admin/log',
+
+  // 风险管理
+  // 列表
+  getRiskList: 'admin/risk',
+  // 详情
+  getRiskDetail: 'admin/risk/:id',
+  // 创建
+  addRisk: 'admin/risk',
+  // 更新
+  editRisk: 'admin/risk/:id',
+  // 删除
+  deleteRisk: 'admin/risk/:id',
+
+  // 风险路由管理
+  // 列表
+  getRiskRouteList: 'admin/riskRoute',
+  // 详情
+  getRiskRouteDetail: 'admin/riskRoute/:id',
+  // 创建
+  addRiskRoute: 'admin/riskRoute',
+  // 更新
+  editRiskRoute: 'admin/riskRoute/:id',
+  // 删除
+  deleteRiskRoute: 'admin/riskRoute/:id'
 }
 if (mode === 'local') {
   for (const k in api) {

@@ -239,6 +239,7 @@ export default {
   dataType: '资料类型',
   fileData: '资料',
   file: '文件',
-  parentType: '上级类型'
-
+  parentType: '上级类型',
+  riskLine: '风险线路',
+  riskRoute: '风险路由'
 }

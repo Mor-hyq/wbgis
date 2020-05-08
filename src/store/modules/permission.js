@@ -118,22 +118,22 @@ const permission = {
       try {
         // for test start
         // 全部的
-        // const permissionList = asyncRoutes
-        // const code = 200
+        const permissionList = asyncRoutes
+        const code = 200
         // for test end
         // 有接口的
-        const {
-          code,
-          data: permissionList
-        } = await fetchPermission()
+        // const {
+        //   code,
+        //   data: permissionList
+        // } = await fetchPermission()
         if (code === 200) {
           // for test start
-          // const routes = recursionRouter(permissionList, cloneDeep(asyncRoutes))
+          const routes = recursionRouter(permissionList, cloneDeep(asyncRoutes))
           // for test end
           // 权限测试
           /*  获取后台给的权限数组 */
           /*  根据后台权限跟我们定义好的权限对比,生成用户权限路由 */
-          const routes = recursionRouter(permissionList[0].children, cloneDeep(asyncRoutes))
+          // const routes = recursionRouter(permissionList[0].children, cloneDeep(asyncRoutes))
           /* 生成左侧导航菜单 */
           commit('SET_MENU', routes)
           // 为路由设置默认redirect值
