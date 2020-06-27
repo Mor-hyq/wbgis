@@ -16,7 +16,7 @@ import fjbnby from './components/matainform/fjbnby'
 import fjyjc from './components/matainform/fjyjc'
 import gdpqy from './components/matainform/gdpqy'
 import jysdtjc from './components/matainform/jysdtjc'
-export default {
+export default { // 该页面已弃用
   name: 'MaintainRecord',
   components: {
     ddpscy,

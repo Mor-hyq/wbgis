@@ -20,6 +20,8 @@ const api = {
   getAssetNameState: 'admin/pipeAsset/:id?target=pipeAsset',
   // 获取维护记录
   getMaintainRecord: 'admin/assetEgi?target=recordList',
+  // 获取维护记录(新)
+  getMaintainRecord2: 'admin/assetEgiPeriod?target=list',
   // 删除维护记录
   deleteMaintainRecord: 'admin/egiRecord/1?target=delete',
   // 修改维护记录
@@ -64,7 +66,19 @@ const api = {
   // 设备完好率图表
   getIntactChart: 'admin/asset',
   // 设备台账
-  getAssetAccount: 'admin/asset'
+  getAssetAccount: 'admin/asset',
+
+  // 设备维护列表（新）
+  getEquipmentMatainList: 'admin/assetEgiPeriod?target=egiTableList',
+
+  // 维护登记列表
+  getMaintainRegisterList: 'admin/assetEgiPeriod/:id?target=list',
+  // 根据设备类型获取对应维护表单列表
+  getAssetFormList: 'admin/assetEgiPeriod?target=list',
+  // 保存维护登记
+  saveMaintainRegister: 'admin/assetEgiPeriod?target=egi',
+  // 查看维护登记详情
+  getMaintainRegisterDetail: 'admin/assetEgiPeriod/:id?target=detail'
 }
 
 if (mode === 'local') {

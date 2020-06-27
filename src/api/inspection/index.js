@@ -35,8 +35,8 @@ export function addAssetEgi({
 export function getAssetEgiList({
   pipe_name,
   state,
-  egi_person,
-  egi,
+  equipment_id,
+  cycle,
   page = 1,
   paginate = 10
 } = {}) {
@@ -46,8 +46,8 @@ export function getAssetEgiList({
     params: {
       pipe_name,
       state,
-      egi_person,
-      egi,
+      equipment_id,
+      cycle,
       page,
       paginate
     }
@@ -148,6 +148,34 @@ export function getMaintainRecord({
       page,
       paginate,
       time
+    }
+  })
+}
+// 获取维护记录（新）
+export function getMaintainRecord2({
+  plan_time,
+  egi_time,
+  equipment_id,
+  field_value_id_2,
+  field_id_2 = '',
+  state,
+  cycle,
+  page = 1,
+  paginate = 10
+} = {}) {
+  return request({
+    url: api.getMaintainRecord2,
+    method: 'get',
+    params: {
+      plan_time,
+      egi_time,
+      equipment_id,
+      field_id_2,
+      field_value_id_2,
+      state,
+      cycle,
+      page,
+      paginate
     }
   })
 }
@@ -565,3 +593,74 @@ export function getAssetAccount({
   })
 }
 
+// 设备维护列表（新）
+export function getEquipmentMatainList({
+  page = 1,
+  paginate = 10,
+  state,
+  equipment_id,
+  cycle
+} = {}) {
+  return request({
+    url: api.getEquipmentMatainList,
+    method: 'get',
+    params: {
+      page,
+      paginate,
+      state,
+      equipment_id,
+      cycle
+    }
+  })
+}
+
+// 维护登记列表
+export function getMaintainRegisterList({
+  id,
+  state,
+  field_id_2,
+  field_value_id_2,
+  page = 1,
+  paginate = 10
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getMaintainRegisterList, { id }),
+    method: 'get',
+    params: {
+      state,
+      field_id_2,
+      field_value_id_2,
+      page,
+      paginate
+    }
+  })
+}
+// 根据设备类型获取对应维护表单列表
+export function getAssetFormList({
+  equipment_id
+} = {}) {
+  return request({
+    url: api.getAssetFormList,
+    method: 'get',
+    params: {
+      equipment_id
+    }
+  })
+}
+// 保存维护登记
+export function saveMaintainRegister(data) {
+  return request({
+    url: api.saveMaintainRegister,
+    method: 'post',
+    data
+  })
+}
+// 查看维护登记详情
+export function getMaintainRegisterDetail({
+  id
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getMaintainRegisterDetail, { id }),
+    method: 'get'
+  })
+}

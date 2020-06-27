@@ -42,6 +42,7 @@
             <el-select
               v-model="form.equipment_id"
               clearable
+              @change="equipmentChanged"
             >
               <el-option
                 v-for="pipe in eTypeOptions"
@@ -51,22 +52,22 @@
               />
             </el-select>
           </el-form-item>
-          <!-- <el-form-item
-            prop="asset_id"
-            :label="mylang.equipmentName"
+          <el-form-item
+            prop="type"
+            label="维护表单"
           >
             <el-select
-              v-model="form.asset_id"
+              v-model="form.type"
               clearable
             >
               <el-option
-                v-for="pipe in eNameOptions"
-                :key="pipe.asset_id"
-                :value="pipe.asset_id"
-                :label="pipe.name"
+                v-for="type in maintainOptions"
+                :key="type.type"
+                :value="type.type"
+                :label="type.name"
               />
             </el-select>
-          </el-form-item> -->
+          </el-form-item>
           <el-form-item
             prop="notify_person"
             :label="`${mylang.noticeStaff}`"
@@ -77,9 +78,22 @@
         <el-col :span="12">
           <el-form-item
             prop="egi_cycle"
-            :label="`${mylang.maintainCycle}(天)`"
+            :label="`${mylang.maintainCycle}`"
           >
-            <el-input v-model="form.egi_cycle" type="number" clearable />
+            <!-- <el-input v-model="form.egi_cycle" type="number" clearable /> -->
+            <el-select
+              v-model="form.egi_cycle"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="cycle in cycleOptions"
+                :key="cycle.id"
+                :value="cycle.id"
+                :label="cycle.label"
+              />
+            </el-select>
           </el-form-item>
           <el-form-item
             prop="next_egi_time"
@@ -119,7 +133,8 @@ import {
   editAssetEgi,
   getAssetEgiDetail,
   // getAssetNameState,
-  getAssetTypeState
+  getAssetTypeState,
+  getAssetFormList
 } from '@/api/inspection'
 import { validatePhone2Func } from '@/utils/validateFunc'
 import deleteCache from '@/mixins/deleteCache'
@@ -143,6 +158,7 @@ export default {
         pipe_id: '',
         equipment_id: '',
         // asset_id: '',
+        type: '',
         egi_cycle: '',
         next_egi_time: '',
         notify_person: '',
@@ -159,6 +175,9 @@ export default {
         // asset_id: [
         //   { required: true, message: `请选择${this.mylang.equipment}` }
         // ],
+        type: [
+          { required: true, message: `请选择维护表单` }
+        ],
         egi_cycle: [
           { required: true, message: `请输入${this.mylang.maintainCycle}` }
         ],
@@ -176,6 +195,8 @@ export default {
       pipeOptions: [],
       eTypeOptions: [],
       eNameOptions: [],
+      maintainOptions: [],
+      cycleOptions: this.$store.state.form.cycleOptions,
       pickerTypeOptions: {
         disabledDate: (time) => {
           return time.getTime() < (Date.now() - 8.64e7)
@@ -184,6 +205,7 @@ export default {
     }
   },
   created() {
+    // this.getMaintainOptions()
     this.getPipeOptions()
     if (this.isEdit || this.isRead) {
       this.getDetail()
@@ -293,6 +315,13 @@ export default {
     //   //   this.getEquipmentNameOptions()
     //   // }
     // },
+    equipmentChanged(val) {
+      if (val) {
+        this.getMaintainOptions()
+      } else {
+        this.maintainOptions = []
+      }
+    },
     getPipeOptions() {
       if (this.$store.state.form.belongPipe.length < 1) {
         this.$store.dispatch('form/setBelongPipe').then(() => {
@@ -313,6 +342,27 @@ export default {
       } catch (error) {
         //
       }
+    },
+    async getMaintainOptions() {
+      try {
+        const { code, data } = await getAssetFormList({
+          equipment_id: this.form.equipment_id
+        })
+        if (code === 200) {
+          this.maintainOptions = data.list || []
+        } else {
+          this.maintainOptions = []
+        }
+      } catch (error) {
+        this.maintainOptions = []
+      }
+      // if (this.$store.state.form.maintainSelect.length < 1) {
+      //   this.$store.dispatch('form/setMaintainSelect').then(() => {
+      //     this.maintainOptions = this.$store.state.form.maintainSelect
+      //   })
+      // } else {
+      //   this.maintainOptions = this.$store.state.form.maintainSelect
+      // }
     }
     // async getEquipmentNameOptions() {
     //   try {

@@ -4,7 +4,10 @@
       <el-tab-pane lazy label="设备维护管理" name="1">
         <maintain-index ref="maintain" />
       </el-tab-pane>
-      <el-tab-pane lazy label="维护记录" name="2">
+      <el-tab-pane lazy label="设备维护表单" name="2">
+        <maintain-form ref="form" />
+      </el-tab-pane>
+      <el-tab-pane lazy label="设备维护记录" name="3">
         <maintain-record ref="record" />
       </el-tab-pane>
     </el-tabs>
@@ -14,13 +17,15 @@
 <script>
 import MaintainIndex from './components/MaintainIndex'
 import MaintainRecord from './components/MaintainRecord'
+import MaintainForm from './components/MaintainFormComponent'
 import deleteCache from '@/mixins/deleteCache'
 
 export default {
   name: 'EquipmentMaintain',
   components: {
     MaintainIndex,
-    MaintainRecord
+    MaintainRecord,
+    MaintainForm
   },
   mixins: [deleteCache],
   data() {

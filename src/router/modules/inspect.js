@@ -137,13 +137,13 @@ const inspect = {
           }
         },
         {
-          path: 'maintainRecord',
-          name: 'MaintainRecord',
-          component: () => import('@/views/Inspection/maintain/record'),
+          path: 'maintainRegister',
+          name: 'MaintainRegister',
+          component: () => import('@/views/Inspection/maintain/register'),
           hidden: true,
           meta: {
             level: '1-2-1-4',
-            title: '维护记录',
+            title: '维护登记',
             activeMenu: '/inspect/maintainManage/equipmentMaintain',
             noCache: true
           }

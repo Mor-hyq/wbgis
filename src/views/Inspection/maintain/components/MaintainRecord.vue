@@ -10,7 +10,25 @@
     >
       <template v-if="!isComponent" slot="search">
         <el-form ref="searchForm" :model="searchForm" size="mini" inline>
-          <el-form-item prop="plan_time" :label="mylang.maintainDate">
+          <el-form-item prop="equipment_id" label="设备类型">
+            <el-select
+              v-model="searchForm.equipment_id"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="pipe in eTypeOptions"
+                :key="pipe.id"
+                :value="pipe.id"
+                :label="pipe.name"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
+            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
+          </el-form-item>
+          <el-form-item prop="plan_time" :label="mylang.plan + mylang.maintainDate">
             <el-date-picker
               v-model="searchForm.plan_time"
               type="daterange"
@@ -32,7 +50,32 @@
               style="width:250px;"
             />
           </el-form-item>
-          <el-form-item prop="table_id" label="维护表单">
+          <el-form-item prop="state" :label="mylang.maintainState">
+            <el-select v-model="searchForm.state" clearable>
+              <el-option
+                v-for="option in stateOptions"
+                :key="option.id"
+                :label="option.label"
+                :value="option.id"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="cycle" :label="mylang.maintainCycle">
+            <el-select
+              v-model="searchForm.cycle"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="cycle in cycleOptions"
+                :key="cycle.id"
+                :value="cycle.id"
+                :label="cycle.label"
+              />
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item prop="table_id" label="维护表单">
             <el-select
               v-model="searchForm.table_id"
               clearable
@@ -44,7 +87,7 @@
                 :label="type.name"
               />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item prop="state" :label="mylang.maintainState">
             <el-select v-model="searchForm.state" clearable style="width:120px;">
               <el-option value="0" label="维护中" />
@@ -55,8 +98,8 @@
         </el-form>
       </template>
       <div v-if="!isComponent" style="margin-bottom:8px;">
-        <el-button type="primary" :size="$btnSize" @click="handleEdit()">{{ mylang.modify }}</el-button>
-        <el-button type="danger" :size="$btnSize" plain @click="handleDelete">{{ mylang.delete }}</el-button>
+        <!-- <el-button type="primary" :size="$btnSize" @click="handleEdit()">{{ mylang.modify }}</el-button> -->
+        <!-- <el-button type="danger" :size="$btnSize" plain @click="handleDelete">{{ mylang.delete }}</el-button> -->
         <el-button type="primary" :size="$btnSize" plain @click="handleExport">{{ mylang.export }}</el-button>
       </div>
       <el-table
@@ -75,55 +118,69 @@
         />
         <el-table-column
           align="center"
-          prop="type_name"
+          prop="equipment_name"
           :label="mylang.equipmentType"
         />
-        <!-- <el-table-column
+        <el-table-column
           align="center"
           prop="asset_name"
-          show-overflow-tooltip
           :label="mylang.equipmentName"
-        /> -->
+        />
+        <el-table-column
+          align="center"
+          prop="egi_cycle"
+          :label="`${mylang.maintainCycle}`"
+          :formatter="formatterCycle"
+        />
         <el-table-column
           align="center"
           prop="egi_time"
-          :label="mylang.maintainDate"
+          :label="mylang.actual + mylang.maintainDate"
         />
         <el-table-column
           align="center"
           prop="egi_person"
-          :label="mylang.maintainStaff"
-        />
-        <el-table-column
-          align="center"
-          prop="egi_result"
-          label="维护结果"
+          :label="mylang.actual +mylang.maintainStaff"
         />
         <el-table-column
           align="center"
           prop="plan_time"
-          show-overflow-tooltip
           :label="mylang.plan + mylang.maintainDate"
         />
         <el-table-column
           align="center"
-          prop="plan_person"
-          show-overflow-tooltip
-          :label="mylang.plan + mylang.maintainStaff"
-        />
+          prop="state"
+          :label="mylang.maintainState"
+        >
+          <template slot-scope="scope">
+            <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ getSateName(scope.row) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column
+          label="维护情况"
+          align="center"
+          width="100"
+        >
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              @click="goDetailPage(scope.row)"
+            >{{ mylang.detail }}</el-button>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column
           align="center"
           prop="name"
-          show-overflow-tooltip
           label="维护表单"
         >
           <template slot-scope="scope">
             <span class="name" @click="goRecordDetail(scope.row)">{{ scope.row.name }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </my-table>
-    <el-dialog v-if="!isComponent" :title="dialogTitle" :visible.sync="dialogTableVisible" @close="handleClose">
+    <!-- <el-dialog v-if="!isComponent" :title="dialogTitle" :visible.sync="dialogTableVisible" @close="handleClose">
       <el-form
         ref="dialogForms"
         :model="dialogForm"
@@ -178,12 +235,18 @@
         <el-button type="primary" @click="handleConfirm">{{ mylang.confirm }}</el-button>
         <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import { getMaintainRecord, deleteMaintainRecord, editMaintainRecord } from '@/api/inspection'
+import {
+  // getMaintainRecord,
+  getMaintainRecord2,
+  // deleteMaintainRecord,
+  // editMaintainRecord,
+  getAssetTypeState
+} from '@/api/inspection'
 import config from '@/config'
 
 export default {
@@ -199,10 +262,23 @@ export default {
       searchForm: {
         plan_time: '',
         egi_time: '',
-        table_id: ''
+        equipment_id: '',
+        field_value_id_2: '',
+        state: '',
+        cycle: ''
       },
       maintainOptions: [],
-      stateOptions: [],
+      eTypeOptions: [],
+      stateOptions: [{
+        id: '1',
+        // label: this.mylang.abnormal
+        label: '已维护'
+      }, {
+        id: '2',
+        // label: this.mylang.normal
+        label: '逾期'
+      }],
+      cycleOptions: this.$store.state.form.cycleOptions,
       realSearch: {},
       total: 0,
       listQuery: {
@@ -211,33 +287,34 @@ export default {
       },
       tableLoading: false,
       chooseDelArr: [],
-      tableData: [],
-      dialogTableVisible: false,
-      dialogTitle: '',
-      dialogForm: { // 弹窗中的表单
-        id: '', // 编辑时的id
-        egi_person: '',
-        egi_time: '',
-        egi_result: '',
-        table_id: '',
-        table_name: '',
-        isEdit: false
-      },
-      dialogRule: {
-        egi_person: [
-          { required: true, message: `请输入${this.mylang.maintainStaff}` }
-        ],
-        egi_time: [
-          { required: true, message: `请选择${this.mylang.maintainDate}` }
-        ],
-        table_id: [
-          { required: true, message: `请选择维护表单` }
-        ]
-      }
+      tableData: []
+      // dialogTableVisible: false,
+      // dialogTitle: '',
+      // dialogForm: { // 弹窗中的表单
+      //   id: '', // 编辑时的id
+      //   egi_person: '',
+      //   egi_time: '',
+      //   egi_result: '',
+      //   table_id: '',
+      //   table_name: '',
+      //   isEdit: false
+      // },
+      // dialogRule: {
+      //   egi_person: [
+      //     { required: true, message: `请输入${this.mylang.maintainStaff}` }
+      //   ],
+      //   egi_time: [
+      //     { required: true, message: `请选择${this.mylang.maintainDate}` }
+      //   ],
+      //   table_id: [
+      //     { required: true, message: `请选择维护表单` }
+      //   ]
+      // }
     }
   },
   created() {
-    this.getMaintainOptions()
+    // this.getMaintainOptions()
+    this.getPipeOptions()
     if (!this.isComponent) {
       this.initTableData()
     }
@@ -248,26 +325,38 @@ export default {
       paginate = this.listQuery.limit,
       plan_time = '',
       egi_time = '',
-      table_id = ''
+      equipment_id = '',
+      field_value_id_2 = '',
+      state = '',
+      cycle = ''
     } = {}) {
       this.listQuery.page = 1
-      this.getList({ page, paginate, plan_time, egi_time, table_id })
+      this.getList({ page, paginate, plan_time, egi_time, equipment_id,
+        field_value_id_2,
+        state,
+        cycle })
     },
     async getList({
       plan_time = '',
       egi_time = '',
-      table_id = '',
+      equipment_id = '',
+      field_value_id_2 = '',
+      state = '',
+      cycle = '',
       page = this.listQuery.page,
       paginate = this.listQuery.limit
     } = {}) {
       this.tableLoading = true
       this.tableData = []
       try {
-        const { code, data } = await getMaintainRecord({
+        const { code, data } = await getMaintainRecord2({
           page, paginate,
           plan_time: Array.isArray(plan_time) ? plan_time.join() : '',
           egi_time: Array.isArray(egi_time) ? egi_time.join() : '',
-          table_id
+          equipment_id,
+          field_value_id_2,
+          state,
+          cycle
         })
         this.tableLoading = false
         if (code === 200) {
@@ -286,7 +375,10 @@ export default {
       this.initTableData({
         plan_time: search.plan_time,
         egi_time: search.egi_time,
-        table_id: search.table_id
+        equipment_id: search.equipment_id,
+        field_value_id_2: search.field_value_id_2,
+        state: search.state,
+        cycle: search.cycle
       })
     },
     handleChange(data) {
@@ -296,7 +388,10 @@ export default {
         paginate: data.page.limit,
         plan_time: data.search.plan_time,
         egi_time: data.search.egi_time,
-        table_id: data.search.table_id
+        equipment_id: data.search.equipment_id,
+        field_value_id_2: data.search.field_value_id_2,
+        state: data.search.state,
+        cycle: data.search.cycle
       })
     },
     // 复选框选中事件
@@ -305,193 +400,205 @@ export default {
         this.chooseDelArr = data
       }
     },
-    handleEdit() {
-      if (this.chooseDelArr.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '未选择任何需要修改的选项'
-        })
-      } else if (this.chooseDelArr.length > 1) {
-        this.$message({
-          type: 'warning',
-          message: '修改项只能选择一个'
-        })
-      } else {
-        const slcrow = this.chooseDelArr[0]
-        this.dialogTitle = '维护信息修改'
-        this.showDialog()
-        if (this.$refs.dialogForms) {
-          this.$refs.dialogForms.resetFields()
-        }
-        this.dialogForm.id = slcrow.id
-        this.dialogForm.egi_person = slcrow.egi_person
-        this.dialogForm.egi_time = slcrow.egi_time
-        this.dialogForm.egi_result = slcrow.egi_result
-        this.dialogForm.table_id = slcrow.table_id
-        this.dialogForm.table_name = slcrow.name
-        this.dialogForm.isEdit = !!slcrow.table_id
-      }
-    },
-    handleDelete() {
-      if (this.chooseDelArr.length === 0) {
-        this.$message({
-          type: 'warning',
-          message: '未选择任何需要删除的选项'
-        })
-        return false
-      }
-      this.$confirm('即将删除您选中的' + this.mylang.maintainInfo + '，确认吗？', '删除' + this.mylang.maintainInfo, {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const ids = this.chooseDelArr.map(v => v.id).join(',')
-        this.deleteData({ delete_ids: ids })
-      })
-    },
-    async deleteData({ delete_ids } = {}) {
-      const loading = this.$loading({
-        lock: true,
-        text: '提交中',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      try {
-        const { code } = await deleteMaintainRecord({ delete_ids })
-        loading.close()
-        if (code === 200) {
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          })
-          // 重新获取当前页面数据
-          this.getList({
-            page: this.listQuery.page,
-            pageSize: this.listQuery.limit,
-            plan_time: this.realSearch.plan_time,
-            egi_time: this.realSearch.egi_time,
-            table_id: this.realSearch.table_id
-          })
-        }
-      } catch (error) {
-        loading.close()
-      }
-    },
-    goRecordDetail(row) {
-      this.$router.push({
-        name: 'MaintainRecord',
-        query: {
-          tid: row.table_id,
-          rid: row.id,
-          is_r: '1'
-        }
-      })
-    },
-    handleConfirm() {
-      // 提交确认
-      this.$refs.dialogForms.validate((valid) => {
-        if (valid) {
-          this.$confirm('确定保存吗？', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.finishMaintain()
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    async finishMaintain() {
-      const loading = this.$loading({
-        lock: true,
-        text: '提交中',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      try {
-        const { code } = await editMaintainRecord({
-          ...this.dialogForm,
-          egi_table_id: this.dialogForm.table_id
-        })
-        loading.close()
-        if (code === 200) {
-          // 重新获取当前页面数据
-          if (this.dialogForm.isEdit) {
-            // 没有修改过 维护表单 则直接刷新当前页面
-            this.getList({
-              page: this.listQuery.page,
-              pageSize: this.listQuery.limit,
-              plan_time: this.realSearch.plan_time,
-              egi_time: this.realSearch.egi_time,
-              table_id: this.realSearch.table_id
-            })
-            this.hideDialog()
-          } else {
-            // 重新选择了 维护表单
-            this.goMatainPage('create')
-          }
-        }
-      } catch (error) {
-        console.log(error)
-        loading.close()
-      }
-    },
-    handleDelEdit() {
-      this.dialogForm.table_name = ''
-      this.dialogForm.table_id = ''
-      this.dialogForm.isEdit = false
-    },
-    showDialog() {
-      this.dialogTableVisible = true
-    },
-    hideDialog() {
-      this.dialogTableVisible = false
-    },
-    handleClose() {
-      this.dialogForm = { // 弹窗中的表单
-        id: '', // 编辑时的id
-        egi_person: '',
-        egi_time: '',
-        egi_result: '',
-        table_id: '',
-        table_name: '',
-        isEdit: false
-      }
-    },
+    // handleEdit() {
+    //   if (this.chooseDelArr.length === 0) {
+    //     this.$message({
+    //       type: 'warning',
+    //       message: '未选择任何需要修改的选项'
+    //     })
+    //   } else if (this.chooseDelArr.length > 1) {
+    //     this.$message({
+    //       type: 'warning',
+    //       message: '修改项只能选择一个'
+    //     })
+    //   } else {
+    //     const slcrow = this.chooseDelArr[0]
+    //     this.dialogTitle = '维护信息修改'
+    //     this.showDialog()
+    //     if (this.$refs.dialogForms) {
+    //       this.$refs.dialogForms.resetFields()
+    //     }
+    //     this.dialogForm.id = slcrow.id
+    //     this.dialogForm.egi_person = slcrow.egi_person
+    //     this.dialogForm.egi_time = slcrow.egi_time
+    //     this.dialogForm.egi_result = slcrow.egi_result
+    //     this.dialogForm.table_id = slcrow.table_id
+    //     this.dialogForm.table_name = slcrow.name
+    //     this.dialogForm.isEdit = !!slcrow.table_id
+    //   }
+    // },
+    // handleDelete() {
+    //   if (this.chooseDelArr.length === 0) {
+    //     this.$message({
+    //       type: 'warning',
+    //       message: '未选择任何需要删除的选项'
+    //     })
+    //     return false
+    //   }
+    //   this.$confirm('即将删除您选中的' + this.mylang.maintainInfo + '，确认吗？', '删除' + this.mylang.maintainInfo, {
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消',
+    //     type: 'warning'
+    //   }).then(() => {
+    //     const ids = this.chooseDelArr.map(v => v.id).join(',')
+    //     this.deleteData({ delete_ids: ids })
+    //   })
+    // },
+    // async deleteData({ delete_ids } = {}) {
+    //   const loading = this.$loading({
+    //     lock: true,
+    //     text: '提交中',
+    //     spinner: 'el-icon-loading',
+    //     background: 'rgba(0, 0, 0, 0.7)'
+    //   })
+    //   try {
+    //     const { code } = await deleteMaintainRecord({ delete_ids })
+    //     loading.close()
+    //     if (code === 200) {
+    //       this.$message({
+    //         type: 'success',
+    //         message: '删除成功'
+    //       })
+    //       // 重新获取当前页面数据
+    //       this.getList({
+    //         page: this.listQuery.page,
+    //         pageSize: this.listQuery.limit,
+    //         plan_time: this.realSearch.plan_time,
+    //         egi_time: this.realSearch.egi_time,
+    //         equipment_id: this.realSearch.equipment_id,
+    //         field_value_id_2: this.realSearch.field_value_id_2,
+    //         state: this.realSearch.state,
+    //         cycle: this.realSearch.cycle
+    //       })
+    //     }
+    //   } catch (error) {
+    //     loading.close()
+    //   }
+    // },
+    // goRecordDetail(row) {
+    //   this.$router.push({
+    //     name: 'MaintainRecord',
+    //     query: {
+    //       tid: row.table_id,
+    //       rid: row.id,
+    //       is_r: '1'
+    //     }
+    //   })
+    // },
+    // handleConfirm() {
+    //   // 提交确认
+    //   this.$refs.dialogForms.validate((valid) => {
+    //     if (valid) {
+    //       this.$confirm('确定保存吗？', '提示', {
+    //         confirmButtonText: '确定',
+    //         cancelButtonText: '取消',
+    //         type: 'warning'
+    //       }).then(() => {
+    //         this.finishMaintain()
+    //       })
+    //     } else {
+    //       return false
+    //     }
+    //   })
+    // },
+    // async finishMaintain() {
+    //   const loading = this.$loading({
+    //     lock: true,
+    //     text: '提交中',
+    //     spinner: 'el-icon-loading',
+    //     background: 'rgba(0, 0, 0, 0.7)'
+    //   })
+    //   try {
+    //     const { code } = await editMaintainRecord({
+    //       ...this.dialogForm,
+    //       egi_table_id: this.dialogForm.table_id
+    //     })
+    //     loading.close()
+    //     if (code === 200) {
+    //       // 重新获取当前页面数据
+    //       if (this.dialogForm.isEdit) {
+    //         // 没有修改过 维护表单 则直接刷新当前页面
+    //         this.getList({
+    //           page: this.listQuery.page,
+    //           pageSize: this.listQuery.limit,
+    //           plan_time: this.realSearch.plan_time,
+    //           egi_time: this.realSearch.egi_time,
+    //           equipment_id: this.realSearch.equipment_id,
+    //           field_value_id_2: this.realSearch.field_value_id_2,
+    //           state: this.realSearch.state,
+    //           cycle: this.realSearch.cycle
+    //         })
+    //         this.hideDialog()
+    //       } else {
+    //         // 重新选择了 维护表单
+    //         this.goMatainPage('create')
+    //       }
+    //     }
+    //   } catch (error) {
+    //     console.log(error)
+    //     loading.close()
+    //   }
+    // },
+    // handleDelEdit() {
+    //   this.dialogForm.table_name = ''
+    //   this.dialogForm.table_id = ''
+    //   this.dialogForm.isEdit = false
+    // },
+    // showDialog() {
+    //   this.dialogTableVisible = true
+    // },
+    // hideDialog() {
+    //   this.dialogTableVisible = false
+    // },
+    // handleClose() {
+    //   this.dialogForm = { // 弹窗中的表单
+    //     id: '', // 编辑时的id
+    //     egi_person: '',
+    //     egi_time: '',
+    //     egi_result: '',
+    //     table_id: '',
+    //     table_name: '',
+    //     isEdit: false
+    //   }
+    // },
     handleExport() {
+      if (this.tableData.length < 1) {
+        return
+      }
       const mode = config.mode
       let requestUrl = mode === 'local' ? config.dev.url.baseURL : config[mode].url.baseURL
-      requestUrl += 'admin/assetEgi?target=recordList&export=1'
+      requestUrl += 'admin/assetEgiPeriod?target=list&export=1'
       for (const k in this.realSearch) {
         if (this.realSearch[k] || this.realSearch[k] === 0) {
-          requestUrl += `&${k}=${this.realSearch[k]}`
+          requestUrl += `&${k}=${Array.isArray(this.realSearch[k]) ? this.realSearch[k].join() : this.realSearch[k]}`
         }
       }
       window.location.href = requestUrl
       // window.open(requestUrl)
     },
-    goMatainPage(type) {
-      if (type === 'edit') {
-        this.$router.push({
-          name: 'MaintainRecord',
-          query: {
-            rid: this.dialogForm.id,
-            tid: this.dialogForm.table_id,
-            is_e: '1'
-          }
-        })
-      } else {
-        this.$router.push({
-          name: 'MaintainRecord',
-          query: {
-            rid: this.dialogForm.id,
-            tid: this.dialogForm.table_id
-          }
-        })
-      }
+    goDetailPage(row) {
+
     },
+    // goMatainPage(type) {
+    //   if (type === 'edit') {
+    //     this.$router.push({
+    //       name: 'MaintainRecord',
+    //       query: {
+    //         rid: this.dialogForm.id,
+    //         tid: this.dialogForm.table_id,
+    //         is_e: '1'
+    //       }
+    //     })
+    //   } else {
+    //     this.$router.push({
+    //       name: 'MaintainRecord',
+    //       query: {
+    //         rid: this.dialogForm.id,
+    //         tid: this.dialogForm.table_id
+    //       }
+    //     })
+    //   }
+    // },
     getMaintainOptions() {
       if (this.$store.state.form.maintainSelect.length < 1) {
         this.$store.dispatch('form/setMaintainSelect').then(() => {
@@ -500,6 +607,49 @@ export default {
       } else {
         this.maintainOptions = this.$store.state.form.maintainSelect
       }
+    },
+    getPipeOptions() {
+      if (this.$store.state.form.belongPipe.length < 1) {
+        this.$store.dispatch('form/setBelongPipe').then(() => {
+          const pipeOptions = this.$store.state.form.belongPipe
+          this.getEquipmentOptions(pipeOptions[0].id)
+        })
+      } else {
+        const pipeOptions = this.$store.state.form.belongPipe
+        this.getEquipmentOptions(pipeOptions[0].id)
+      }
+    },
+    async getEquipmentOptions(id) {
+      try {
+        const { code, data } = await getAssetTypeState({
+          id
+        })
+        if (code === 200) {
+          this.eTypeOptions = data || []
+        }
+      } catch (error) {
+        //
+      }
+    },
+    getSateName(row) {
+      let name = ''
+      for (let i = 0; i < this.stateOptions.length; i++) {
+        if (this.stateOptions[i].id === String(row.state)) {
+          name = this.stateOptions[i].label
+          break
+        }
+      }
+      return name
+    },
+    formatterCycle(row, column, cellValue) {
+      let name = ''
+      for (let i = 0; i < this.cycleOptions.length; i++) {
+        if (this.cycleOptions[i].id === String(cellValue)) {
+          name = this.cycleOptions[i].label
+          break
+        }
+      }
+      return name
     }
   }
 }
@@ -527,6 +677,12 @@ export default {
   color: #409eff;
   &:hover {
     color: #0565c5;
+  }
+}
+.order-state {
+  color: #F56C6C;
+  &.done {
+    color: #67C23A;
   }
 }
 </style>

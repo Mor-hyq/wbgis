@@ -90,3 +90,18 @@ div:focus {
 .risk4 {
   color: #409eff;
 }
+.report-card-box {
+  padding: 5px 0;
+  .el-card {
+    .el-card__header {
+      padding: 10px;
+      font-size: 14px;
+    }
+    .el-card__body {
+      padding: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+}

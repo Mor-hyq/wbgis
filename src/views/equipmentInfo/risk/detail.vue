@@ -65,7 +65,8 @@ export default {
       this.tableData = []
       try {
         const { code, data } = await getRiskRouteList({
-          id: this.id
+          id: this.id,
+          paginate: 200
         })
         this.tableLoading = false
         if (code === 200) {

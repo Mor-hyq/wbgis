@@ -30,7 +30,29 @@ const state = {
   ], // 账户状态
   assetTab: '0', // 应急管理的选中tab数据
   maintainTab: '1', // 维护页面选中tab数据
-  riskLevelSelect: [] // 风险等级下拉数据
+  riskLevelSelect: [], // 风险等级下拉数据
+  cycleOptions: [ // 维护周期
+    {
+      id: '1',
+      label: '每日'
+    },
+    {
+      id: '2',
+      label: '每周'
+    },
+    {
+      id: '3',
+      label: '每月'
+    },
+    {
+      id: '4',
+      label: '每半年'
+    },
+    {
+      id: '5',
+      label: '每年'
+    }
+  ]
 }
 
 const mutations = {

@@ -75,13 +75,11 @@
         <el-table-column
           align="center"
           prop="fault_state"
-          show-overflow-tooltip
           :label="mylang.accidentPlace"
         />
         <el-table-column
           align="center"
           prop="fault_coordinate"
-          show-overflow-tooltip
           :label="mylang.accidentLonLat"
         />
         <el-table-column
@@ -97,25 +95,21 @@
         <el-table-column
           align="center"
           prop="fault_describe"
-          show-overflow-tooltip
           :label="mylang.accidentDescribe"
         />
         <el-table-column
           align="center"
           prop="fault_time"
-          show-overflow-tooltip
           :label="mylang.accidentTime"
         />
         <el-table-column
           align="center"
           prop="deal_user"
-          show-overflow-tooltip
           :label="mylang.appraiser"
         />
         <el-table-column
           align="center"
           prop="deal_result"
-          show-overflow-tooltip
           :label="mylang.dealResult"
         />
         <el-table-column
@@ -435,6 +429,9 @@ export default {
       this.$refs.tables.clearSelection()
     },
     handleExport() {
+      if (this.tableData.length < 1) {
+        return
+      }
       const mode = config.mode
       let requestUrl = mode === 'local' ? config.dev.url.baseURL : config[mode].url.baseURL
       requestUrl += 'admin/fault?target=list&export=1'

@@ -155,6 +155,9 @@ import {
   getIntactChart
   // getFaultTypeChart
 } from '@/api/inspection'
+import {
+  getRiskList
+} from '@/api/system'
 import { getAssetChart, getPipeDetail } from '@/api/equipmentInfo'
 import { getGis } from '@/api/gis'
 import GisRouterDialog from './components/GisRouterDialog'
@@ -212,6 +215,7 @@ export default {
   created() {
     // 获取管道后在加载地图
     this.getPipeOptions()
+    this.getRiskList()
   },
   mounted() {
     this.initCharts2()
@@ -952,6 +956,19 @@ export default {
           s_name: name
         }
       })
+    },
+    async getRiskList() {
+      // 获取风险路由列表
+      try {
+        const { code, data } = await getRiskList({
+          page: 1,
+          paginate: 200
+        })
+        if (code === 200) {
+          console.log(data)
+        }
+      } catch (error) {
+      }
     }
 
   }

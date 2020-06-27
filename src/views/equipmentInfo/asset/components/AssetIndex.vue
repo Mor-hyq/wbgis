@@ -395,6 +395,9 @@ export default {
       }
     },
     handleExport() {
+      if (this.tableData.length < 1) {
+        return
+      }
       const mode = config.mode
       let requestUrl = mode === 'local' ? config.dev.url.baseURL : config[mode].url.baseURL
       requestUrl += 'admin/asset?type=export&equipment_id=' + this.equipment_id

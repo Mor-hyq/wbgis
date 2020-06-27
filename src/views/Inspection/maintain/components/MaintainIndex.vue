@@ -37,12 +37,42 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item prop="egi_person" :label="mylang.maintainStaff">
+          <el-form-item prop="equipment_id" label="设备类型">
+            <el-select
+              v-model="searchForm.equipment_id"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="pipe in eTypeOptions"
+                :key="pipe.id"
+                :value="pipe.id"
+                :label="pipe.name"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="cycle" :label="mylang.maintainCycle">
+            <el-select
+              v-model="searchForm.cycle"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="cycle in cycleOptions"
+                :key="cycle.id"
+                :value="cycle.id"
+                :label="cycle.label"
+              />
+            </el-select>
+          </el-form-item>
+          <!-- <el-form-item prop="egi_person" :label="mylang.maintainStaff">
             <el-input v-model="searchForm.egi_person" :placeholder="`请输入${mylang.maintainStaff}`" clearable />
-          </el-form-item>
-          <el-form-item prop="egi" :label="mylang.maintainRequirement">
+          </el-form-item> -->
+          <!-- <el-form-item prop="egi" :label="mylang.maintainRequirement">
             <el-input v-model="searchForm.egi" :placeholder="`请输入${mylang.maintainRequirement}`" clearable />
-          </el-form-item>
+          </el-form-item> -->
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
         </el-form>
       </template>
@@ -74,25 +104,22 @@
         <el-table-column
           align="center"
           prop="equipment_name"
-          show-overflow-tooltip
           :label="mylang.equipmentType"
         />
         <!-- <el-table-column
           align="center"
           prop="asset_name"
-          show-overflow-tooltip
           :label="mylang.equipmentName"
         /> -->
         <el-table-column
           align="center"
           prop="egi_cycle"
-          show-overflow-tooltip
-          :label="`${mylang.maintainCycle}(天)`"
+          :label="`${mylang.maintainCycle}`"
+          :formatter="formatterCycle"
         />
         <el-table-column
           align="center"
           prop="next_egi_time"
-          show-overflow-tooltip
           :label="`下次${mylang.maintainDate}`"
         />
         <el-table-column
@@ -100,26 +127,30 @@
           prop="notify_person"
           :label="mylang.noticeStaff"
         />
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           prop="phone"
           :label="mylang.contact"
-        />
-        <el-table-column
+        /> -->
+        <!-- <el-table-column
           align="center"
           prop="create_time"
           :label="mylang.createTime"
-        />
+        /> -->
         <el-table-column
           align="center"
           prop="state"
           :label="mylang.maintainState"
         >
           <template slot-scope="scope">
-            <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ getSateName(scope.row) }}</span>
+            <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ getSateName(scope.row) }}({{ scope.row.egiNum }})</span>
           </template>
         </el-table-column>
-
+        <el-table-column
+          align="center"
+          prop="egi"
+          :label="mylang.maintainRequirement"
+        />
         <el-table-column
           v-if="!isComponent"
           :label="mylang.actions"
@@ -135,8 +166,13 @@
             <el-button
               type="primary"
               :size="$btnSize"
-              @click="handleMaintain(scope.row)"
+              @click="goMaintainRegister(scope.row)"
             >维护登记</el-button>
+            <!-- <el-button
+              type="primary"
+              :size="$btnSize"
+              @click="handleMaintain(scope.row)"
+            >维护登记</el-button> -->
             <!-- <el-button
               :size="$btnSize"
               type="primary"
@@ -153,7 +189,7 @@
         </el-table-column>
       </el-table>
     </my-table>
-    <el-dialog v-if="!isComponent" :title="dialogTitle" :visible.sync="dialogTableVisible" @close="handleClose">
+    <!-- <el-dialog v-if="!isComponent" :title="dialogTitle" :visible.sync="dialogTableVisible" @close="handleClose">
       <el-form
         ref="dialogForms"
         :model="dialogForm"
@@ -202,12 +238,17 @@
         <el-button type="primary" @click="handleConfirm">{{ mylang.confirm }}</el-button>
         <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
-import { getAssetEgiList, deleteAssetEgi, finishMaintain } from '@/api/inspection'
+import {
+  getAssetEgiList,
+  deleteAssetEgi,
+  // finishMaintain,
+  getAssetTypeState
+} from '@/api/inspection'
 import config from '@/config'
 export default {
   name: 'EquipmentMaintainIndex',
@@ -221,8 +262,8 @@ export default {
     return {
       searchForm: {
         pipe_name: '',
-        egi_person: '',
-        egi: '',
+        cycle: '',
+        equipment_id: '',
         state: ''
       },
       pipeOptions: [],
@@ -235,6 +276,8 @@ export default {
         // label: this.mylang.normal
         label: '已维护'
       }],
+      cycleOptions: this.$store.state.form.cycleOptions,
+      eTypeOptions: [],
       realSearch: {},
       total: 0,
       listQuery: {
@@ -244,26 +287,26 @@ export default {
       tableLoading: false,
       chooseDelArr: [],
       tableData: [],
-      dialogTableVisible: false,
-      dialogTitle: '',
-      dialogForm: { // 弹窗中的表单
-        egi_person: '',
-        egi_time: '',
-        egi_result: '',
-        table_id: ''
-      },
-      editId: '', // 编辑时的id
-      dialogRule: {
-        egi_person: [
-          { required: true, message: `请输入${this.mylang.maintainStaff}` }
-        ],
-        egi_time: [
-          { required: true, message: `请选择${this.mylang.maintainDate}` }
-        ],
-        table_id: [
-          { required: true, message: `请选择维护表单` }
-        ]
-      },
+      // dialogTableVisible: false,
+      // dialogTitle: '',
+      // dialogForm: { // 弹窗中的表单
+      //   egi_person: '',
+      //   egi_time: '',
+      //   egi_result: '',
+      //   table_id: ''
+      // },
+      // editId: '', // 编辑时的id
+      // dialogRule: {
+      //   egi_person: [
+      //     { required: true, message: `请输入${this.mylang.maintainStaff}` }
+      //   ],
+      //   egi_time: [
+      //     { required: true, message: `请选择${this.mylang.maintainDate}` }
+      //   ],
+      //   table_id: [
+      //     { required: true, message: `请选择维护表单` }
+      //   ]
+      // },
       maintainOptions: []
     }
   },
@@ -273,25 +316,26 @@ export default {
     // }
     this.initTableData()
     if (!this.isComponent) {
-      // this.getPipeOptions()
+      this.getPipeOptions()
       this.getMaintainOptions()
+      // this.getEquipmentOptions()
     }
   },
   methods: {
     initTableData({
       page = 1,
       paginate = this.listQuery.limit,
-      egi = '',
-      egi_person = '',
+      equipment_id = '',
+      cycle = '',
       pipe_name = '',
       state = ''
     } = {}) {
       this.listQuery.page = 1
-      this.getList({ page, paginate, pipe_name, egi, state, egi_person })
+      this.getList({ page, paginate, pipe_name, equipment_id, state, cycle })
     },
     async getList({
-      egi = '',
-      egi_person = '',
+      equipment_id = '',
+      cycle = '',
       pipe_name = '',
       state = '',
       page = this.listQuery.page,
@@ -301,7 +345,7 @@ export default {
       this.tableData = []
       try {
         const { code, data } = await getAssetEgiList({
-          page, paginate, egi, pipe_name, state, egi_person
+          page, paginate, equipment_id, pipe_name, state, cycle
         })
         this.tableLoading = false
         if (code === 200) {
@@ -317,8 +361,8 @@ export default {
       const search = this.$refs.mytable.handleSearch()
       this.realSearch = search
       this.initTableData({
-        egi: search.egi,
-        egi_person: search.egi_person,
+        equipment_id: search.equipment_id,
+        cycle: search.cycle,
         pipe_name: search.pipe_name,
         state: search.state
       })
@@ -328,8 +372,8 @@ export default {
       this.getList({
         page: data.page.page,
         paginate: data.page.limit,
-        egi: data.search.egi,
-        egi_person: data.search.egi_person,
+        equipment_id: data.search.equipment_id,
+        cycle: data.search.cycle,
         pipe_name: data.search.pipe_name,
         state: data.state
       })
@@ -346,119 +390,119 @@ export default {
         }
       })
     },
-    handleMaintain(row) {
-      if (row) {
-        // const slcrow = this.chooseDelArr[0]
-        this.dialogTitle = this.mylang.finishMaintain
-        this.editId = row.id
-        this.showDialog()
-        if (this.$refs.dialogForms) {
-          this.$refs.dialogForms.resetFields()
-        }
-        this.dialogForm.egi_person = ''
-        this.dialogForm.egi_time = ''
-        this.dialogForm.egi_result = ''
-        this.dialogForm.table_id = ''
-      } else {
-        if (this.chooseDelArr.length === 0) {
-          this.$message({
-            type: 'warning',
-            message: '未选择任何需要维护的选项'
-          })
-        } else if (this.chooseDelArr.length > 1) {
-          this.$message({
-            type: 'warning',
-            message: '维护项只能选择一个'
-          })
-        } else {
-          const slcrow = this.chooseDelArr[0]
-          this.dialogTitle = this.mylang.finishMaintain
-          this.editId = slcrow.id
-          this.showDialog()
-          if (this.$refs.dialogForms) {
-            this.$refs.dialogForms.resetFields()
-          }
-          this.dialogForm.egi_person = ''
-          this.dialogForm.egi_time = ''
-          this.dialogForm.egi_result = ''
-          this.dialogForm.table_id = ''
-        }
-      }
-    },
-    showDialog() {
-      this.dialogTableVisible = true
-    },
-    hideDialog() {
-      this.dialogTableVisible = false
-    },
-    handleClose() {
-      this.editId = ''
-    },
-    handleConfirm() {
-      // 提交确认
-      this.$refs.dialogForms.validate((valid) => {
-        if (valid) {
-          this.$confirm('确定保存吗？', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            this.finishMaintain()
-            // this.goCreateRecord()
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    async finishMaintain() {
-      const loading = this.$loading({
-        lock: true,
-        text: '提交中',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
-      try {
-        const { code, data } = await finishMaintain({
-          id: this.editId,
-          ...this.dialogForm
-        })
-        loading.close()
-        if (code === 200) {
-          // 重新获取当前页面数据
-          // this.getList({
-          //   page: this.listQuery.page,
-          //   pageSize: this.listQuery.limit,
-          //   egi: this.realSearch.egi,
-          //   egi_person: this.realSearch.egi_person,
-          //   pipe_name: this.realSearch.pipe_name,
-          //   state: this.realSearch.state
-          // })
-          this.goCreateRecord({
-            rid: data.egi_record_id,
-            tid: this.dialogForm.table_id
-          })
-          this.hideDialog()
-        }
-      } catch (error) {
-        console.log(error)
-        loading.close()
-      }
-    },
+    // handleMaintain(row) {
+    //   if (row) {
+    //     // const slcrow = this.chooseDelArr[0]
+    //     this.dialogTitle = this.mylang.finishMaintain
+    //     this.editId = row.id
+    //     this.showDialog()
+    //     if (this.$refs.dialogForms) {
+    //       this.$refs.dialogForms.resetFields()
+    //     }
+    //     this.dialogForm.egi_person = ''
+    //     this.dialogForm.egi_time = ''
+    //     this.dialogForm.egi_result = ''
+    //     this.dialogForm.table_id = ''
+    //   } else {
+    //     if (this.chooseDelArr.length === 0) {
+    //       this.$message({
+    //         type: 'warning',
+    //         message: '未选择任何需要维护的选项'
+    //       })
+    //     } else if (this.chooseDelArr.length > 1) {
+    //       this.$message({
+    //         type: 'warning',
+    //         message: '维护项只能选择一个'
+    //       })
+    //     } else {
+    //       const slcrow = this.chooseDelArr[0]
+    //       this.dialogTitle = this.mylang.finishMaintain
+    //       this.editId = slcrow.id
+    //       this.showDialog()
+    //       if (this.$refs.dialogForms) {
+    //         this.$refs.dialogForms.resetFields()
+    //       }
+    //       this.dialogForm.egi_person = ''
+    //       this.dialogForm.egi_time = ''
+    //       this.dialogForm.egi_result = ''
+    //       this.dialogForm.table_id = ''
+    //     }
+    //   }
+    // },
+    // showDialog() {
+    //   this.dialogTableVisible = true
+    // },
+    // hideDialog() {
+    //   this.dialogTableVisible = false
+    // },
+    // handleClose() {
+    //   this.editId = ''
+    // },
+    // handleConfirm() {
+    //   // 提交确认
+    //   this.$refs.dialogForms.validate((valid) => {
+    //     if (valid) {
+    //       this.$confirm('确定保存吗？', '提示', {
+    //         confirmButtonText: '确定',
+    //         cancelButtonText: '取消',
+    //         type: 'warning'
+    //       }).then(() => {
+    //         this.finishMaintain()
+    //         // this.goCreateRecord()
+    //       })
+    //     } else {
+    //       return false
+    //     }
+    //   })
+    // },
+    // async finishMaintain() {
+    //   const loading = this.$loading({
+    //     lock: true,
+    //     text: '提交中',
+    //     spinner: 'el-icon-loading',
+    //     background: 'rgba(0, 0, 0, 0.7)'
+    //   })
+    //   try {
+    //     const { code, data } = await finishMaintain({
+    //       id: this.editId,
+    //       ...this.dialogForm
+    //     })
+    //     loading.close()
+    //     if (code === 200) {
+    //       // 重新获取当前页面数据
+    //       // this.getList({
+    //       //   page: this.listQuery.page,
+    //       //   pageSize: this.listQuery.limit,
+    //       //   egi: this.realSearch.egi,
+    //       //   egi_person: this.realSearch.egi_person,
+    //       //   pipe_name: this.realSearch.pipe_name,
+    //       //   state: this.realSearch.state
+    //       // })
+    //       this.goCreateRecord({
+    //         rid: data.egi_record_id,
+    //         tid: this.dialogForm.table_id
+    //       })
+    //       this.hideDialog()
+    //     }
+    //   } catch (error) {
+    //     console.log(error)
+    //     loading.close()
+    //   }
+    // },
     goCreatePage() {
       this.$router.push({
         name: 'MaintainCreate'
       })
     },
-    goCreateRecord(data) {
-      this.$router.push({
-        name: 'MaintainRecord',
-        query: {
-          rid: data.rid,
-          tid: data.tid
-        }
-      })
-    },
+    // goCreateRecord(data) {
+    //   this.$router.push({
+    //     name: 'MaintainRecord',
+    //     query: {
+    //       rid: data.rid,
+    //       tid: data.tid
+    //     }
+    //   })
+    // },
     goEditPage(row) {
       if (row) {
         this.$router.push({
@@ -533,8 +577,8 @@ export default {
           this.getList({
             page: this.listQuery.page,
             pageSize: this.listQuery.limit,
-            egi: this.realSearch.egi,
-            egi_person: this.realSearch.egi_person,
+            equipment_id: this.realSearch.equipment_id,
+            cycle: this.realSearch.cycle,
             pipe_name: this.realSearch.pipe_name,
             state: this.realSearch.state
           })
@@ -544,6 +588,9 @@ export default {
       }
     },
     handleExport() {
+      if (this.tableData.length < 1) {
+        return
+      }
       const mode = config.mode
       let requestUrl = mode === 'local' ? config.dev.url.baseURL : config[mode].url.baseURL
       requestUrl += 'admin/assetEgi?target=list&export=1'
@@ -555,19 +602,21 @@ export default {
       window.location.href = requestUrl
       // window.open(requestUrl)
     },
+    goMaintainRegister(row) {
+      this.$router.push({
+        name: 'MaintainRegister',
+        query: {
+          id: row.id
+        }
+      })
+    },
     getSateName(row) {
       let name = ''
-      switch (+row.state) {
-        case 0:
-          // name = '维护中'
-          name = '待维护'
+      for (let i = 0; i < this.stateOptions.length; i++) {
+        if (this.stateOptions[i].id === String(row.state)) {
+          name = this.stateOptions[i].label
           break
-        case 1:
-          // name = '维护完成'
-          name = '已维护'
-          break
-        default:
-          break
+        }
       }
       return name
     },
@@ -584,10 +633,34 @@ export default {
       if (this.$store.state.form.belongPipe.length < 1) {
         this.$store.dispatch('form/setBelongPipe').then(() => {
           this.pipeOptions = this.$store.state.form.belongPipe
+          this.getEquipmentOptions(this.pipeOptions[0].id)
         })
       } else {
         this.pipeOptions = this.$store.state.form.belongPipe
+        this.getEquipmentOptions(this.pipeOptions[0].id)
       }
+    },
+    async getEquipmentOptions(id) {
+      try {
+        const { code, data } = await getAssetTypeState({
+          id
+        })
+        if (code === 200) {
+          this.eTypeOptions = data || []
+        }
+      } catch (error) {
+        //
+      }
+    },
+    formatterCycle(row, column, cellValue) {
+      let name = ''
+      for (let i = 0; i < this.cycleOptions.length; i++) {
+        if (this.cycleOptions[i].id === String(cellValue)) {
+          name = this.cycleOptions[i].label
+          break
+        }
+      }
+      return name
     }
   }
 }

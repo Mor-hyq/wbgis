@@ -448,6 +448,9 @@ export default {
       }
     },
     handleExport() {
+      if (this.tableData.length < 1) {
+        return
+      }
       const mode = config.mode
       let requestUrl = mode === 'local' ? config.dev.url.baseURL : config[mode].url.baseURL
       requestUrl += 'admin/assetService?target=list&export=1'
