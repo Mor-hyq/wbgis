@@ -39,20 +39,7 @@ export default {
   },
   data() {
     return {
-      form: {
-        eqType: '',
-        eqNum: '',
-        eqName: '',
-        egi_period_id: '',
-        check_mid: '',
-        check_time: '',
-        low_area: '',
-        visual: '',
-        water_detector: '',
-        deal: '',
-        deal_visual: '',
-        remark: ''
-      }
+
     }
   },
   computed: {
