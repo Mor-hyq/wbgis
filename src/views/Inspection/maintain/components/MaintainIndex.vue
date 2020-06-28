@@ -286,7 +286,7 @@ export default {
       },
       tableLoading: false,
       chooseDelArr: [],
-      tableData: [],
+      tableData: []
       // dialogTableVisible: false,
       // dialogTitle: '',
       // dialogForm: { // 弹窗中的表单
@@ -307,7 +307,7 @@ export default {
       //     { required: true, message: `请选择维护表单` }
       //   ]
       // },
-      maintainOptions: []
+      // maintainOptions: []
     }
   },
   created() {
@@ -317,7 +317,7 @@ export default {
     this.initTableData()
     if (!this.isComponent) {
       this.getPipeOptions()
-      this.getMaintainOptions()
+      // this.getMaintainOptions()
       // this.getEquipmentOptions()
     }
   },
@@ -620,15 +620,15 @@ export default {
       }
       return name
     },
-    getMaintainOptions() {
-      if (this.$store.state.form.maintainSelect.length < 1) {
-        this.$store.dispatch('form/setMaintainSelect').then(() => {
-          this.maintainOptions = this.$store.state.form.maintainSelect
-        })
-      } else {
-        this.maintainOptions = this.$store.state.form.maintainSelect
-      }
-    },
+    // getMaintainOptions() {
+    //   if (this.$store.state.form.maintainSelect.length < 1) {
+    //     this.$store.dispatch('form/setMaintainSelect').then(() => {
+    //       this.maintainOptions = this.$store.state.form.maintainSelect
+    //     })
+    //   } else {
+    //     this.maintainOptions = this.$store.state.form.maintainSelect
+    //   }
+    // },
     getPipeOptions() {
       if (this.$store.state.form.belongPipe.length < 1) {
         this.$store.dispatch('form/setBelongPipe').then(() => {

@@ -99,18 +99,21 @@
             <el-button
               size="mini"
               type="success"
-              @click="goDetailPage(scope.row)"
+              @click="handleDetail(scope.row)"
             >{{ mylang.detail }}</el-button>
             <el-button
               type="primary"
               size="mini"
-              @click="goMaintainRegister(scope.row)"
+              @click="handleMaintainRegister(scope.row)"
             >维护登记</el-button>
           </template>
         </el-table-column>
       </el-table>
     </my-table>
-
+    <maintain-container
+      :visible.sync="dialogInfo.visible"
+      :type="dialogInfo.type"
+    />
   </div>
 </template>
 
@@ -119,8 +122,12 @@ import dayjs from 'dayjs'
 import {
   getMaintainRegisterList
 } from '@/api/inspection'
+import MaintainContainer from './components/newMaintainForm/Container'
 export default {
   name: 'MaintainRegister',
+  components: {
+    MaintainContainer
+  },
   data() {
     return {
       id: this.$route.query.id || '',
@@ -147,6 +154,10 @@ export default {
         equipment: '',
         next_egi_time: '',
         asset_num: ''
+      },
+      dialogInfo: {
+        visible: false,
+        type: ''
       }
     }
   },
@@ -214,11 +225,19 @@ export default {
         state: data.search.state
       })
     },
-    goDetailPage(row) {
-
+    handleDetail(row) {
+      this.dialogInfo = {
+        visible: true,
+        type: row.equipment_id + '' + row.type,
+        isRead: true
+      }
     },
-    goMaintainRegister(row) {
-
+    handleMaintainRegister(row) {
+      this.dialogInfo = {
+        visible: true,
+        type: row.equipment_id + '' + row.type,
+        isRead: false
+      }
     },
     filterTime(row, column, cellValue) {
       if (cellValue) {
