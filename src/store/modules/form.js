@@ -4,7 +4,8 @@ import {
   getAccidentType, getAccidentLevel,
   getResultPlanType, getExercisePlanState,
   getInspectTypeState, getFaultTypeState,
-  getMaintainSelect, getAccidentLevelSelect
+  getMaintainSelect, getAccidentLevelSelect,
+  getCheckMembers
 } from '@/api/common'
 import { getCompanySelet } from '@/api/system'
 const state = {
@@ -52,7 +53,8 @@ const state = {
       id: '5',
       label: '每年'
     }
-  ]
+  ],
+  checkMember: [] // 检查人员列表
 }
 
 const mutations = {
@@ -94,6 +96,9 @@ const mutations = {
   },
   SET_RISKLEVELSELECT: (state, data) => {
     state.riskLevelSelect = data
+  },
+  SET_CHECKMEMBER: (state, data) => {
+    state.checkMember = data
   }
 }
 
@@ -206,6 +211,16 @@ const actions = {
       }
     } catch (error) {
       commit('SET_RISKLEVELSELECT', [])
+    }
+  },
+  async setCheckMember({ commit }) {
+    try {
+      const { code, data } = await getCheckMembers()
+      if (code === 200) {
+        commit('SET_CHECKMEMBER', data.data || [])
+      }
+    } catch (error) {
+      commit('SET_CHECKMEMBER', [])
     }
   }
 }

@@ -113,6 +113,9 @@
     <maintain-container
       :visible.sync="dialogInfo.visible"
       :type="dialogInfo.type"
+      :eq-type="dialogInfo.eqType"
+      :eq-num="dialogInfo.eqNum"
+      :eq-name="dialogInfo.eqName"
     />
   </div>
 </template>
@@ -157,7 +160,10 @@ export default {
       },
       dialogInfo: {
         visible: false,
-        type: ''
+        type: '',
+        eqType: '',
+        eqNum: '',
+        eqName: ''
       }
     }
   },
@@ -229,6 +235,9 @@ export default {
       this.dialogInfo = {
         visible: true,
         type: row.equipment_id + '' + row.type,
+        eqType: this.info.equipment,
+        eqNum: row.asset_code,
+        eqName: row.asset_name,
         isRead: true
       }
     },
@@ -236,6 +245,9 @@ export default {
       this.dialogInfo = {
         visible: true,
         type: row.equipment_id + '' + row.type,
+        eqType: this.info.equipment,
+        eqNum: row.asset_code,
+        eqName: row.asset_name,
         isRead: false
       }
     },

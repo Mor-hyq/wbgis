@@ -8,16 +8,27 @@
     :close-on-click-modal="false"
     custom-class="custom-dialog"
   >
-    <component :is="componentName.type" />
+    <component
+      :is="componentName.type"
+      :ref="componentRef"
+      :is-read="isRead"
+      :eq-type="eqType"
+      :eq-num="eqNum"
+      :eq-name="eqName"
+    />
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
+      <el-button type="primary" @click="handleConfirm">保存并填写下一条</el-button>
+    </div>
   </el-dialog>
 </template>
 
 <script>
-import ddpsf from './ddpsf'
+import ddpspwz from './ddpsf'
 
 export default {
   components: {
-    ddpsf
+    ddpspwz
   },
   props: {
     visible: {
@@ -35,11 +46,23 @@ export default {
     isRead: {
       type: Boolean,
       default: false
+    },
+    eqType: {
+      type: String,
+      default: ''
+    },
+    eqNum: {
+      type: String,
+      default: ''
+    },
+    eqName: {
+      type: String,
+      default: ''
     }
   },
   data() {
     return {
-
+      componentRef: 'ref_' + Date.now()
     }
   },
   computed: {
@@ -103,6 +126,9 @@ export default {
   methods: {
     hideDialog() {
       this.$emit('update:visible', false)
+    },
+    handleConfirm() {
+      console.log(this.$refs[this.componentRef])
     }
   }
 }

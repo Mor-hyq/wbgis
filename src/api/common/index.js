@@ -119,7 +119,17 @@ export function getAccidentLevelSelect() {
     method: 'get'
   })
 }
-
+// 获取检查人员列表
+export function getCheckMembers() {
+  return request({
+    url: api.getCheckMembers,
+    method: 'get',
+    params: {
+      page: 1,
+      paginate: 200
+    }
+  })
+}
 // export function downFile(sha1) {
 //   return request({
 //     url: api.downFile,

@@ -30,7 +30,9 @@ const api = {
   // 维护|报警弹窗提示
   getWarinig: 'admin/attention',
   // 获取风险等级下拉
-  getAccidentLevelSelect: 'admin/accidentLevel'
+  getAccidentLevelSelect: 'admin/accidentLevel',
+  // 获取检查人员列表
+  getCheckMembers: 'admin/member'
 }
 
 // local模式接口添加 debug=cross
