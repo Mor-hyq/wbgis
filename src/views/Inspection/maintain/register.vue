@@ -97,6 +97,7 @@
         >
           <template slot-scope="scope">
             <el-button
+              v-if="+scope.row.state === 1"
               size="mini"
               type="success"
               @click="handleDetail(scope.row)"
@@ -116,6 +117,9 @@
       :eq-type="dialogInfo.eqType"
       :eq-num="dialogInfo.eqNum"
       :eq-name="dialogInfo.eqName"
+      :eq-id="dialogInfo.eqId"
+      :is-read="dialogInfo.isRead"
+      @confirm="getCurrentList"
     />
   </div>
 </template>
@@ -163,7 +167,8 @@ export default {
         type: '',
         eqType: '',
         eqNum: '',
-        eqName: ''
+        eqName: '',
+        eqId: ''
       }
     }
   },
@@ -231,9 +236,18 @@ export default {
         state: data.search.state
       })
     },
+    getCurrentList() {
+      this.getList({
+        page: this.listQuery.page,
+        pageSize: this.listQuery.limit,
+        field_value_id_2: this.realSearch.field_value_id_2,
+        state: this.realSearch.state
+      })
+    },
     handleDetail(row) {
       this.dialogInfo = {
         visible: true,
+        eqId: row.id,
         type: row.equipment_id + '' + row.type,
         eqType: this.info.equipment,
         eqNum: row.asset_code,
@@ -244,6 +258,7 @@ export default {
     handleMaintainRegister(row) {
       this.dialogInfo = {
         visible: true,
+        eqId: row.id,
         type: row.equipment_id + '' + row.type,
         eqType: this.info.equipment,
         eqNum: row.asset_code,

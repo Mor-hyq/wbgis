@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-form
+      ref="form"
       :model="form"
       :rules="isRead ? {} :formRules"
       label-suffix=":"
@@ -101,7 +102,7 @@
       >
         <el-input
           v-model="form.deal"
-          :rows="2"
+          :rows="3"
           type="textarea"
         />
       </el-form-item>
@@ -123,7 +124,7 @@
       >
         <el-input
           v-model="form.remark"
-          :rows="2"
+          :rows="3"
           type="textarea"
         />
       </el-form-item>
@@ -132,6 +133,10 @@
 </template>
 
 <script>
+import {
+  saveMaintainRegister,
+  getMaintainRegisterDetail
+} from '@/api/inspection'
 export default {
   props: {
     isRead: {
@@ -149,23 +154,43 @@ export default {
     eqName: {
       type: String,
       default: ''
+    },
+    eqId: {
+      type: [String, Number],
+      default: ''
     }
   },
   data() {
     return {
       form: {
-        egi_period_id: '',
         check_mid: '',
         check_time: '',
         low_area: '',
-        visual: '',
-        water_detector: '',
+        visual: 1,
+        water_detector: 1,
         deal: '',
-        deal_visual: '',
+        deal_visual: 1,
         remark: ''
       },
       formRules: {
-
+        check_mid: [
+          { required: true, message: '请选择检查人员' }
+        ],
+        check_time: [
+          { required: true, message: '请选择维护时间' }
+        ],
+        low_area: [
+          { required: true, message: '请填写机坪低点排水区域' }
+        ],
+        visual: [
+          { required: true, message: '请选择目视选项' }
+        ],
+        water_detector: [
+          { required: true, message: '请选择化学测水器选项' }
+        ],
+        deal_visual: [
+          { required: true, message: '请选择目视结论' }
+        ]
       },
       memberOptions: [],
       visualOptions: [
@@ -207,7 +232,83 @@ export default {
   created() {
     this.getCheckMember()
   },
+  mounted() {
+    if (this.isRead) {
+      this.getDetail()
+    }
+  },
   methods: {
+    async getDetail() {
+      try {
+        const { code, data } = await getMaintainRegisterDetail({ id: this.eqId })
+        if (code === 200) {
+          const form = {
+            check_mid: data.check_member,
+            check_time: data.check_time,
+            low_area: data.low_area,
+            visual: +data.visual,
+            water_detector: +data.water_detector,
+            deal: data.deal,
+            deal_visual: +data.deal_visual,
+            remark: data.remark
+          }
+          this.form = form
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async uploadData() {
+      const loading = this.$loading({
+        lock: true,
+        text: '提交中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      const datas = {
+        egi_period_id: this.eqId,
+        ...this.form
+      }
+      try {
+        const { code } = await saveMaintainRegister(datas)
+        loading.close()
+        if (code === 200) {
+          this.$message({
+            type: 'success',
+            message: '创建成功'
+          })
+          this.resetForm()
+          this.$emit('success')
+        }
+      } catch (error) {
+        console.log(error)
+        loading.close()
+      }
+    },
+    validate(cb) {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          // 验证通过
+          this.uploadData()
+        }
+      })
+    },
+    resetForm() {
+      const form = {
+        check_mid: '',
+        check_time: '',
+        low_area: '',
+        visual: 1,
+        water_detector: 1,
+        deal: '',
+        deal_visual: 1,
+        remark: ''
+      }
+      this.form = form
+      // this.$nextTick(() => {
+      //   this.$refs.form.clearValidate()
+      // })
+    },
     getCheckMember() {
       if (this.$store.state.form.checkMember.length < 1) {
         this.$store.dispatch('form/setCheckMember').then(() => {

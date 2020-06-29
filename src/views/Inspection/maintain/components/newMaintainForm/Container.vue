@@ -7,28 +7,38 @@
     :before-close="hideDialog"
     :close-on-click-modal="false"
     custom-class="custom-dialog"
+    :destroy-on-close="true"
   >
     <component
       :is="componentName.type"
+      v-if="visible"
       :ref="componentRef"
       :is-read="isRead"
       :eq-type="eqType"
       :eq-num="eqNum"
       :eq-name="eqName"
+      :eq-id="eqId"
+      @success="handleSuccess"
     />
     <div slot="footer" class="dialog-footer">
       <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
-      <el-button type="primary" @click="handleConfirm">保存并填写下一条</el-button>
+      <el-button v-if="!isRead" type="primary" @click="handleConfirm">保存</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
-import ddpspwz from './ddpsf'
+import ddpspwz from './ddpspwz'
+import gdpqy from './gdpqy'
+import fjyjc from './fjyjc'
+import fjbnby from './fjbnby'
 
 export default {
   components: {
-    ddpspwz
+    ddpspwz,
+    gdpqy,
+    fjyjc,
+    fjbnby
   },
   props: {
     visible: {
@@ -57,6 +67,10 @@ export default {
     },
     eqName: {
       type: String,
+      default: ''
+    },
+    eqId: {
+      type: [String, Number],
       default: ''
     }
   },
@@ -128,7 +142,11 @@ export default {
       this.$emit('update:visible', false)
     },
     handleConfirm() {
-      console.log(this.$refs[this.componentRef])
+      this.$refs[this.componentRef].validate()
+    },
+    handleSuccess() {
+      this.hideDialog()
+      this.$emit('confirm')
     }
   }
 }
