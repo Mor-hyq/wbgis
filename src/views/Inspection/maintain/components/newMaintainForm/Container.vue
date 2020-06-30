@@ -2,7 +2,7 @@
   <el-dialog
     :title="dialogTitle"
     :visible.sync="visible"
-    width="980px"
+    width="750px"
     top="10vh"
     :before-close="hideDialog"
     :close-on-click-modal="false"
@@ -32,13 +32,24 @@ import ddpspwz from './ddpspwz'
 import gdpqy from './gdpqy'
 import fjyjc from './fjyjc'
 import fjbnby from './fjbnby'
-
+import glqflqyc from './glqflqyc'
+import djzkz from './djzkz'
+import djfcsy from './djfcsy'
+import xsyjcs from './xsyjcs'
+import ycsbclr from './ycsbclr'
+import ycsbclrg from './ycsbclrg'
 export default {
   components: {
     ddpspwz,
     gdpqy,
     fjyjc,
-    fjbnby
+    fjbnby,
+    glqflqyc,
+    djzkz,
+    djfcsy,
+    xsyjcs,
+    ycsbclr,
+    ycsbclrg
   },
   props: {
     visible: {
@@ -129,8 +140,8 @@ export default {
           }
         case '111':
           return {
-            name: '过滤器/分离器（预过滤器）压差记录',
-            type: 'glqflqyc'
+            name: '航空加油站油车设备、车辆日检查单',
+            type: 'ycsbclrg'
           }
         default:
           return {}
@@ -167,6 +178,20 @@ $padding: 15px;
         max-height: 70vh;
         height: 70vh;
         overflow: auto;
+    }
+    .inline-radio {
+      margin-top: 8px;
+      min-height: 30px;
+      .el-form-item {
+        display: inline-block;
+        margin: 0;
+        .el-input {
+          width: 160px;
+        }
+      }
+    }
+    .read {
+      font-size: 14px;
     }
 }
 </style>

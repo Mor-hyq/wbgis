@@ -604,7 +604,7 @@ export default {
     },
     goMaintainRegister(row) {
       this.$router.push({
-        name: 'MaintainRegister',
+        name: 'MaintainRecord',
         query: {
           id: row.id
         }

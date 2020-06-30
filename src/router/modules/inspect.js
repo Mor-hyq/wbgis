@@ -137,8 +137,10 @@ const inspect = {
           }
         },
         {
-          path: 'maintainRegister',
-          name: 'MaintainRegister',
+          // path: 'maintainRegister',
+          // name: 'MaintainRegister',
+          path: 'maintainRecord',
+          name: 'MaintainRecord',
           component: () => import('@/views/Inspection/maintain/register'),
           hidden: true,
           meta: {

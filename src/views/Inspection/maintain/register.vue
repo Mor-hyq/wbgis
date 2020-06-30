@@ -103,6 +103,7 @@
               @click="handleDetail(scope.row)"
             >{{ mylang.detail }}</el-button>
             <el-button
+              v-if="+scope.row.state !== 1"
               type="primary"
               size="mini"
               @click="handleMaintainRegister(scope.row)"
@@ -131,7 +132,7 @@ import {
 } from '@/api/inspection'
 import MaintainContainer from './components/newMaintainForm/Container'
 export default {
-  name: 'MaintainRegister',
+  name: 'MaintainRecord',
   components: {
     MaintainContainer
   },

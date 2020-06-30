@@ -124,13 +124,13 @@ export function recursionRouter(userRoutes = [], allRoutes = [], includeName = [
     //   return
     // }
     // real start
-    // if (!v.url) {
-    //   return
-    // }
-    // const name = v.url
+    if (!v.url) {
+      return
+    }
+    const name = v.url
     // real end
     // test start
-    const name = v.name
+    // const name = v.name
     // test end
 
     // let name

@@ -8,7 +8,7 @@
       :size="$btnSize"
       class="custom-class"
       :disabled="isRead"
-      label-width="100px"
+      label-width="120px"
     >
       <el-row :gutter="10">
         <el-col :span="8">
@@ -64,114 +64,46 @@
         </el-col>
       </el-row>
       <el-form-item
-        prop="valve"
-        label="阀室/阀门"
-      >
-        <el-radio-group v-model="form.valve">
-          <el-radio :label="1">正常</el-radio>
-          <div class="inline-radio">
-            <el-radio :label="2">异常</el-radio>
-            <template v-if="!isRead">
-              <el-form-item
-                v-if="form.valve === 2"
-                prop="valve_text"
-              >
-                <el-input v-model="form.valve_text" clearable style="width:250px;" />
-              </el-form-item>
-            </template>
-            <span v-else class="read">{{ form.valve_text }}</span>
-          </div>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="leakage"
-        label="渗漏"
-      >
-        <el-radio-group v-model="form.leakage">
-          <el-radio :label="1">正常</el-radio>
-          <div class="inline-radio">
-            <el-radio :label="2">异常</el-radio>
-            <template v-if="!isRead">
-              <el-form-item
-                v-if="form.leakage === 2"
-                prop="leakage_text"
-              >
-                <el-input v-model="form.leakage_text" style="width:250px;" />
-              </el-form-item>
-            </template>
-            <span v-else class="read">{{ form.leakage_text }}</span>
-          </div>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="stag_water"
-        label="积水/油"
-      >
-        <el-radio-group v-model="form.stag_water">
-          <el-radio :label="1">正常</el-radio>
-          <div class="inline-radio">
-            <el-radio :label="2">异常</el-radio>
-            <template v-if="!isRead">
-              <el-form-item
-                v-if="form.stag_water === 2"
-                prop="stag_water_text"
-              >
-                <el-input v-model="form.stag_water_text" style="width:250px;" />
-              </el-form-item>
-            </template>
-            <span v-else class="read">{{ form.stag_water_text }}</span>
-          </div>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="clean"
-        label="洁净"
-      >
-        <el-radio-group v-model="form.clean">
-          <el-radio :label="1">正常</el-radio>
-          <div class="inline-radio">
-            <el-radio :label="2">异常</el-radio>
-            <template v-if="!isRead">
-              <el-form-item
-                v-if="form.clean === 2"
-                prop="clean_text"
-              >
-                <el-input v-model="form.clean_text" style="width:250px;" />
-              </el-form-item>
-            </template>
-            <span v-else class="read">{{ form.clean_text }}</span>
-          </div>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="cover"
-        label="井盖"
-      >
-        <el-radio-group v-model="form.cover">
-          <el-radio :label="1">正常</el-radio>
-          <div class="inline-radio">
-            <el-radio :label="2">异常</el-radio>
-            <template v-if="!isRead">
-              <el-form-item
-                v-if="form.cover === 2"
-                prop="cover_text"
-              >
-                <el-input v-model="form.cover_text" style="width:250px;" />
-              </el-form-item>
-            </template>
-            <span v-else class="read">{{ form.cover_text }}</span>
-          </div>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="abnormal_deal"
-        label="异常处理"
+        prop="ground_area"
+        label="地井阀区域"
       >
         <el-input
-          v-model="form.abnormal_deal"
-          :rows="3"
-          type="textarea"
+          v-if="!isRead"
+          v-model="form.ground_area"
+          clearable
         />
+        <span v-else class="read">{{ form.ground_area }}</span>
+      </el-form-item>
+      <el-form-item
+        prop="check"
+        label="检查情况"
+      >
+        <el-radio-group v-model="form.check">
+          <el-radio :label="1">正常</el-radio>
+          <div class="inline-radio">
+            <el-radio :label="2">异常</el-radio>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.check === 2"
+                prop="check_text"
+              >
+                <el-input v-model="form.check_text" clearable />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.check_text }}</span>
+          </div>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item
+        prop="close_time"
+        label="关闭时间(S)"
+      >
+        <el-input
+          v-if="!isRead"
+          v-model="form.close_time"
+          clearable
+        />
+        <span v-else>{{ form.close_time }}</span>
       </el-form-item>
       <el-form-item
         prop="remark"
@@ -224,17 +156,10 @@ export default {
       form: {
         check_mid: '',
         check_time: '',
-        valve: 1,
-        valve_text: '',
-        leakage: 1,
-        leakage_text: '',
-        stag_water: 1,
-        stag_water_text: '',
-        clean: 1,
-        clean_text: '',
-        cover: 1,
-        cover_text: '',
-        abnormal_deal: '',
+        check: 1,
+        ground_area: '',
+        check_text: '',
+        close_time: '',
         remark: ''
       },
       formRules: {
@@ -244,26 +169,16 @@ export default {
         check_time: [
           { required: true, message: '请选择维护时间' }
         ],
-        valve: [
-          { required: true, message: '请选择阀室/阀门状态' }
+        check: [
+          { required: true, message: '请选择检查情况' }
         ],
-        valve_text: abnormalRule,
-        leakage: [
-          { required: true, message: '请选择渗漏状态' }
+        check_text: abnormalRule,
+        close_time: [
+          { required: true, trigger: 'blur', message: '请填写关闭时间' }
         ],
-        leakage_text: abnormalRule,
-        stag_water: [
-          { required: true, message: '请选择积水/油状态' }
-        ],
-        stag_water_text: abnormalRule,
-        clean: [
-          { required: true, message: '请选择洁净状态' }
-        ],
-        clean_text: abnormalRule,
-        cover: [
-          { required: true, message: '请选择井盖状态' }
-        ],
-        cover_text: abnormalRule
+        ground_area: [
+          { required: true, trigger: 'blur', message: '请填写地井阀区域' }
+        ]
       },
       memberOptions: []
 
@@ -286,17 +201,10 @@ export default {
             check_mid: data.check_member,
             check_time: data.check_time,
             remark: data.remark,
-            abnormal_deal: data.abnormal_deal,
-            valve: +data.valve === 1 ? 1 : 2,
-            valve_text: +data.valve !== 1 ? data.valve : '',
-            leakage: +data.leakage === 1 ? 1 : 2,
-            leakage_text: +data.leakage !== 1 ? data.leakage : '',
-            stag_water: +data.stag_water === 1 ? 1 : 2,
-            stag_water_text: +data.stag_water !== 1 ? data.stag_water : '',
-            clean: +data.clean === 1 ? 1 : 2,
-            clean_text: +data.clean !== 1 ? data.clean : '',
-            cover: +data.cover === 1 ? 1 : 2,
-            cover_text: +data.cover !== 1 ? data.cover : ''
+            close_time: data.close_time,
+            ground_area: data.ground_area,
+            check: +data.check === 1 ? 1 : 2,
+            check_text: +data.check !== 1 ? data.check : ''
           }
           this.form = form
         }
@@ -315,12 +223,9 @@ export default {
         egi_period_id: this.eqId,
         check_mid: this.form.check_mid,
         check_time: this.form.check_time,
-        valve: this.form.valve === 1 ? 1 : this.form.valve_text,
-        leakage: this.form.leakage === 1 ? 1 : this.form.leakage_text,
-        stag_water: this.form.stag_water === 1 ? 1 : this.form.stag_water_text,
-        clean: this.form.clean === 1 ? 1 : this.form.clean_text,
-        cover: this.form.cover === 1 ? 1 : this.form.cover_text,
-        abnormal_deal: this.form.abnormal_deal,
+        check: this.form.check === 1 ? 1 : this.form.check_text,
+        close_time: this.form.close_time,
+        ground_area: this.form.ground_area,
         remark: this.form.remark
       }
       try {
@@ -357,17 +262,10 @@ export default {
       const form = {
         check_mid: '',
         check_time: '',
-        valve: 1,
-        valve_text: '',
-        leakage: 1,
-        leakage_text: '',
-        stag_water: 1,
-        stag_water_text: '',
-        clean: 1,
-        clean_text: '',
-        cover: 1,
-        cover_text: '',
-        abnormal_deal: '',
+        check: 1,
+        check_text: '',
+        close_time: '',
+        ground_area: '',
         remark: ''
       }
       this.form = form

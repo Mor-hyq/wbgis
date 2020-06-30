@@ -65,7 +65,7 @@
       </el-row>
       <el-form-item
         prop="high_area"
-        label="机坪高点排气区域"
+        label="地井区域"
       >
         <el-input
           v-if="!isRead"
@@ -74,30 +74,102 @@
         />
         <span v-else class="read">{{ form.high_area }}</span>
       </el-form-item>
-      <el-form-item
-        prop="visual"
-        label="目视"
-      >
-        <el-radio-group v-model="form.visual">
-          <el-radio
-            v-for="item in visualOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="water_detector"
-        label="化学测水器"
-      >
-        <el-radio-group v-model="form.water_detector">
-          <el-radio
-            v-for="item in waterOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="leakage"
+            label="渗漏"
+          >
+            <el-radio-group v-model="form.leakage">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="clean"
+            label="清洁"
+          >
+            <el-radio-group v-model="form.clean">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="pilot_valve"
+            label="先导阀"
+          >
+            <el-radio-group v-model="form.pilot_valve">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="line"
+            label="内衬"
+          >
+            <el-radio-group v-model="form.line">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="cover"
+            label="井盖"
+          >
+            <el-radio-group v-model="form.cover">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="tether"
+            label="系链"
+          >
+            <el-radio-group v-model="form.tether">
+              <el-radio
+                :label="1"
+              >合格</el-radio>
+              <el-radio
+                :label="2"
+              >不合格</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item
         prop="deal"
         label="处理过程"
@@ -107,18 +179,6 @@
           :rows="3"
           type="textarea"
         />
-      </el-form-item>
-      <el-form-item
-        prop="deal_visual"
-        label="目视结论"
-      >
-        <el-radio-group v-model="form.deal_visual">
-          <el-radio
-            v-for="item in dealOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
       </el-form-item>
       <el-form-item
         prop="remark"
@@ -168,10 +228,13 @@ export default {
         check_mid: '',
         check_time: '',
         high_area: '',
-        visual: 1,
-        water_detector: 1,
+        leakage: 1,
+        clean: 1,
+        pilot_valve: 1,
+        line: 1,
+        cover: 1,
+        tether: 1,
         deal: '',
-        deal_visual: 1,
         remark: ''
       },
       formRules: {
@@ -182,53 +245,31 @@ export default {
           { required: true, message: '请选择维护时间' }
         ],
         high_area: [
-          { required: true, message: '请填写机坪高点排气区域' }
+          { required: true, message: '请填写地井区域' }
         ],
-        visual: [
-          { required: true, message: '请选择目视选项' }
+        leakage: [
+          { required: true, message: '请选择渗漏选项' }
         ],
-        water_detector: [
-          { required: true, message: '请选择化学测水器选项' }
+        clean: [
+          { required: true, message: '请选择清洁选项' }
         ],
-        deal_visual: [
-          { required: true, message: '请选择目视结论' }
+        pilot_valve: [
+          { required: true, message: '请选择先导阀选项' }
+        ],
+        line: [
+          { required: true, message: '请选择内衬选项' }
+        ],
+        cover: [
+          { required: true, message: '请选择井盖选项' }
+        ],
+        tether: [
+          { required: true, message: '请选择系链选项' }
+        ],
+        deal: [
+          { required: true, message: '请填写处理过程' }
         ]
       },
-      memberOptions: [],
-      visualOptions: [
-        {
-          id: 1,
-          name: '清澈透明'
-        },
-        {
-          id: 2,
-          name: '少量水分杂质'
-        },
-        {
-          id: 3,
-          name: '大量水分杂质'
-        }
-      ],
-      waterOptions: [
-        {
-          id: 1,
-          name: '不变色'
-        },
-        {
-          id: 2,
-          name: '变色'
-        }
-      ],
-      dealOptions: [
-        {
-          id: 1,
-          name: '合格'
-        },
-        {
-          id: 2,
-          name: '不合格'
-        }
-      ]
+      memberOptions: []
     }
   },
   created() {
@@ -248,10 +289,13 @@ export default {
             check_mid: data.check_member,
             check_time: data.check_time,
             high_area: data.high_area,
-            visual: +data.visual,
-            water_detector: +data.water_detector,
+            leakage: +data.leakage,
+            clean: +data.clean,
+            pilot_valve: +data.pilot_valve,
+            line: +data.line,
+            cover: +data.cover,
+            tether: +data.tether,
             deal: data.deal,
-            deal_visual: +data.deal_visual,
             remark: data.remark
           }
           this.form = form
@@ -306,10 +350,13 @@ export default {
         check_mid: '',
         check_time: '',
         high_area: '',
-        visual: 1,
-        water_detector: 1,
+        leakage: 1,
+        clean: 1,
+        pilot_valve: 1,
+        line: 1,
+        cover: 1,
+        tether: 1,
         deal: '',
-        deal_visual: 1,
         remark: ''
       }
       this.form = form

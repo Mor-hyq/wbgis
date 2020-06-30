@@ -10,7 +10,7 @@
       :disabled="isRead"
       label-width="100px"
     >
-      <el-row :gutter="25">
+      <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -18,17 +18,17 @@
         </el-col>
         <el-col :span="8">
           <el-form-item
-            :label="mylang.equipmentNumber"
-          >{{ eqNum }}</el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item
             :label="mylang.equipmentName"
           >{{ eqName }}</el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="25">
         <el-col :span="8">
+          <el-form-item
+            :label="mylang.equipmentNumber"
+          >{{ eqNum }}</el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
           <el-form-item
             prop="check_mid"
             label="检查人员"
@@ -47,7 +47,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <el-form-item
             prop="check_time"
             label="维护时间"
@@ -68,9 +68,11 @@
         label="机坪低点排水区域"
       >
         <el-input
+          v-if="!isRead"
           v-model="form.low_area"
           clearable
         />
+        <span v-else class="read">{{ form.low_area }}</span>
       </el-form-item>
       <el-form-item
         prop="visual"
@@ -289,7 +291,13 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           // 验证通过
-          this.uploadData()
+          this.$confirm('确定保存吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.uploadData()
+          })
         }
       })
     },

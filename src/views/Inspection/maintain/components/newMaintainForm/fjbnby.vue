@@ -10,7 +10,7 @@
       :disabled="isRead"
       label-width="100px"
     >
-      <el-row :gutter="25">
+      <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -18,17 +18,17 @@
         </el-col>
         <el-col :span="8">
           <el-form-item
-            :label="mylang.equipmentNumber"
-          >{{ eqNum }}</el-form-item>
-        </el-col>
-        <el-col :span="8">
-          <el-form-item
             :label="mylang.equipmentName"
           >{{ eqName }}</el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="25">
         <el-col :span="8">
+          <el-form-item
+            :label="mylang.equipmentNumber"
+          >{{ eqNum }}</el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
           <el-form-item
             prop="check_mid"
             label="检查人员"
@@ -47,7 +47,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="10">
           <el-form-item
             prop="check_time"
             label="检查时间"
@@ -69,15 +69,17 @@
       >
         <el-radio-group v-model="form.valve_level">
           <el-radio :label="1">正常</el-radio>
-          <div style="display:inline-block;">
+          <div class="inline-radio">
             <el-radio :label="2">异常</el-radio>
-            <el-form-item
-              v-if="form.valve_level === 2"
-              prop="valve_level_text"
-              style="display:inline-block;"
-            >
-              <el-input v-model="form.valve_level_text" clearable style="width:250px;" />
-            </el-form-item>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.valve_level === 2"
+                prop="valve_level_text"
+              >
+                <el-input v-model="form.valve_level_text" clearable style="width:250px;" />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.valve_level_text }}</span>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -87,15 +89,17 @@
       >
         <el-radio-group v-model="form.corrosion">
           <el-radio :label="1">正常</el-radio>
-          <div style="display:inline-block;">
+          <div class="inline-radio">
             <el-radio :label="2">异常</el-radio>
-            <el-form-item
-              v-if="form.corrosion === 2"
-              prop="corrosion_text"
-              style="display:inline-block;"
-            >
-              <el-input v-model="form.corrosion_text" style="width:250px;" />
-            </el-form-item>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.corrosion === 2"
+                prop="corrosion_text"
+              >
+                <el-input v-model="form.corrosion_text" style="width:250px;" />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.corrosion_text }}</span>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -105,15 +109,17 @@
       >
         <el-radio-group v-model="form.seal">
           <el-radio :label="1">正常</el-radio>
-          <div style="display:inline-block;">
+          <div class="inline-radio">
             <el-radio :label="2">异常</el-radio>
-            <el-form-item
-              v-if="form.seal === 2"
-              prop="seal_text"
-              style="display:inline-block;"
-            >
-              <el-input v-model="form.seal_text" style="width:250px;" />
-            </el-form-item>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.seal === 2"
+                prop="seal_text"
+              >
+                <el-input v-model="form.seal_text" style="width:250px;" />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.seal_text }}</span>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -123,15 +129,17 @@
       >
         <el-radio-group v-model="form.smooth">
           <el-radio :label="1">正常</el-radio>
-          <div style="display:inline-block;">
+          <div class="inline-radio">
             <el-radio :label="2">异常</el-radio>
-            <el-form-item
-              v-if="form.smooth === 2"
-              prop="smooth_text"
-              style="display:inline-block;"
-            >
-              <el-input v-model="form.smooth_text" style="width:250px;" />
-            </el-form-item>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.smooth === 2"
+                prop="smooth_text"
+              >
+                <el-input v-model="form.smooth_text" style="width:250px;" />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.smooth_text }}</span>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -141,15 +149,17 @@
       >
         <el-radio-group v-model="form.bolt">
           <el-radio :label="1">正常</el-radio>
-          <div style="display:inline-block;">
+          <div class="inline-radio">
             <el-radio :label="2">异常</el-radio>
-            <el-form-item
-              v-if="form.bolt === 2"
-              prop="bolt_text"
-              style="display:inline-block;"
-            >
-              <el-input v-model="form.bolt_text" style="width:250px;" />
-            </el-form-item>
+            <template v-if="!isRead">
+              <el-form-item
+                v-if="form.bolt === 2"
+                prop="bolt_text"
+              >
+                <el-input v-model="form.bolt_text" style="width:250px;" />
+              </el-form-item>
+            </template>
+            <span v-else class="read">{{ form.bolt_text }}</span>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -208,7 +218,7 @@ export default {
   data() {
     const abnormalRule = [
       { required: true, message: '请填写异常原因' },
-      { pattern: new RegExp(/^.*[^\d].*$/), trigger: 'blur', message: '填写信息有误' }
+      { pattern: new RegExp(/^.*[^\d].*$/), trigger: 'blur', message: '不能填写纯数字' }
     ]
     return {
       form: {
@@ -333,7 +343,13 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           // 验证通过
-          this.uploadData()
+          this.$confirm('确定保存吗？', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.uploadData()
+          })
         }
       })
     },
@@ -341,11 +357,17 @@ export default {
       const form = {
         check_mid: '',
         check_time: '',
-        low_area: '',
-        visual: 1,
-        water_detector: 1,
-        deal: '',
-        deal_visual: 1,
+        valve_level: 1,
+        valve_level_text: '',
+        corrosion: 1,
+        corrosion_text: '',
+        seal: 1,
+        seal_text: '',
+        smooth: 1,
+        smooth_text: '',
+        bolt: 1,
+        bolt_text: '',
+        abnormal_deal: '',
         remark: ''
       }
       this.form = form

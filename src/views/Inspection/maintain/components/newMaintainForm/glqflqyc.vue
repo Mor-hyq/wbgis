@@ -8,9 +8,9 @@
       :size="$btnSize"
       class="custom-class"
       :disabled="isRead"
-      label-width="100px"
+      label-width="120px"
     >
-      <el-row :gutter="10">
+      <el-row :gutter="5">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -63,63 +63,110 @@
           </el-form-item>
         </el-col>
       </el-row>
-      <el-form-item
-        prop="high_area"
-        label="机坪高点排气区域"
-      >
-        <el-input
-          v-if="!isRead"
-          v-model="form.high_area"
-          clearable
-        />
-        <span v-else class="read">{{ form.high_area }}</span>
-      </el-form-item>
-      <el-form-item
-        prop="visual"
-        label="目视"
-      >
-        <el-radio-group v-model="form.visual">
-          <el-radio
-            v-for="item in visualOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="water_detector"
-        label="化学测水器"
-      >
-        <el-radio-group v-model="form.water_detector">
-          <el-radio
-            v-for="item in waterOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item
-        prop="deal"
-        label="处理过程"
-      >
-        <el-input
-          v-model="form.deal"
-          :rows="3"
-          type="textarea"
-        />
-      </el-form-item>
-      <el-form-item
-        prop="deal_visual"
-        label="目视结论"
-      >
-        <el-radio-group v-model="form.deal_visual">
-          <el-radio
-            v-for="item in dealOptions"
-            :key="item.id"
-            :label="item.id"
-          >{{ item.name }}</el-radio>
-        </el-radio-group>
-      </el-form-item>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="rated_flow_rate"
+            label="额定流速(L/M)"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.rated_flow_rate"
+              clearable
+            />
+            <span v-else class="read">{{ form.rated_flow_rate }}</span>
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="flow_rate"
+            label="流速(L/M)"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.flow_rate"
+              clearable
+            />
+            <span v-else class="read">{{ form.flow_rate }}</span>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="rate"
+            label="流速率"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.rate"
+              clearable
+            />
+            <span v-else class="read">{{ form.rate }}</span>
+
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="pressure"
+            label="压差读数(Mpa)"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.pressure"
+              clearable
+            />
+            <span v-else class="read">{{ form.pressure }}</span>
+
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="all_pressure"
+            label="全流量压差"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.all_pressure"
+              clearable
+            />
+            <span v-else class="read">{{ form.all_pressure }}</span>
+
+          </el-form-item>
+        </el-col>
+        <el-col :span="10">
+          <el-form-item
+            prop="up_oil"
+            label="自上次读数后输油量(L)"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.up_oil"
+              clearable
+            />
+            <span v-else class="read">{{ form.up_oil }}</span>
+
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :span="10">
+          <el-form-item
+            prop="oil"
+            label="输油总数计量(L)"
+          >
+            <el-input
+              v-if="!isRead"
+              v-model="form.oil"
+              clearable
+            />
+            <span v-else class="read">{{ form.oil }}</span>
+
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item
         prop="remark"
         label="备注"
@@ -167,11 +214,13 @@ export default {
       form: {
         check_mid: '',
         check_time: '',
-        high_area: '',
-        visual: 1,
-        water_detector: 1,
-        deal: '',
-        deal_visual: 1,
+        rated_flow_rate: '',
+        flow_rate: '',
+        rate: '',
+        pressure: '',
+        all_pressure: '',
+        up_oil: '',
+        oil: '',
         remark: ''
       },
       formRules: {
@@ -181,54 +230,29 @@ export default {
         check_time: [
           { required: true, message: '请选择维护时间' }
         ],
-        high_area: [
-          { required: true, message: '请填写机坪高点排气区域' }
+        rated_flow_rate: [
+          { required: true, message: '请填写额定流速' }
         ],
-        visual: [
-          { required: true, message: '请选择目视选项' }
+        flow_rate: [
+          { required: true, message: '请填写流速' }
         ],
-        water_detector: [
-          { required: true, message: '请选择化学测水器选项' }
+        rate: [
+          { required: true, message: '请填写流速率' }
         ],
-        deal_visual: [
-          { required: true, message: '请选择目视结论' }
+        pressure: [
+          { required: true, message: '请填写压差读书' }
+        ],
+        all_pressure: [
+          { required: true, message: '请填写全流量压差' }
+        ],
+        up_oil: [
+          { required: true, message: '请填写自上次读数后输油量' }
+        ],
+        oil: [
+          { required: true, message: '请填写输油总数计量' }
         ]
       },
-      memberOptions: [],
-      visualOptions: [
-        {
-          id: 1,
-          name: '清澈透明'
-        },
-        {
-          id: 2,
-          name: '少量水分杂质'
-        },
-        {
-          id: 3,
-          name: '大量水分杂质'
-        }
-      ],
-      waterOptions: [
-        {
-          id: 1,
-          name: '不变色'
-        },
-        {
-          id: 2,
-          name: '变色'
-        }
-      ],
-      dealOptions: [
-        {
-          id: 1,
-          name: '合格'
-        },
-        {
-          id: 2,
-          name: '不合格'
-        }
-      ]
+      memberOptions: []
     }
   },
   created() {
@@ -247,12 +271,14 @@ export default {
           const form = {
             check_mid: data.check_member,
             check_time: data.check_time,
-            high_area: data.high_area,
-            visual: +data.visual,
-            water_detector: +data.water_detector,
-            deal: data.deal,
-            deal_visual: +data.deal_visual,
-            remark: data.remark
+            remark: data.remark,
+            rated_flow_rate: data.rated_flow_rate,
+            flow_rate: data.flow_rate,
+            rate: data.rate,
+            pressure: data.pressure,
+            all_pressure: data.all_pressure,
+            up_oil: data.up_oil,
+            oil: data.oil
           }
           this.form = form
         }
@@ -305,11 +331,13 @@ export default {
       const form = {
         check_mid: '',
         check_time: '',
-        high_area: '',
-        visual: 1,
-        water_detector: 1,
-        deal: '',
-        deal_visual: 1,
+        rated_flow_rate: '',
+        flow_rate: '',
+        rate: '',
+        pressure: '',
+        all_pressure: '',
+        up_oil: '',
+        oil: '',
         remark: ''
       }
       this.form = form
