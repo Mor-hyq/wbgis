@@ -14,17 +14,17 @@
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
-          >{{ eqType }}</el-form-item>
+          >{{ eqType || form.equipment_name }}</el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentName"
-          >{{ eqName }}</el-form-item>
+          >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentNumber"
-          >{{ eqNum }}</el-form-item>
+          >{{ eqNum || form.code }}</el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="10">
@@ -222,7 +222,10 @@ export default {
             meter: data.meter,
             model: data.model,
             expire: data.expire,
-            potential: data.potential
+            potential: data.potential,
+            equipment_name: data.equipment_name,
+            code: data.code,
+            asset_name: data.asset_name
           }
           this.form = form
         }

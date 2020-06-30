@@ -169,7 +169,8 @@ export default {
         eqType: '',
         eqNum: '',
         eqName: '',
-        eqId: ''
+        eqId: '',
+        isRead: false
       }
     }
   },

@@ -15,17 +15,17 @@
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
-          >{{ eqType }}</el-form-item>
+          >{{ eqType || form.equipment_name }}</el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentName"
-          >{{ eqName }}</el-form-item>
+          >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentNumber"
-          >{{ eqNum }}</el-form-item>
+          >{{ eqNum || form.code }}</el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="10">
@@ -1305,7 +1305,10 @@ export default {
             check_mid: data.check_member,
             check_time: data.check_time,
             remark: data.remark,
-            shift: data.shift
+            shift: data.shift,
+            equipment_name: data.equipment_name,
+            code: data.code,
+            asset_name: data.asset_name
           }
           if (data.chass_equipment) {
             const chass_equipment = JSON.parse(data.chass_equipment)
