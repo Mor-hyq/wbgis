@@ -74,7 +74,7 @@ const api = {
   // 维护登记列表
   getMaintainRegisterList: 'admin/assetEgiPeriod/:id?target=list',
   // 根据设备类型获取对应维护表单列表
-  getAssetFormList: 'admin/assetEgiPeriod?target=list',
+  getAssetFormList: 'admin/assetEgiPeriod?target=table',
   // 保存维护登记
   saveMaintainRegister: 'admin/assetEgiPeriod?target=egi',
   // 查看维护登记详情

@@ -59,6 +59,7 @@
             <el-select
               v-model="form.type"
               clearable
+              style="width:100%;"
             >
               <el-option
                 v-for="type in maintainOptions"
@@ -72,7 +73,19 @@
             prop="notify_person"
             :label="`${mylang.noticeStaff}`"
           >
-            <el-input v-model="form.notify_person" clearable />
+            <!-- <el-input v-model="form.notify_person" clearable /> -->
+            <el-select
+              v-model="form.notify_person"
+              clearable
+              filterable
+            >
+              <el-option
+                v-for="item in memberOptions"
+                :key="item.id"
+                :value="item.id"
+                :label="item.nickname"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -99,10 +112,19 @@
             prop="next_egi_time"
             :label="`下次${mylang.maintainDate}`"
           >
-            <el-date-picker
+            <!-- <el-date-picker
               v-model="form.next_egi_time"
               type="date"
               placeholder="选择日期"
+            /> -->
+            <el-date-picker
+              v-model="form.next_egi_time"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"
+              clearable
             />
           </el-form-item>
           <el-form-item
@@ -185,7 +207,7 @@ export default {
           { required: true, message: `请选择下次${this.mylang.maintainDate}` }
         ],
         notify_person: [
-          { required: true, message: `请输入${this.mylang.noticeStaff}` }
+          { required: true, message: `请选择${this.mylang.noticeStaff}` }
         ],
         phone: [
           { required: true, validator: validatePhone2Func, tips: `${this.mylang.contact}` }
@@ -196,6 +218,7 @@ export default {
       eTypeOptions: [],
       eNameOptions: [],
       maintainOptions: [],
+      memberOptions: [],
       cycleOptions: this.$store.state.form.cycleOptions,
       pickerTypeOptions: {
         disabledDate: (time) => {
@@ -207,6 +230,7 @@ export default {
   created() {
     // this.getMaintainOptions()
     this.getPipeOptions()
+    this.getCheckMember()
     if (this.isEdit || this.isRead) {
       this.getDetail()
     }
@@ -235,9 +259,13 @@ export default {
       try {
         const { code, data } = await getAssetEgiDetail({ id: this.id })
         if (code === 200) {
-          this.form = { ...this.form, ...data }
+          this.form = {
+            ...this.form, ...data,
+            next_egi_time: data.next_egi_time.split(',')
+          }
           if (data.equipment_id) {
             this.getEquipmentOptions()
+            this.getMaintainOptions()
             // this.getEquipmentNameOptions()
           }
         }
@@ -253,7 +281,11 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       try {
-        const { code } = await addAssetEgi(this.form)
+        const data = {
+          ...this.form,
+          next_egi_time: Array.isArray(this.form.next_egi_time) ? this.form.next_egi_time.join() : this.form.next_egi_time
+        }
+        const { code } = await addAssetEgi(data)
         loading.close()
         if (code === 200) {
           this.$_deleteView({ name: 'EquipmentMaintain' })
@@ -279,7 +311,11 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       try {
-        const { code } = await editAssetEgi({ id: this.id, ...this.form })
+        const data = {
+          ...this.form,
+          next_egi_time: Array.isArray(this.form.next_egi_time) ? this.form.next_egi_time.join() : this.form.next_egi_time
+        }
+        const { code } = await editAssetEgi({ id: this.id, ...data })
         loading.close()
         if (code === 200) {
           this.$_deleteView({ name: 'EquipmentMaintain' })
@@ -363,6 +399,15 @@ export default {
       // } else {
       //   this.maintainOptions = this.$store.state.form.maintainSelect
       // }
+    },
+    getCheckMember() {
+      if (this.$store.state.form.checkMember.length < 1) {
+        this.$store.dispatch('form/setCheckMember').then(() => {
+          this.memberOptions = this.$store.state.form.checkMember
+        })
+      } else {
+        this.memberOptions = this.$store.state.form.checkMember
+      }
     }
     // async getEquipmentNameOptions() {
     //   try {
