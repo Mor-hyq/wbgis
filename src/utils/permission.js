@@ -114,6 +114,14 @@
 // for test end
 
 // 按传递的权限路由顺序
+const staticRoute = {
+  'TunnelRiskRouter': 0,
+  'TunnelRiskRouterDetail': 0,
+  'TunnelRiskRouterManage': 0,
+  'MaintainRecordForm': 0,
+  'AccidentType': 0,
+  'AccidentLevel': 0
+}
 export function recursionRouter(userRoutes = [], allRoutes = [], includeName = []) {
   var realRoutes = []
   userRoutes.forEach((v, i) => {
@@ -141,16 +149,23 @@ export function recursionRouter(userRoutes = [], allRoutes = [], includeName = [
     //   name = v.path
     // }
     allRoutes.forEach((item, index) => {
-      if (name === item.name || item.isFixed) {
-        includeName.push(name)
+      if (name === item.name || (!staticRoute[item.name] && item.isFixed)) {
+        if (item.isFixed) {
+          if (!staticRoute[item.name]) {
+            staticRoute[item.name] = 1
+            includeName.push(item.name)
+          }
+        } else {
+          includeName.push(name)
+        }
         // 本地写的meta与后台传入的进行合并
         if (item.meta) {
           // item.meta.title = v.title || item.meta.title || ''
           // item.meta.icon = v.icon || item.meta.icon || ''
           // item.meta.permission = v.permission || []
           // item.meta.fields = v.fields || []
-          item.meta.title = v.name || item.meta.title
-          item.meta.icon = v.icon || item.meta.icon
+          item.meta.title = item.isFixed ? item.meta.title : v.name || item.meta.title
+          item.meta.icon = item.isFixed ? item.meta.icon : v.icon || item.meta.icon
         } else {
           item.meta = {
             title: v.name || '',

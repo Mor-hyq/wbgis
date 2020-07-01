@@ -632,7 +632,7 @@ export function getEquipmentMatainDetail({
 export function getMaintainRegisterList({
   id,
   state,
-  field_id_2,
+  field_id_2 = '',
   field_value_id_2,
   page = 1,
   paginate = 10

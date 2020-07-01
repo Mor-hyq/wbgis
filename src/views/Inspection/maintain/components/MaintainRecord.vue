@@ -28,7 +28,7 @@
           <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
             <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
           </el-form-item>
-          <el-form-item prop="plan_time" :label="mylang.plan + mylang.maintainDate">
+          <!-- <el-form-item prop="plan_time" :label="mylang.plan + mylang.maintainDate">
             <el-date-picker
               v-model="searchForm.plan_time"
               type="daterange"
@@ -38,7 +38,7 @@
               value-format="yyyy-MM-dd"
               style="width:250px;"
             />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item prop="egi_time" :label="mylang.actual + mylang.maintainDate">
             <el-date-picker
               v-model="searchForm.egi_time"

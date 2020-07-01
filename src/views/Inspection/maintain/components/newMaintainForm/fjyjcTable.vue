@@ -33,13 +33,13 @@
           <!-- 检查日期 -->
           <td>{{ list.check_time }}</td>
           <!-- 检查人 -->
-          <td>{{ list.mid }}</td>
+          <td>{{ list.check_member }}</td>
         </tr>
         <tr>
-          <td class="all-col" colspan="8">异常处理：{{ abnormalDeal }}</td>
+          <td class="all-col" colspan="8">异常处理：<div v-html="abnormalDeal" /></td>
         </tr>
         <tr>
-          <td class="all-col" colspan="8">备注：{{ remark }}</td>
+          <td class="all-col" colspan="8">备注：<div v-html="remark" /></td>
         </tr>
       </tbody>
     </table>
@@ -85,6 +85,7 @@ export default {
           this.tableName = data.title
           this.tableList = data.list
           this.abnormalDeal = data.abnormal_deal
+          this.remark = data.remark
         }
       } catch (error) {
         console.log(error)

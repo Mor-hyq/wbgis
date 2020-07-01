@@ -107,7 +107,12 @@ div:focus {
 }
 .print-table {
   border: 1px solid #666;
-  border-collapse: collapse; 
+  border-collapse: collapse;
+  &.medium-width {
+    th {
+      width: 120px;
+    }
+  }
   caption {
     margin-bottom: 10px;
   }
@@ -124,5 +129,9 @@ div:focus {
   .all-col {
     text-align: left;
     padding: 20px 10px;
+    div {
+      white-space: pre;
+      padding-left: 2em;
+    }
   }
 }

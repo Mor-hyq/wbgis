@@ -43,7 +43,8 @@ export default { // 该页面已弃用
   },
   data() {
     return {
-      type: this.$route.query.type || '',
+      // type: this.$route.query.type || '',
+      type: '32',
       id: this.$route.query.id || '',
       peid: this.$route.query.peid || ''
     }

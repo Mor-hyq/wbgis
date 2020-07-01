@@ -358,6 +358,7 @@ const emergency = {
       path: 'accidentType',
       name: 'AccidentType',
       component: () => import('@/views/emergency/accidentType/index'),
+      isFixed: true,
       meta: {
         level: '1-10',
         title: '事故类型管理',
@@ -369,6 +370,7 @@ const emergency = {
       path: 'accidentLevel',
       name: 'AccidentLevel',
       component: () => import('@/views/emergency/accidentLevel/index'),
+      isFixed: true,
       meta: {
         level: '1-11',
         title: '事故等级管理',

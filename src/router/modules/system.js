@@ -132,6 +132,7 @@ const system = {
           path: 'tunnelRiskRouter',
           name: 'TunnelRiskRouter',
           component: () => import('@/views/equipmentInfo/risk/index'),
+          isFixed: true,
           meta: {
             level: '1-1-3',
             title: '风险线路管理',
@@ -143,6 +144,7 @@ const system = {
           name: 'TunnelRiskRouterDetail',
           component: () => import('@/views/equipmentInfo/risk/detail'),
           hidden: true,
+          isFixed: true,
           meta: {
             level: '1-1-3-1',
             title: '风险路由详情',
@@ -155,6 +157,7 @@ const system = {
           name: 'TunnelRiskRouterManage',
           component: () => import('@/views/equipmentInfo/risk/manage'),
           hidden: true,
+          isFixed: true,
           meta: {
             level: '1-1-3-2',
             title: '风险路由管理',
