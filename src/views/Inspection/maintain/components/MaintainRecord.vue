@@ -236,10 +236,21 @@
         <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
       </div>
     </el-dialog> -->
+    <maintain-container
+      :visible.sync="dialogInfo.visible"
+      :type="dialogInfo.type"
+      :eq-type="dialogInfo.eqType"
+      :eq-num="dialogInfo.eqNum"
+      :eq-name="dialogInfo.eqName"
+      :eq-id="dialogInfo.eqId"
+      :is-read="true"
+    />
   </div>
 </template>
 
 <script>
+import MaintainContainer from './newMaintainForm/Container'
+
 import {
   // getMaintainRecord,
   getMaintainRecord2,
@@ -251,6 +262,9 @@ import config from '@/config'
 
 export default {
   name: 'MaintainRecordComponent',
+  components: {
+    MaintainContainer
+  },
   props: {
     isComponent: {
       type: Boolean,
@@ -287,7 +301,15 @@ export default {
       },
       tableLoading: false,
       chooseDelArr: [],
-      tableData: []
+      tableData: [],
+      dialogInfo: {
+        visible: false,
+        type: '',
+        eqType: '',
+        eqNum: '',
+        eqName: '',
+        eqId: ''
+      }
       // dialogTableVisible: false,
       // dialogTitle: '',
       // dialogForm: { // 弹窗中的表单
@@ -577,7 +599,14 @@ export default {
       // window.open(requestUrl)
     },
     goDetailPage(row) {
-
+      this.dialogInfo = {
+        visible: true,
+        eqId: row.id,
+        type: row.equipment_id + '' + row.type
+        // eqType: this.info.equipment,
+        // eqNum: row.asset_code,
+        // eqName: row.asset_name
+      }
     },
     // goMatainPage(type) {
     //   if (type === 'edit') {

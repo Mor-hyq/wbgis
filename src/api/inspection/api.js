@@ -70,6 +70,8 @@ const api = {
 
   // 设备维护列表（新）
   getEquipmentMatainList: 'admin/assetEgiPeriod?target=egiTableList',
+  // 获取导出表单列表
+  getEquipmentMatainDetail: 'admin/exportTable/:id',
 
   // 维护登记列表
   getMaintainRegisterList: 'admin/assetEgiPeriod/:id?target=list',

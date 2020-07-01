@@ -80,6 +80,17 @@ export const constantRoutes = [ // 该路由不设置name值
     meta: {
       title: '首页'
     }
+  },
+  {
+    path: '/inspect/maintainManage/form',
+    name: 'MaintainRecordForm',
+    component: () => import('@/views/Inspection/maintain/recordForm'),
+    hidden: true,
+    meta: {
+      title: '表单详情',
+      activeMenu: '/inspect/maintainManage/equipmentMaintain',
+      noCache: true
+    }
   }
   // {
   //   path: '/',

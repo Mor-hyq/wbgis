@@ -613,7 +613,19 @@ export function getEquipmentMatainList({
     }
   })
 }
-
+// 获取导出表单列表
+export function getEquipmentMatainDetail({
+  id,
+  period
+} = {}) {
+  return request({
+    url: replacePlaceHolder(api.getEquipmentMatainDetail, { id }),
+    method: 'get',
+    params: {
+      period
+    }
+  })
+}
 // 维护登记列表
 export function getMaintainRegisterList({
   id,

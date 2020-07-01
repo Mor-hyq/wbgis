@@ -221,7 +221,15 @@ export default {
     },
     handleExport(row) {
       if (row) {
-        console.log('export')
+        this.$router.push({
+          name: 'MaintainRecordForm',
+          // path: '/inspect/maintainManage/form',
+          query: {
+            type: row.equipment_id + '' + row.type,
+            id: row.id,
+            peid: row.period
+          }
+        })
       } else {
         if (this.chooseDelArr.length < 0) {
           return
