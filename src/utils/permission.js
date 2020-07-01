@@ -141,7 +141,7 @@ export function recursionRouter(userRoutes = [], allRoutes = [], includeName = [
     //   name = v.path
     // }
     allRoutes.forEach((item, index) => {
-      if (name === item.name) {
+      if (name === item.name || item.isFixed) {
         includeName.push(name)
         // 本地写的meta与后台传入的进行合并
         if (item.meta) {

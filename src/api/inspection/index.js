@@ -14,7 +14,8 @@ export function addAssetEgi({
   next_egi_time,
   notify_person,
   phone,
-  egi
+  egi,
+  type
 } = {}) {
   return request({
     url: api.addAssetEgi,
@@ -27,7 +28,8 @@ export function addAssetEgi({
       next_egi_time,
       notify_person,
       phone,
-      egi
+      egi,
+      type
     }
   })
 }

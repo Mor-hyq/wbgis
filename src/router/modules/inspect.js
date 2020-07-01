@@ -149,6 +149,18 @@ const inspect = {
             activeMenu: '/inspect/maintainManage/equipmentMaintain',
             noCache: true
           }
+        },
+        {
+          path: 'maintainRecordForm',
+          name: 'MaintainRecordForm',
+          component: () => import('@/views/Inspection/maintain/recordForm'),
+          hidden: true,
+          isFixed: true,
+          meta: {
+            title: '表单详情',
+            activeMenu: '/inspect/maintainManage/equipmentMaintain',
+            noCache: true
+          }
         }
       ]
     },

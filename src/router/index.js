@@ -15,7 +15,6 @@ import inspect from './modules/inspect'
 import emergency from './modules/emergency'
 import equipmentInfo from './modules/equipmentInfo'
 import system from './modules/system'
-
 // import generateFormRouter from './modules/generateForm'
 // import activityManageRouter from './modules/activity'
 /**
@@ -79,17 +78,6 @@ export const constantRoutes = [ // 该路由不设置name值
     hidden: true,
     meta: {
       title: '首页'
-    }
-  },
-  {
-    path: '/inspect/maintainManage/form',
-    name: 'MaintainRecordForm',
-    component: () => import('@/views/Inspection/maintain/recordForm'),
-    hidden: true,
-    meta: {
-      title: '表单详情',
-      activeMenu: '/inspect/maintainManage/equipmentMaintain',
-      noCache: true
     }
   }
   // {

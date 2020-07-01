@@ -226,7 +226,7 @@ export default {
           // path: '/inspect/maintainManage/form',
           query: {
             type: row.equipment_id + '' + row.type,
-            id: row.id,
+            id: row.asset_egi_id,
             peid: row.period
           }
         })

@@ -8,6 +8,10 @@
       :id="id"
       :peid="peid"
     />
+    <!-- <fjyjc
+      :id="id"
+      :peid="peid"
+    /> -->
   </div>
 </template>
 
