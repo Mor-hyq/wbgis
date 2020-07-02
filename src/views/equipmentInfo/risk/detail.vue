@@ -5,7 +5,7 @@
       <span class="name">风险名称：</span>
       <strong class="t-info">{{ info.name }}</strong>
       <span class="name left-m">风险等级：</span>
-      <strong v-if="info.level" class="t-red">{{ filterRisk(info.level) }}</strong>
+      <strong v-if="info.level" :class="`risk${info.level}`">{{ filterRisk(info.level) }}</strong>
     </div>
     <el-table
       v-loading="tableLoading"
@@ -51,11 +51,11 @@ export default {
       tableData: [],
       id: this.$route.params.id || '',
       info: {},
-      levelOptions: []
+      levelOptions: this.$store.state.form.riskRouteLevel
     }
   },
   created() {
-    this.getLevelOptions()
+    // this.getLevelOptions()
     this.getList()
     this.getDetail()
   },
@@ -65,7 +65,7 @@ export default {
       this.tableData = []
       try {
         const { code, data } = await getRiskRouteList({
-          id: this.id,
+          risk_id: this.id,
           paginate: 200
         })
         this.tableLoading = false
@@ -91,16 +91,16 @@ export default {
     filterRisk(level) {
       const arr = this.levelOptions.filter(v => +v.id === +level)
       return arr.length > 0 ? arr[0].level : ''
-    },
-    getLevelOptions() {
-      if (this.$store.state.form.riskLevelSelect.length < 1) {
-        this.$store.dispatch('form/setRiskLevelSelect').then(() => {
-          this.levelOptions = this.$store.state.form.riskLevelSelect
-        })
-      } else {
-        this.levelOptions = this.$store.state.form.riskLevelSelect
-      }
     }
+    // getLevelOptions() {
+    //   if (this.$store.state.form.riskLevelSelect.length < 1) {
+    //     this.$store.dispatch('form/setRiskLevelSelect').then(() => {
+    //       this.levelOptions = this.$store.state.form.riskLevelSelect
+    //     })
+    //   } else {
+    //     this.levelOptions = this.$store.state.form.riskLevelSelect
+    //   }
+    // }
   }
 }
 </script>

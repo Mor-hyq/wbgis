@@ -1,9 +1,9 @@
 <template>
   <div class="gis-wrapper">
     <div class="map-wrapper">
-      <div class="fengxian-pic">
+      <!-- <div class="fengxian-pic">
         <img :src="fengxianPic" alt="">
-      </div>
+      </div> -->
       <div id="container" class="container custom-map" />
       <div class="head">
         <el-form inline :size="btnSize">
@@ -57,9 +57,9 @@
           <!-- <el-form-item style="margin-left:10px;">
             <el-checkbox v-model="form.checked" @change="checkChange">显示维护维修设备</el-checkbox>
           </el-form-item> -->
-          <el-form-item>
+          <!-- <el-form-item>
             <el-checkbox v-model="form.control" @change="checkChange2">显示机坪供油机位风险图</el-checkbox>
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item>
             <el-checkbox v-model="form.buleShow" @change="hideBlue">隐藏参考线</el-checkbox>
           </el-form-item> -->
@@ -156,7 +156,8 @@ import {
   // getFaultTypeChart
 } from '@/api/inspection'
 import {
-  getRiskList
+  getRiskList,
+  getRiskRouteList
 } from '@/api/system'
 import { getAssetChart, getPipeDetail } from '@/api/equipmentInfo'
 import { getGis } from '@/api/gis'
@@ -200,7 +201,8 @@ export default {
       iconTypeRed: require('@/assets/images/icon_bsz_r.png'),
       iconTypeYellow: require('@/assets/images/icon_bsz_y.png'),
       iconTypeBlue: require('@/assets/images/icon_gdss_1.png'),
-      fengxianPic: require('@/assets/images/fengxian.jpg'),
+      // fengxianPic: require('@/assets/images/fengxian.jpg'),
+      fengxianPic: '',
       pipeInfo: '',
       pipeLength: 0,
       pipeVisible: false,
@@ -965,9 +967,69 @@ export default {
           paginate: 200
         })
         if (code === 200) {
-          console.log(data)
+          data.data.forEach(v => {
+            this.getRiskRouteLists(v)
+          })
         }
       } catch (error) {
+        console.log(error)
+      }
+    },
+    async getRiskRouteLists(route) {
+      try {
+        const { code, data } = await getRiskRouteList({
+          risk_id: route.id,
+          paginate: 200
+        })
+        if (code === 200) {
+          if (data.data.length > 0) {
+            const map = this.map
+            const lngLatArr = data.data
+            // 风险等级线条颜色
+            const strokeColors = ['#F56C6C', '#E6A23C', '#fdfd00', '#409eff']
+            const num = (+route.level) % 4
+            const ind = num > 0 ? num - 1 : num
+            const polypath = lngLatArr.map(v => [v.lng, v.lat])
+            const polyline = new AMap.Polygon({
+              path: polypath,
+              isOutline: true,
+              zIndex: 2000,
+              strokeWeight: 1,
+              strokeColor: strokeColors[ind],
+              fillOpacity: 0.3,
+              strokeOpacity: 1,
+              cursor: 'default'
+            })
+            this.lines[this.polyname + '3' + ind] = polyline
+            polyline.setMap(map)
+            const getCenterPoint = function(data) {
+              var lng = 0.0
+              var lat = 0.0
+              for (var i = 0; i < data.length; i++) {
+                if (data[i].length < 1) { continue }
+                lng = lng + parseFloat(data[i].lng)
+                lat = lat + parseFloat(data[i].lat)
+              }
+              lng = lng / data.length
+              lat = lat / data.length
+              return [lng, lat]
+            }
+            const textMap = new AMap.Text({
+              text: route.name,
+              map: this.map,
+              position: getCenterPoint(polypath),
+              clickable: true
+            })
+            AMap.event.addListener(textMap, 'click', function(e) {
+              textMap.hide()
+            })
+            AMap.event.addListener(polyline, 'click', function(e) {
+              textMap.show()
+            })
+          }
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
 

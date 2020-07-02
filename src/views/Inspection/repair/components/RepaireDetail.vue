@@ -48,12 +48,12 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item
+          <!-- <el-form-item
             prop="title"
             :label="`${mylang.repaireOrder + mylang.title}`"
           >
             <el-input v-model="form.title" clearable />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item
             prop="error_type_id"
             :label="`${mylang.faultType}`"
@@ -140,9 +140,13 @@
           </el-col>
         </el-row>
       </el-form-item>
-      <el-form-item
+      <!-- <el-form-item
         prop="content"
         :label="`${mylang.repaireContent}`"
+      > -->
+      <el-form-item
+        prop="content"
+        label="故障现象及判断"
       >
         <el-input v-model="form.content" type="textarea" :rows="isRead ? '' : 5" />
       </el-form-item>
@@ -468,7 +472,7 @@ export default {
           { required: true, message: `请输入${this.mylang.equipmentQuantity}` }
         ],
         budget: [
-          { required: true, message: `请输入${this.mylang.budgetMoney}` }
+          { required: false, message: `请输入${this.mylang.budgetMoney}` }
         ],
         plan_start_time: [
           { required: true, trigger: 'change', validator: validateTime1 }

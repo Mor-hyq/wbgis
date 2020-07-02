@@ -31,6 +31,24 @@ const state = {
   ], // 账户状态
   assetTab: '0', // 应急管理的选中tab数据
   maintainTab: '1', // 维护页面选中tab数据
+  riskRouteLevel: [
+    {
+      id: 1,
+      level: '一级'
+    },
+    {
+      id: 2,
+      level: '二级'
+    },
+    {
+      id: 3,
+      level: '三级'
+    },
+    {
+      id: 4,
+      level: '四级'
+    }
+  ], // 风险路由等级
   riskLevelSelect: [], // 风险等级下拉数据
   cycleOptions: [ // 维护周期
     {

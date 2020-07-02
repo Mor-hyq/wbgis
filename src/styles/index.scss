@@ -134,4 +134,16 @@ div:focus {
       padding-left: 2em;
     }
   }
+  .cus-tit {
+    display: inline-block;
+    width: 30%;
+    &:last-child {
+      width: 40%;
+      text-align: right;
+    }
+    span {
+      font-weight: normal;
+      font-size: 16px;
+    }
+  }
 }

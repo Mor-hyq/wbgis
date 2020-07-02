@@ -168,11 +168,11 @@ export default {
         //   { required: true, message: `请输入里程` }
         // ]
       },
-      levelOptions: []
+      levelOptions: this.$store.state.form.riskRouteLevel
     }
   },
   created() {
-    this.getLevelOptions()
+    // this.getLevelOptions()
     this.initTableData()
     this.$_deleteOtherView()
   },
@@ -415,16 +415,16 @@ export default {
     filterRisk(level) {
       const arr = this.levelOptions.filter(v => +v.id === +level)
       return arr.length > 0 ? arr[0].level : ''
-    },
-    getLevelOptions() {
-      if (this.$store.state.form.riskLevelSelect.length < 1) {
-        this.$store.dispatch('form/setRiskLevelSelect').then(() => {
-          this.levelOptions = this.$store.state.form.riskLevelSelect
-        })
-      } else {
-        this.levelOptions = this.$store.state.form.riskLevelSelect
-      }
     }
+    // getLevelOptions() {
+    //   if (this.$store.state.form.riskLevelSelect.length < 1) {
+    //     this.$store.dispatch('form/setRiskLevelSelect').then(() => {
+    //       this.levelOptions = this.$store.state.form.riskLevelSelect
+    //     })
+    //   } else {
+    //     this.levelOptions = this.$store.state.form.riskLevelSelect
+    //   }
+    // }
   }
 }
 </script>

@@ -172,7 +172,7 @@ export default {
           { required: true, message: `请填写${this.mylang.sort}` }
         ]
       },
-      levelOptions: this.$store.state.form.riskLevelSelect
+      levelOptions: this.$store.state.form.riskRouteLevel
     }
   },
   created() {
