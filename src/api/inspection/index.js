@@ -273,16 +273,18 @@ export function deleteMaintainTable({
 export function addAssetService({
   pipe_id,
   equipment_id,
-  style_id,
-  error_type_id,
-  title,
+  // style_id,
+  // error_type_id,
+  // title,
   asset_num,
-  budget,
-  plan_start_time,
-  plan_end_time,
+  money,
+  // plan_start_time,
+  // plan_end_time,
   asset_ids,
-  content,
-  location
+  fault,
+  start_time
+  // content,
+  // location
 } = {}) {
   return request({
     url: api.addAssetService,
@@ -290,16 +292,18 @@ export function addAssetService({
     data: {
       pipe_id,
       equipment_id,
-      style_id,
-      error_type_id,
-      title,
+      // style_id,
+      // error_type_id,
+      // title,
       asset_num,
-      budget,
-      plan_start_time,
-      plan_end_time,
+      money,
+      // plan_start_time,
+      // plan_end_time,
+      start_time,
       asset_ids,
-      content,
-      location
+      fault
+      // content,
+      // location
     }
   })
 }
@@ -376,25 +380,39 @@ export function editAssetService({
 // 完成维修接口
 export function completeAssetService({
   id,
-  constract_unit,
-  constracter,
-  phone,
-  workload,
-  start_time,
-  end_time,
-  result
+  construct_union,
+  real_money,
+  overhaul_mid,
+  accept_mid,
+  service_time,
+  accept_time,
+  content,
+  accept
+  // constracter,
+  // phone,
+  // workload,
+  // start_time,
+  // end_time,
+  // result
 } = {}) {
   return request({
     url: replacePlaceHolder(api.completeAssetService, { id }),
     method: 'put',
     data: {
-      constract_unit,
-      constracter,
-      phone,
-      workload,
-      start_time,
-      end_time,
-      result
+      construct_union,
+      real_money,
+      overhaul_mid,
+      accept_mid,
+      service_time,
+      accept_time,
+      content,
+      accept
+      // constracter,
+      // phone,
+      // workload,
+      // start_time,
+      // end_time,
+      // result
     }
   })
 }

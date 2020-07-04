@@ -54,7 +54,7 @@
           >
             <el-input v-model="form.title" clearable />
           </el-form-item> -->
-          <el-form-item
+          <!-- <el-form-item
             prop="error_type_id"
             :label="`${mylang.faultType}`"
           >
@@ -69,8 +69,8 @@
                 :label="pipe.error"
               />
             </el-select>
-          </el-form-item>
-          <el-form-item
+          </el-form-item> -->
+          <!-- <el-form-item
             prop="style_id"
             :label="`${mylang.repaireMeasure}`"
           >
@@ -85,22 +85,26 @@
                 :label="pipe.style"
               />
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
         </el-col>
         <el-col :span="12">
+          <el-form-item
+            prop="money"
+            :label="`${mylang.budgetMoney}`"
+          >
+            <el-input v-model="form.money" type="number" clearable />
+          </el-form-item>
           <el-form-item
             prop="asset_num"
             :label="mylang.equipmentQuantity"
           >
-            <el-input v-model="form.asset_num" type="number" clearable />
+            <el-input
+              v-model="form.asset_num"
+              type="number"
+              readonly
+            />
           </el-form-item>
-          <el-form-item
-            prop="budget"
-            :label="`${mylang.budgetMoney}`"
-          >
-            <el-input v-model="form.budget" type="number" clearable />
-          </el-form-item>
-          <el-form-item
+          <!-- <el-form-item
             prop="plan_start_time"
             :label="`${mylang.plan + mylang.startTime}`"
           >
@@ -121,7 +125,7 @@
               :placeholder="mylang.endTime"
               clearable
             />
-          </el-form-item>
+          </el-form-item> -->
         </el-col>
       </el-row>
       <el-form-item
@@ -140,27 +144,38 @@
           </el-col>
         </el-row>
       </el-form-item>
+      <el-form-item
+        prop="start_time"
+        label="报修日期"
+      >
+        <el-date-picker
+          v-model="form.start_time"
+          type="date"
+          placeholder="报修日期"
+          clearable
+        />
+      </el-form-item>
       <!-- <el-form-item
         prop="content"
         :label="`${mylang.repaireContent}`"
       > -->
       <el-form-item
-        prop="content"
+        prop="fault"
         label="故障现象及判断"
       >
-        <el-input v-model="form.content" type="textarea" :rows="isRead ? '' : 5" />
+        <el-input v-model="form.fault" type="textarea" :rows="isRead ? '' : 5" />
       </el-form-item>
-      <el-form-item
+      <!-- <el-form-item
         prop="location"
         :label="`${mylang.repaireLocation}`"
       >
         <el-input v-model="form.location" type="textarea" :rows="isRead ? '' : 5" />
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <template v-if="type === 'done'">
       <el-divider />
       <el-tag>维修施工详情</el-tag>
-      <el-form
+      <!-- <el-form
         ref="cform"
         :rules="isRead ? {} :cformRules"
         :model="cform"
@@ -229,6 +244,104 @@
         >
           <el-input v-model="cform.result" type="textarea" :rows="isRead ? '' : 5" />
         </el-form-item>
+      </el-form> -->
+      <el-form
+        ref="cform"
+        :rules="isRead ? {} :cformRules"
+        :model="cform"
+        label-suffix=":"
+        label-width="auto"
+        :size="$btnSize"
+        class="custom-class"
+        style="padding-top:10px;"
+        :disabled="isRead"
+      >
+        <el-row :gutter="25">
+          <el-col :span="12">
+            <el-form-item
+              prop="construct_union"
+              :label="`${mylang.constructionCompany}`"
+            >
+              <el-input v-model="cform.construct_union" clearable />
+            </el-form-item>
+            <el-form-item
+              prop="overhaul_mid"
+              label="检修人员"
+            >
+              <el-select
+                v-model="cform.overhaul_mid"
+                clearable
+                filterable
+              >
+                <el-option
+                  v-for="item in memberOptions"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.nickname"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              prop="service_time"
+              :label="`维修时间`"
+            >
+              <el-date-picker
+                v-model="cform.service_time"
+                type="date"
+                placeholder="维修时间"
+                clearable
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item
+              prop="real_money"
+              :label="`实际金额`"
+            >
+              <el-input v-model="cform.real_money" clearable />
+            </el-form-item>
+            <el-form-item
+              prop="accept_mid"
+              label="验收人员"
+            >
+              <el-select
+                v-model="cform.accept_mid"
+                clearable
+                filterable
+              >
+                <el-option
+                  v-for="item in memberOptions"
+                  :key="item.id"
+                  :value="item.id"
+                  :label="item.nickname"
+                />
+              </el-select>
+            </el-form-item>
+            <el-form-item
+              prop="accept_time"
+              label="验收时间"
+            >
+              <el-date-picker
+                v-model="cform.accept_time"
+                type="date"
+                placeholder="验收时间"
+                clearable
+              />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-form-item
+          prop="content"
+          label="检修内容"
+        >
+          <el-input v-model="cform.content" type="textarea" :rows="isRead ? '' : 5" />
+        </el-form-item>
+        <el-form-item
+          prop="accept"
+          label="验收情况"
+        >
+          <el-input v-model="cform.accept" type="textarea" :rows="isRead ? '' : 5" />
+        </el-form-item>
       </el-form>
     </template>
     <div v-if="!isRead" style="margin-top:20px;">
@@ -243,7 +356,7 @@
       custom-class="dialog-custom"
       append-to-body
     >
-      <ul
+      <!-- <ul
         id="print-table"
         class="origin-table"
       >
@@ -270,7 +383,7 @@
           <span class="width20 tit">{{ mylang.faultType }}</span>
           <span class="text-left width25">{{ tableFaultName }}</span>
           <span class="width20 tit">{{ mylang.budgetMoney }}</span>
-          <span class="text-left width25">{{ form.budget }}元</span>
+          <span class="text-left width25">{{ form.money }}元</span>
         </li>
         <li class="center">
           <span class="width20 tit">{{ mylang.repaireMeasure }}</span>
@@ -286,16 +399,16 @@
         </li>
         <li class="center">
           <span class="width-1em tit">{{ mylang.repaireContent }}</span>
-          <span class="text-left min-height width1 pre-wrap">{{ form.content }}</span>
+          <span class="text-left min-height width1 pre-wrap">{{ form.fault }}</span>
         </li>
         <li class="center">
           <span class="width-1em tit">维护结果</span>
           <div class="width1" style="border-left:none;">
             <div class="center inner-li">
               <span class="width20 tit">{{ mylang.constructionCompany }}</span>
-              <span class="width25">{{ cform.constract_unit }}</span>
+              <span class="width25">{{ cform.construct_union }}</span>
               <span class="width20 tit">{{ mylang.constructer }}</span>
-              <span class="width25">{{ cform.constracter }}</span>
+              <span class="width25">{{ cform.real_money }}</span>
             </div>
             <div class="center inner-li">
               <span class="width20 tit">{{ mylang.phone }}</span>
@@ -304,17 +417,46 @@
               <span class="width25">{{ cform.workload }}</span>
             </div>
             <div class="center inner-li">
-              <span class="width1 min-height text-left pre-wrap">{{ cform.result }}</span>
+              <span class="width1 min-height text-left pre-wrap">{{ cform.content }}</span>
             </div>
             <div class="center inner-li" style="border-bottom:none;">
               <span class="width20 tit">{{ mylang.actual + mylang.startTime }}</span>
               <span class="width25">{{ cform.start_time }}</span>
               <span class="width20 tit">{{ mylang.actual + mylang.endTime }}</span>
-              <span class="width25">{{ cform.end_time }}</span>
+              <span class="width25">{{ cform.accept_time }}</span>
             </div>
           </div>
         </li>
-      </ul>
+      </ul> -->
+      <table id="print-table" class="print-table" align="center" cellspacing="0" cellpadding="0">
+        <caption>设备检修记录</caption>
+        <tr style="height:100px;">
+          <td style="width:50px;">故障现象及判断</td>
+          <td colspan="2">{{ form.fault }}</td>
+          <td>设备名称</td>
+          <td colspan="2">{{ tableInfo.assetName }}</td>
+        </tr>
+        <tr>
+          <td>检修内容</td>
+          <td colspan="5">{{ cform.content }}</td>
+        </tr>
+        <tr>
+          <td>验收情况</td>
+          <td colspan="5">{{ cform.accept }}</td>
+        </tr>
+        <tr>
+          <td>报修时间</td>
+          <td colspan="5">{{ form.start_time }}</td>
+        </tr>
+        <tr>
+          <td>检修人</td>
+          <td>{{ filterName(cform.overhaul_mid) }}</td>
+          <td>{{ cform.service_time }}</td>
+          <td>验收人</td>
+          <td>{{ filterName(cform.accept_mid) }}</td>
+          <td>{{ cform.accept_time }}</td>
+        </tr>
+      </table>
       <div slot="footer">
         <el-button plain :size="$btnSize" @click="printVisible = false">{{ mylang.cancel }}</el-button>
         <el-button type="primary" :size="$btnSize" @click="handlePrint">{{ mylang.print }}</el-button>
@@ -331,7 +473,7 @@ import {
   completeAssetService,
   getAssetTypeState
 } from '@/api/inspection'
-import { validatePhone2Func } from '@/utils/validateFunc'
+// import { validatePhone2Func } from '@/utils/validateFunc'
 import LinkEquipment from './LinkEquipment'
 import deleteCache from '@/mixins/deleteCache'
 import print from 'print-js'
@@ -357,100 +499,101 @@ export default {
     }
   },
   data() {
-    const validateTime1 = (rule, value, callback) => {
-      if (rule.required) {
-      // 必填时的校验
-        if (value === '') {
-          callback(new Error(`请选择${this.mylang.plan + this.mylang.startTime}`))
-        } else if (this.form.plan_end_time && value > this.form.plan_end_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      } else {
-        // 非必填时校验
-        if (this.form.plan_end_time && value > this.form.plan_end_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      }
-    }
-    const validateTime2 = (rule, value, callback) => {
-      if (rule.required) {
-      // 必填时的校验
-        if (!this.form.plan_start_time) {
-          callback(new Error(`请先选择${this.mylang.plan + this.mylang.startTime}`))
-        } else if (value === '') {
-          callback(new Error(`请选择${this.mylang.plan + this.mylang.endTime}`))
-        } else if (value < this.form.plan_start_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      } else {
-        // 非必填时校验
-        if (value < this.form.plan_start_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      }
-    }
-    const validateTime3 = (rule, value, callback) => {
-      if (rule.required) {
-      // 必填时的校验
-        if (value === '') {
-          callback(new Error(`请选择${this.mylang.actual + this.mylang.startTime}`))
-        } else if (this.cform.end_time && value > this.cform.end_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      } else {
-        // 非必填时校验
-        if (this.cform.end_time && value > this.cform.end_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      }
-    }
-    const validateTime4 = (rule, value, callback) => {
-      if (rule.required) {
-      // 必填时的校验
-        if (!this.cform.start_time) {
-          callback(new Error(`请先选择${this.mylang.actual + this.mylang.startTime}`))
-        } else if (value === '') {
-          callback(new Error(`请选择${this.mylang.actual + this.mylang.endTime}`))
-        } else if (value < this.cform.start_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      } else {
-        // 非必填时校验
-        if (value < this.form.plan_start_time) {
-          callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-        } else {
-          callback()
-        }
-      }
-    }
+    // const validateTime1 = (rule, value, callback) => {
+    //   if (rule.required) {
+    //   // 必填时的校验
+    //     if (value === '') {
+    //       callback(new Error(`请选择${this.mylang.plan + this.mylang.startTime}`))
+    //     } else if (this.form.plan_end_time && value > this.form.plan_end_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   } else {
+    //     // 非必填时校验
+    //     if (this.form.plan_end_time && value > this.form.plan_end_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   }
+    // }
+    // const validateTime2 = (rule, value, callback) => {
+    //   if (rule.required) {
+    //   // 必填时的校验
+    //     if (!this.form.plan_start_time) {
+    //       callback(new Error(`请先选择${this.mylang.plan + this.mylang.startTime}`))
+    //     } else if (value === '') {
+    //       callback(new Error(`请选择${this.mylang.plan + this.mylang.endTime}`))
+    //     } else if (value < this.form.plan_start_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   } else {
+    //     // 非必填时校验
+    //     if (value < this.form.plan_start_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   }
+    // }
+    // const validateTime3 = (rule, value, callback) => {
+    //   if (rule.required) {
+    //   // 必填时的校验
+    //     if (value === '') {
+    //       callback(new Error(`请选择${this.mylang.actual + this.mylang.startTime}`))
+    //     } else if (this.cform.end_time && value > this.cform.end_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   } else {
+    //     // 非必填时校验
+    //     if (this.cform.end_time && value > this.cform.end_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   }
+    // }
+    // const validateTime4 = (rule, value, callback) => {
+    //   if (rule.required) {
+    //   // 必填时的校验
+    //     if (!this.cform.start_time) {
+    //       callback(new Error(`请先选择${this.mylang.actual + this.mylang.startTime}`))
+    //     } else if (value === '') {
+    //       callback(new Error(`请选择${this.mylang.actual + this.mylang.endTime}`))
+    //     } else if (value < this.cform.start_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   } else {
+    //     // 非必填时校验
+    //     if (value < this.form.plan_start_time) {
+    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
+    //     } else {
+    //       callback()
+    //     }
+    //   }
+    // }
     return {
       form: {
         pipe_id: '',
         equipment_id: '',
-        style_id: '',
-        error_type_id: '',
-        title: '',
+        // style_id: '',
+        // error_type_id: '',
+        // title: '',
         asset_num: '',
-        budget: '',
-        plan_start_time: '',
-        plan_end_time: '',
+        money: '',
+        // plan_start_time: '',
+        // plan_end_time: '',
+        start_time: '',
         asset_ids: '',
-        content: '',
-        location: ''
+        fault: ''
+        // location: ''
       },
       formRules: {
         pipe_id: [
@@ -459,71 +602,85 @@ export default {
         equipment_id: [
           { required: true, message: `请选择${this.mylang.equipmentType}` }
         ],
-        style_id: [
-          { required: true, message: `请选择${this.mylang.repaireMeasure}` }
-        ],
-        error_type_id: [
-          { required: true, message: `请选择${this.mylang.faultType}` }
-        ],
-        title: [
-          { required: true, message: `请输入${this.mylang.repaireOrder + this.mylang.title}` }
-        ],
+        // style_id: [
+        //   { required: true, message: `请选择${this.mylang.repaireMeasure}` }
+        // ],
+        // error_type_id: [
+        //   { required: true, message: `请选择${this.mylang.faultType}` }
+        // ],
+        // title: [
+        //   { required: true, message: `请输入${this.mylang.repaireOrder + this.mylang.title}` }
+        // ],
         asset_num: [
           { required: true, message: `请输入${this.mylang.equipmentQuantity}` }
         ],
-        budget: [
+        money: [
           { required: false, message: `请输入${this.mylang.budgetMoney}` }
         ],
-        plan_start_time: [
-          { required: true, trigger: 'change', validator: validateTime1 }
-        ],
-        plan_end_time: [
-          { required: true, trigger: 'change', validator: validateTime2 }
+        // plan_start_time: [
+        //   { required: true, trigger: 'change', validator: validateTime1 }
+        // ],
+        // plan_end_time: [
+        //   { required: true, trigger: 'change', validator: validateTime2 }
+        // ],
+        start_time: [
+          { required: true, trigger: 'change', message: '请选择报修时间' }
         ],
         asset_ids: [
           { required: true, message: `请选择${this.mylang.equipment}` }
         ]
       },
       cform: {
-        constract_unit: '',
-        constracter: '',
-        phone: '',
-        workload: '',
-        start_time: '',
-        end_time: '',
-        result: ''
+        construct_union: '',
+        real_money: '',
+        overhaul_mid: '',
+        accept_mid: '',
+        // start_time: '',
+        // end_time: '',
+        service_time: '',
+        accept_time: '',
+        content: '',
+        accept: ''
       },
       cformRules: {
-        constract_unit: [
+        construct_union: [
           { required: true, message: `请输入${this.mylang.constructionCompany}` }
         ],
-        constracter: [
-          { required: true, message: `请输入${this.mylang.constructer}` }
+        real_money: [
+          { required: true, message: `请输入实际金额` }
         ],
-        phone: [
-          { required: true, validator: validatePhone2Func, tips: this.mylang.contact }
+        overhaul_mid: [
+          { required: true, message: `请选择检修人员` }
         ],
-        workload: [
-          { required: true, message: `请输入${this.mylang.workload}` }
+        accept_mid: [
+          { required: true, message: `请选择验收人员` }
         ],
-        start_time: [
-          { required: true, trigger: 'change', validator: validateTime3 }
+        accept_time: [
+          { required: true, trigger: 'change', message: '请选择验收时间' }
         ],
-        end_time: [
-          { required: true, trigger: 'change', validator: validateTime4 }
+        service_time: [
+          { required: true, trigger: 'change', message: '请选择维修时间' }
         ],
-        result: [
-          { required: true, message: `请输入${this.mylang.repairResult}` }
+        // start_time: [
+        //   { required: true, trigger: 'change', validator: validateTime3 }
+        // ],
+        // end_time: [
+        //   { required: true, trigger: 'change', validator: validateTime4 }
+        // ],
+        accept: [
+          { required: true, message: `请输入验收情况` }
         ]
       },
       id: this.$route.query.id || '',
       pipeOptions: [],
       eTypeOptions: [],
       eNameOptions: [],
-      measureOptions: [],
-      faultOptions: [],
+      memberOptions: [],
+      // measureOptions: [],
+      // faultOptions: [],
       equipData: [],
-      printVisible: false
+      printVisible: false,
+      tableInfo: {}
     }
   },
   computed: {
@@ -540,29 +697,31 @@ export default {
     tableEtypeName() {
       const obj = this.eTypeOptions.find(v => v.id === this.form.equipment_id)
       return obj ? obj.name : ''
-    },
-    tableFaultName() {
-      const obj = this.faultOptions.find(v => v.id === this.form.error_type_id)
-      return obj ? obj.error : ''
-    },
-    tableRepairType() {
-      const obj = this.measureOptions.find(v => v.id === this.form.error_type_id)
-      return obj ? obj.style : ''
     }
+    // tableFaultName() {
+    //   const obj = this.faultOptions.find(v => v.id === this.form.error_type_id)
+    //   return obj ? obj.error : ''
+    // },
+    // tableRepairType() {
+    //   const obj = this.measureOptions.find(v => v.id === this.form.error_type_id)
+    //   return obj ? obj.style : ''
+    // }
   },
   watch: {
     equipData: {
       handler(val) {
         const id = val.length > 0 ? val.map(v => v.asset_id).join() : ''
         this.$set(this.form, 'asset_ids', id)
+        this.$set(this.form, 'asset_num', val.length)
       },
       deep: true
     }
   },
   created() {
     this.getPipeOptions()
-    this.getMeasureOptions()
-    this.getFaultOptions()
+    this.getCheckMember()
+    // this.getMeasureOptions()
+    // this.getFaultOptions()
     if (this.isEdit || this.isRead || this.type === 'done') {
       this.getDetail()
     }
@@ -608,25 +767,30 @@ export default {
           this.form = {
             pipe_id: data.pipe_id,
             equipment_id: data.equipment_id,
-            style_id: data.style_id,
-            error_type_id: data.error_type_id,
-            title: data.title,
-            asset_num: data.num,
-            budget: data.money,
-            plan_start_time: data.start_time,
-            plan_end_time: data.end_time,
+            // style_id: data.style_id,
+            // error_type_id: data.error_type_id,
+            // title: data.title,
+            asset_num: data.asset_num,
+            money: data.money,
+            // plan_start_time: data.start_time,
+            // plan_end_time: data.end_time,
+            start_time: data.start_time,
             asset_ids: data.asset_ids,
-            content: data.content,
-            location: data.location
+            fault: data.fault
+            // location: data.location
           }
+          this.tableInfo.assetName = data.asset_ids_value
           this.cform = {
-            constract_unit: data.constract_unit,
-            constracter: data.constracter,
-            phone: data.phone,
-            workload: data.workload,
-            start_time: data.act_start_time,
-            end_time: data.act_end_time,
-            result: data.result
+            construct_union: data.construct_union,
+            real_money: data.real_money,
+            overhaul_mid: +data.overhaul_mid || data.overhaul_mid,
+            accept_mid: +data.accept_mid || data.accept_mid,
+            // start_time: data.act_start_time,
+            // end_time: data.act_end_time,
+            service_time: data.service_time,
+            accept_time: data.accept_time,
+            content: data.content,
+            accept: data.accept
           }
           if (this.form.pipe_id) {
             this.getEquipmentOptions()
@@ -773,24 +937,24 @@ export default {
         this.pipeOptions = this.$store.state.form.belongPipe
       }
     },
-    getMeasureOptions() {
-      if (this.$store.state.form.inspectTypeSelect.length < 1) {
-        this.$store.dispatch('form/setInspectTypeSelect').then(() => {
-          this.measureOptions = this.$store.state.form.inspectTypeSelect
-        })
-      } else {
-        this.measureOptions = this.$store.state.form.inspectTypeSelect
-      }
-    },
-    getFaultOptions() {
-      if (this.$store.state.form.faultTypeSelect.length < 1) {
-        this.$store.dispatch('form/setFaultTypeSelect').then(() => {
-          this.faultOptions = this.$store.state.form.faultTypeSelect
-        })
-      } else {
-        this.faultOptions = this.$store.state.form.faultTypeSelect
-      }
-    },
+    // getMeasureOptions() {
+    //   if (this.$store.state.form.inspectTypeSelect.length < 1) {
+    //     this.$store.dispatch('form/setInspectTypeSelect').then(() => {
+    //       this.measureOptions = this.$store.state.form.inspectTypeSelect
+    //     })
+    //   } else {
+    //     this.measureOptions = this.$store.state.form.inspectTypeSelect
+    //   }
+    // },
+    // getFaultOptions() {
+    //   if (this.$store.state.form.faultTypeSelect.length < 1) {
+    //     this.$store.dispatch('form/setFaultTypeSelect').then(() => {
+    //       this.faultOptions = this.$store.state.form.faultTypeSelect
+    //     })
+    //   } else {
+    //     this.faultOptions = this.$store.state.form.faultTypeSelect
+    //   }
+    // },
     async getEquipmentOptions() {
       try {
         const { code, data } = await getAssetTypeState({
@@ -802,6 +966,22 @@ export default {
       } catch (error) {
         //
       }
+    },
+    getCheckMember() {
+      if (this.$store.state.form.checkMember.length < 1) {
+        this.$store.dispatch('form/setCheckMember').then(() => {
+          this.memberOptions = this.$store.state.form.checkMember
+        })
+      } else {
+        this.memberOptions = this.$store.state.form.checkMember
+      }
+    },
+    filterName(id) {
+      if (+id) {
+        const names = this.memberOptions.find(v => +v.id === +id)
+        return names ? names.nickname : id
+      }
+      return id
     },
     dialogConfirm(val) {
       this.equipData = val.data
