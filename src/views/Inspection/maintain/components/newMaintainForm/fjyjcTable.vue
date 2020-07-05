@@ -96,7 +96,7 @@ export default {
         printable: 'print-table',
         type: 'html',
         maxWidth: 1092,
-        style: '@media print{@page {size:landscape}}',
+        style: '@media print{@page {size:landscape;margin:0;}}',
         targetStyles: ['*']
       })
     },
