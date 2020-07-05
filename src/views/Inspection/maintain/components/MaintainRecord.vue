@@ -39,13 +39,13 @@
               style="width:250px;"
             />
           </el-form-item> -->
-          <el-form-item prop="egi_time" :label="mylang.actual + mylang.maintainDate">
+          <el-form-item prop="egi_time" :label="mylang.maintainDate">
             <el-date-picker
               v-model="searchForm.egi_time"
               type="daterange"
               range-separator="-"
-              start-placeholder="实际维护日期"
-              end-placeholder="实际维护日期"
+              start-placeholder="维护日期"
+              end-placeholder="维护日期"
               value-format="yyyy-MM-dd"
               style="width:250px;"
             />
@@ -135,18 +135,18 @@
         <el-table-column
           align="center"
           prop="egi_time"
-          :label="mylang.actual + mylang.maintainDate"
+          :label="mylang.maintainDate"
         />
         <el-table-column
           align="center"
           prop="egi_person"
-          :label="mylang.actual +mylang.maintainStaff"
+          :label="mylang.maintainStaff"
         />
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           prop="plan_time"
           :label="mylang.plan + mylang.maintainDate"
-        />
+        /> -->
         <el-table-column
           align="center"
           prop="state"
@@ -157,6 +157,7 @@
           </template>
         </el-table-column>
         <el-table-column
+          v-if="!isComponent"
           label="维护情况"
           align="center"
           width="100"
@@ -274,7 +275,7 @@ export default {
   data() {
     return {
       searchForm: {
-        plan_time: '',
+        // plan_time: '',
         egi_time: '',
         equipment_id: '',
         field_value_id_2: '',
@@ -345,7 +346,7 @@ export default {
     initTableData({
       page = 1,
       paginate = this.listQuery.limit,
-      plan_time = '',
+      // plan_time = '',
       egi_time = '',
       equipment_id = '',
       field_value_id_2 = '',
@@ -353,13 +354,16 @@ export default {
       cycle = ''
     } = {}) {
       this.listQuery.page = 1
-      this.getList({ page, paginate, plan_time, egi_time, equipment_id,
+      this.getList({
+        page, paginate,
+        //  plan_time,
+        egi_time, equipment_id,
         field_value_id_2,
         state,
         cycle })
     },
     async getList({
-      plan_time = '',
+      // plan_time = '',
       egi_time = '',
       equipment_id = '',
       field_value_id_2 = '',
@@ -373,8 +377,8 @@ export default {
       try {
         const { code, data } = await getMaintainRecord2({
           page, paginate,
-          plan_time: Array.isArray(plan_time) ? plan_time.join() : '',
-          egi_time: Array.isArray(egi_time) ? egi_time.join() : '',
+          // plan_time: Array.isArray(plan_time) ? plan_time.join() : '',
+          egi_time: Array.isArray(egi_time) ? egi_time.join() : egi_time,
           equipment_id,
           field_value_id_2,
           state,
@@ -395,7 +399,7 @@ export default {
       const search = this.$refs.mytable.handleSearch()
       this.realSearch = search
       this.initTableData({
-        plan_time: search.plan_time,
+        // plan_time: search.plan_time,
         egi_time: search.egi_time,
         equipment_id: search.equipment_id,
         field_value_id_2: search.field_value_id_2,
@@ -408,7 +412,7 @@ export default {
       this.getList({
         page: data.page.page,
         paginate: data.page.limit,
-        plan_time: data.search.plan_time,
+        // plan_time: data.search.plan_time,
         egi_time: data.search.egi_time,
         equipment_id: data.search.equipment_id,
         field_value_id_2: data.search.field_value_id_2,

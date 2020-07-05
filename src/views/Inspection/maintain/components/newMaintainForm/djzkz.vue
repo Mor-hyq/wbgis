@@ -50,7 +50,7 @@
         <el-col :span="10">
           <el-form-item
             prop="check_time"
-            label="维护时间"
+            label="检查时间"
           >
             <el-date-picker
               v-model="form.check_time"
@@ -58,7 +58,7 @@
               clearable
               value-format="yyyy-MM-dd"
               type="date"
-              placeholder="维护时间"
+              placeholder="检查时间"
             />
           </el-form-item>
         </el-col>

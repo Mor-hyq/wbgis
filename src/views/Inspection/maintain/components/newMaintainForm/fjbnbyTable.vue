@@ -68,7 +68,7 @@ export default {
       tableName: '',
       tableList: [],
       abnormalDeal: '',
-      remark: '检查正常打“√”，异常情况文字说明。'
+      remark: ''
     }
   },
   created() {
@@ -99,21 +99,9 @@ export default {
         style: '@media print{@page {size:landscape}}',
         targetStyles: ['*']
       })
-      // print({
-      //   printable: 'print-table',
-      //   type: 'html',
-      //   maxWidth: 1092,
-      //   scanStyles: false,
-      //   // style: tcss,
-      //   css: 'http://plane.leizikeji.top/table-css/ddpscy.css'
-      //   // style: dcss
-      //   // targetStyles: ['*']
-      //   // header: '',
-      //   // style: '@media print{@page {size:landscape}}'
-      // })
     },
     getName(type) {
-      return +type === 1 ? '√' : type
+      return +type === 1 ? '✔' : (type || '')
     }
   }
 }

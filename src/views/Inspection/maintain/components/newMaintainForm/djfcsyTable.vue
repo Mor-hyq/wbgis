@@ -15,43 +15,27 @@
           <th>关闭时间（s）</th>
           <th />
         </tr>
-        <tr>
-          <!-- 地井阀区域 -->
-          <td colspan="2">eref2</td>
-          <!-- 测试内容  检查情况-->
-          <td colspan="3">dfsdf范德萨发的</td>
-          <!-- 测试内容  关闭时间 -->
-          <td>16</td>
-          <!-- 测试内容 -->
-          <td />
-          <!-- 检查人员 -->
-          <td colspan="2">张三</td>
-          <!-- 检查日期 -->
-          <td colspan="2">2020-10-12</td>
-        </tr>
         <tr
           v-for="(list, index) in tableList"
           :key="index"
         >
-          <!-- 编号 -->
-          <td>{{ list.asset_code }}</td>
-          <!-- 阀室/阀门 -->
-          <td>{{ getName(list.valve) }}</td>
-          <!-- 渗漏 -->
-          <td>{{ getName(list.leakage) }}</td>
-          <!-- 积水/油 -->
-          <td>{{ getName(list.stag_water) }}</td>
-          <!-- 洁净 -->
-          <td>{{ getName(list.clean) }}</td>
-          <!-- 井盖 -->
-          <td>{{ getName(list.cover) }}</td>
+          <!-- 地井阀区域 -->
+          <td colspan="2">{{ list.ground_area }}</td>
+          <!-- 测试内容  检查情况-->
+          <td colspan="3">{{ getName(list.check) }}</td>
+          <!-- 测试内容  关闭时间 -->
+          <td>{{ list.close_time }}</td>
+          <!-- 测试内容 -->
+          <td />
+          <!-- 检查人员 -->
+          <td colspan="2">{{ list.check_member }}</td>
           <!-- 检查日期 -->
-          <!-- <td>{{ list.check_time }}</td> -->
-          <!-- 检查人 -->
-          <!-- <td>{{ list.check_member }}</td> -->
+          <td colspan="2">{{ list.check_time }}</td>
         </tr>
+
         <tr>
-          <td class="all-col" colspan="11">备注：<div v-html="remark" /></td>
+          <td>备注</td>
+          <td class="all-col" colspan="10"><div v-html="remark" /></td>
         </tr>
         <tr>
           <td class="all-col" colspan="6" style="border-right:none;">检查人员：{{ checkMember }}</td>
@@ -83,13 +67,13 @@ export default {
     return {
       tableName: '',
       tableList: [],
-      remark: '检查正常打“√”，异常情况文字说明。',
+      remark: '',
       checkMember: '',
       checkTime: ''
     }
   },
   created() {
-    // this.getDetail()
+    this.getDetail()
   },
   methods: {
     async getDetail() {
@@ -118,21 +102,10 @@ export default {
         style: '@media print{@page {size:landscape}}',
         targetStyles: ['*']
       })
-      // print({
-      //   printable: 'print-table',
-      //   type: 'html',
-      //   maxWidth: 1092,
-      //   scanStyles: false,
-      //   // style: tcss,
-      //   css: 'http://plane.leizikeji.top/table-css/ddpscy.css'
-      //   // style: dcss
-      //   // targetStyles: ['*']
-      //   // header: '',
-      //   // style: '@media print{@page {size:landscape}}'
-      // })
     },
     getName(type) {
-      return +type === 1 ? '√' : type
+      // return +type === 1 ? '✔' : (type || '')
+      return +type === 1 ? '✔' : '×'
     }
   }
 }

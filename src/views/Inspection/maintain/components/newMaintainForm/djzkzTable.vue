@@ -10,6 +10,9 @@
           <th colspan="6">检查内容</th>
           <th rowspan="2" colspan="3">处理过程</th>
           <th rowspan="2" colspan="2">备注</th>
+          <th rowspan="2">检查人员</th>
+          <th rowspan="2">检查日期</th>
+
         </tr>
         <tr>
           <th>渗漏</th>
@@ -19,55 +22,40 @@
           <th>井盖</th>
           <th>系链</th>
         </tr>
-        <tr>
-          <!-- 序号 -->
-          <td>1</td>
-          <!-- 地井区域-->
-          <td>的范德萨范德萨</td>
-          <!-- 检查内容  渗漏-->
-          <td>✔</td>
-          <!-- 检查内容  清洁-->
-          <td>✔</td>
-          <!-- 检查内容 先导阀-->
-          <td>✔</td>
-          <!-- 检查内容 内衬-->
-          <td>✔</td>
-          <!-- 检查内容 井盖-->
-          <td>✔</td>
-          <!-- 检查内容 系链-->
-          <td>x</td>
-          <!-- 处理过程 -->
-          <td colspan="3">阀井大开杀戒菲菲姐</td>
-          <!-- 备注 -->
-          <td colspan="2">防守打法第三方</td>
-        </tr>
         <tr
           v-for="(list, index) in tableList"
           :key="index"
         >
-          <!-- 编号 -->
-          <td>{{ list.asset_code }}</td>
-          <!-- 阀室/阀门 -->
-          <td>{{ getName(list.valve) }}</td>
-          <!-- 渗漏 -->
+          <!-- 序号 -->
+          <td>{{ index + 1 }}</td>
+          <!-- 地井区域-->
+          <td>{{ list.high_area }}</td>
+          <!-- 检查内容  渗漏-->
           <td>{{ getName(list.leakage) }}</td>
-          <!-- 积水/油 -->
-          <td>{{ getName(list.stag_water) }}</td>
-          <!-- 洁净 -->
+          <!-- 检查内容  清洁-->
           <td>{{ getName(list.clean) }}</td>
-          <!-- 井盖 -->
+          <!-- 检查内容 先导阀-->
+          <td>{{ getName(list.pilot_valve) }}</td>
+          <!-- 检查内容 内衬-->
+          <td>{{ getName(list.line) }}</td>
+          <!-- 检查内容 井盖-->
           <td>{{ getName(list.cover) }}</td>
-          <!-- 检查日期 -->
-          <!-- <td>{{ list.check_time }}</td> -->
-          <!-- 检查人 -->
-          <!-- <td>{{ list.check_member }}</td> -->
+          <!-- 检查内容 系链-->
+          <td>{{ getName(list.tether) }}</td>
+          <!-- 处理过程 -->
+          <td colspan="3">{{ list.deal }}</td>
+          <!-- 备注 -->
+          <td colspan="2">{{ list.remark }}</td>
+          <td>{{ list.check_member }}</td>
+          <td>{{ list.check_time }}</td>
         </tr>
         <tr>
-          <td class="all-col" colspan="13">备注：<div v-html="remark" /></td>
+          <td>备注</td>
+          <td class="all-col" colspan="14"><div v-html="remark" /></td>
         </tr>
         <tr>
-          <td class="all-col" colspan="8" style="border-left:none;">检查时间：{{ checkTime }}</td>
-          <td class="all-col" colspan="5" style="border-right:none;">检查人员：{{ checkMember }}</td>
+          <td class="all-col" colspan="9" style="border-left:none;">检查时间：{{ checkTime }}</td>
+          <td class="all-col" colspan="6" style="border-right:none;">检查人员：{{ checkMember }}</td>
         </tr>
       </tbody>
     </table>
@@ -95,13 +83,13 @@ export default {
     return {
       tableName: '',
       tableList: [],
-      remark: '检查正常打“√”，异常情况文字说明。',
+      remark: '',
       checkMember: '',
       checkTime: ''
     }
   },
   created() {
-    // this.getDetail()
+    this.getDetail()
   },
   methods: {
     async getDetail() {
@@ -114,7 +102,7 @@ export default {
           this.tableName = data.title
           this.tableList = data.list
           // this.abnormalDeal = data.abnormal_deal
-          // this.remark = data.remark
+          this.remark = data.remark
           this.checkMember = data.check_member
           this.checkTime = data.check_time
         }
@@ -130,21 +118,10 @@ export default {
         style: '@media print{@page {size:landscape}}',
         targetStyles: ['*']
       })
-      // print({
-      //   printable: 'print-table',
-      //   type: 'html',
-      //   maxWidth: 1092,
-      //   scanStyles: false,
-      //   // style: tcss,
-      //   css: 'http://plane.leizikeji.top/table-css/ddpscy.css'
-      //   // style: dcss
-      //   // targetStyles: ['*']
-      //   // header: '',
-      //   // style: '@media print{@page {size:landscape}}'
-      // })
     },
     getName(type) {
-      return +type === 1 ? '√' : type
+      // return +type === 1 ? '✔' : (type || '')
+      return +type === 1 ? '✔' : '×'
     }
   }
 }

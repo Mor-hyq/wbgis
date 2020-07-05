@@ -3,7 +3,7 @@
     <div class="chart-box">
       <h3 class="tit">设备故障统计</h3>
       <div class="search-box">
-        <div class="inline">
+        <div class="inline" style="margin-bottom:10px;">
           <el-select
             v-model="searchForm.pipeId"
             clearable
@@ -36,6 +36,14 @@
             />
           </el-select>
         </div>
+        <!-- <div class="inline">
+          <el-input
+            v-model="searchForm.asset_name"
+            clearable
+            :size="$btnSize"
+            placeholder="设备名称"
+          />
+        </div> -->
         <div class="inline">
           <el-date-picker
             v-model="searchForm.year"
@@ -72,6 +80,8 @@ require('echarts/lib/component/legend')
 import MaintainRecord from '../maintain/components/MaintainRecord'
 import RepaireRecord from '../repair/index'
 import deleteCache from '@/mixins/deleteCache'
+import dayjs from 'dayjs'
+
 import {
   getAssetAnalyse,
   getAssetTypeState
@@ -96,6 +106,7 @@ export default {
       searchForm: {
         pipeId: '',
         equipId: '',
+        // asset_name: '',
         year: curYear
       },
       curMoth: curMonth,
@@ -128,6 +139,7 @@ export default {
           pipe_id: this.searchForm.pipeId,
           equipment_id: this.searchForm.equipId,
           year: this.searchForm.year
+          // field_value_id_2: this.searchForm.asset_name
         })
         if (code === 200) {
           const color = ['#2c6ee7', '#f03c3c']
@@ -213,6 +225,7 @@ export default {
             series
           }
           this.charts.setOption(option)
+          this.initTabs()
           this.charts.getZr().off('click')
           this.charts.getZr().on('click', (params) => {
             const pointInPixel = [params.offsetX, params.offsetY]
@@ -234,8 +247,15 @@ export default {
     },
     initTabs() {
       this.activeTab = [this.activeName]
-      this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
+      const time = this.searchForm.year + '-' + this.curMoth
+      const stime = dayjs(time).startOf('month').format('YYYY-MM-DD')
+      const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
+      this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
+      this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
+      // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
       this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
+      this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
+      // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
       this.$refs['tab' + this.activeName].handleSearch()
     },
     pipeChange(val) {
@@ -255,8 +275,15 @@ export default {
             this.initCharts(true)
             this.getEquipmentOptions()
             this.$nextTick(() => {
-              this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
+              const time = this.searchForm.year + '-' + this.curMoth
+              const stime = dayjs(time).startOf('month').format('YYYY-MM-DD')
+              const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
+              this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
+              this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
+              // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
               this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
+              this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
+              // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
               this.$refs['tab' + this.activeName].handleSearch()
             })
           }
@@ -269,8 +296,15 @@ export default {
             this.getEquipmentOptions()
             this.$nextTick(() => {
               this.initCharts(true)
-              this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
+              const time = this.searchForm.year + '-' + this.curMoth
+              const stime = dayjs(time).startOf('month').format('YYYY-MM-DD')
+              const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
+              this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
+              this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
+              // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
               this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
+              this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
+              // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
               this.$refs['tab' + this.activeName].handleSearch()
             })
           }
@@ -295,8 +329,16 @@ export default {
       if (!this.activeTab.includes(this.activeName)) {
         this.activeTab.push(this.activeName)
         this.$nextTick(() => {
-          this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
+          const time = this.searchForm.year + '-' + this.curMoth
+          const stime = dayjs(time).startOf('month').format('YYYY-MM-DD')
+          const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
+          this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
+          this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
+          // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
           this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
+          this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
+          // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
+
           this.$refs['tab' + this.activeName].handleSearch()
         })
       }

@@ -155,7 +155,7 @@ export function getMaintainRecord({
 }
 // 获取维护记录（新）
 export function getMaintainRecord2({
-  plan_time,
+  // plan_time,
   egi_time,
   equipment_id,
   field_value_id_2,
@@ -169,7 +169,7 @@ export function getMaintainRecord2({
     url: api.getMaintainRecord2,
     method: 'get',
     params: {
-      plan_time,
+      // plan_time,
       egi_time,
       equipment_id,
       field_id_2,
@@ -320,10 +320,11 @@ export function getAssetServiceDetail({
 export function getAssetServiceList({
   pipe_id,
   state,
-  title,
+  equipment_id,
+  // title,
   field_id_2 = '',
   field_value_id_2,
-  time,
+  start_time,
   page = 1,
   paginate = 10
 } = {}) {
@@ -333,10 +334,11 @@ export function getAssetServiceList({
     params: {
       pipe_id,
       state,
-      title,
+      equipment_id,
+      // title,
       field_id_2,
       field_value_id_2,
-      time,
+      start_time,
       page,
       paginate
     }
@@ -503,7 +505,9 @@ export function getRepaireChart({
 export function getAssetAnalyse({
   pipe_id,
   equipment_id,
-  year
+  year,
+  field_value_id_2,
+  field_id_2 = ''
 } = {}) {
   return request({
     url: api.echartsData,
@@ -513,6 +517,8 @@ export function getAssetAnalyse({
       pipe_id,
       equipment_id,
       year
+      // field_id_2,
+      // field_value_id_2
     }
   })
 }

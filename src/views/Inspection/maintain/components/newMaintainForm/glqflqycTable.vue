@@ -14,6 +14,8 @@
           <th>自上次读数后输油量（L）</th>
           <th>输油总数计量（L）</th>
           <th>备注</th>
+          <th>检查人员</th>
+          <th>检查日期</th>
         </tr>
         <tr
           v-for="(list, index) in tableList"
@@ -37,6 +39,10 @@
           <td>{{ list.oil }}</td>
           <!-- 备注 -->
           <td>{{ list.remark }}</td>
+          <!-- 检查人员 -->
+          <td>{{ list.check_member }}</td>
+          <!-- 检查日期 -->
+          <td>{{ list.check_time }}</td>
         </tr>
         <tr>
           <td class="all-col" colspan="6" style="border-right:none;">检查人：{{ checkMember }}</td>
@@ -71,7 +77,7 @@ export default {
       checkMember: '',
       checkTime: ''
       // abnormalDeal: '',
-      // remark: '检查正常打“√”，异常情况文字说明。'
+      // remark: ''
     }
   },
   created() {
@@ -104,21 +110,9 @@ export default {
         style: '@media print{@page {size:landscape}}',
         targetStyles: ['*']
       })
-      // print({
-      //   printable: 'print-table',
-      //   type: 'html',
-      //   maxWidth: 1092,
-      //   scanStyles: false,
-      //   // style: tcss,
-      //   css: 'http://plane.leizikeji.top/table-css/ddpscy.css'
-      //   // style: dcss
-      //   // targetStyles: ['*']
-      //   // header: '',
-      //   // style: '@media print{@page {size:landscape}}'
-      // })
     },
     getName(type) {
-      return +type === 1 ? '√' : type
+      return +type === 1 ? '✔' : (type || '')
     }
   }
 }

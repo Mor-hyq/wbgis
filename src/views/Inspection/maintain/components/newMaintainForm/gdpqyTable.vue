@@ -10,8 +10,8 @@
           <th colspan="2">化学测水器</th>
           <th rowspan="2">处理过程</th>
           <th colspan="2">目视结论</th>
-          <!-- <th rowspan="2">检查人员</th> -->
-          <!-- <th rowspan="2">检查日期</th> -->
+          <th rowspan="2">检查人员</th>
+          <th rowspan="2">检查日期</th>
         </tr>
         <tr>
           <th>清澈透明</th>
@@ -22,60 +22,42 @@
           <th>合格</th>
           <th>不合格</th>
         </tr>
-        <tr>
-          <!-- 机坪高点排气区域 -->
-          <td>fjdkls</td>
-          <!-- 目视  清澈透明-->
-          <td>✔</td>
-          <!-- 目视  少量水分杂质-->
-          <td />
-          <!-- 目视  大量水份杂质-->
-          <td />
-          <!-- 化学测水器 不变色-->
-          <td />
-          <!-- 化学测水器 变色-->
-          <td>✔</td>
-          <!-- 处理过程 -->
-          <td>阀井大开杀戒菲菲姐</td>
-          <!-- 目视结论 合格-->
-          <td>✔</td>
-          <!-- 目视结论 不合格-->
-          <td>✔</td>
-          <!-- 检查人员 -->
-          <!-- <td>张三</td> -->
-          <!-- 检查日期 -->
-          <!-- <td>20201012</td> -->
-        </tr>
         <tr
           v-for="(list, index) in tableList"
           :key="index"
         >
-          <!-- 编号 -->
-          <td>{{ list.asset_code }}</td>
-          <!-- 阀室/阀门 -->
-          <td>{{ getName(list.valve) }}</td>
-          <!-- 渗漏 -->
-          <td>{{ getName(list.leakage) }}</td>
-          <!-- 积水/油 -->
-          <td>{{ getName(list.stag_water) }}</td>
-          <!-- 洁净 -->
-          <td>{{ getName(list.clean) }}</td>
-          <!-- 井盖 -->
-          <td>{{ getName(list.cover) }}</td>
+          <!-- 机坪高点排气区域 -->
+          <td>{{ list.high_area }}</td>
+          <!-- 目视  清澈透明-->
+          <td>{{ getName(list.visual_1) }}</td>
+          <!-- 目视  少量水分杂质-->
+          <td>{{ getName(list.visual_2) }}</td>
+          <!-- 目视  大量水份杂质-->
+          <td>{{ getName(list.visual_3) }}</td>
+          <!-- 化学测水器 不变色-->
+          <td>{{ getName(list.water_detector_1) }}</td>
+          <!-- 化学测水器 变色-->
+          <td>{{ getName(list.water_detector_2) }}</td>
+          <!-- 处理过程 -->
+          <td>{{ list.deal }}</td>
+          <!-- 目视结论 合格-->
+          <td>{{ getName(list.deal_visual_1) }}</td>
+          <!-- 目视结论 不合格-->
+          <td>{{ getName(list.deal_visual_2) }}</td>
+          <!-- 检查人员 -->
+          <td>{{ list.check_member }}</td>
           <!-- 检查日期 -->
-          <!-- <td>{{ list.check_time }}</td> -->
-          <!-- 检查人 -->
-          <!-- <td>{{ list.check_member }}</td> -->
+          <td>{{ list.check_time }}</td>
         </tr>
         <!-- <tr>
           <td class="all-col" colspan="9">异常处理：<div v-html="abnormalDeal" /></td>
         </tr> -->
         <tr>
-          <td class="all-col" colspan="9">备注：<div v-html="remark" /></td>
+          <td class="all-col" colspan="11">备注：<div v-html="remark" /></td>
         </tr>
         <tr>
-          <td class="all-col" colspan="6" style="border-right:none;">检查人：{{ checkMember }}</td>
-          <td class="all-col" colspan="3" style="border-left:none;">检查时间：{{ checkTime }}</td>
+          <td class="all-col" colspan="6" style="border-right:none;">检查人员：{{ checkMember }}</td>
+          <td class="all-col" colspan="5" style="border-left:none;">检查时间：{{ checkTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -103,8 +85,8 @@ export default {
     return {
       tableName: '',
       tableList: [],
-      abnormalDeal: '',
-      remark: '检查正常打“√”，异常情况文字说明。',
+      // abnormalDeal: '',
+      remark: '',
       checkMember: '',
       checkTime: ''
     }
@@ -121,7 +103,14 @@ export default {
         })
         if (code === 200) {
           this.tableName = data.title
-          this.tableList = data.list
+          this.tableList = data.list.map(v => {
+            return {
+              ...v,
+              ['visual_' + v.visual]: v.visual,
+              ['water_detector_' + v.water_detector]: v.water_detector,
+              ['deal_visual_' + v.deal_visual]: v.deal_visual
+            }
+          })
           // this.abnormalDeal = data.abnormal_deal
           this.remark = data.remark
           this.checkMember = data.check_member
@@ -139,21 +128,9 @@ export default {
         style: '@media print{@page {size:landscape}}',
         targetStyles: ['*']
       })
-      // print({
-      //   printable: 'print-table',
-      //   type: 'html',
-      //   maxWidth: 1092,
-      //   scanStyles: false,
-      //   // style: tcss,
-      //   css: 'http://plane.leizikeji.top/table-css/ddpscy.css'
-      //   // style: dcss
-      //   // targetStyles: ['*']
-      //   // header: '',
-      //   // style: '@media print{@page {size:landscape}}'
-      // })
     },
     getName(type) {
-      return +type === 1 ? '√' : type
+      return +type === 1 ? '✔' : (type || '')
     }
   }
 }

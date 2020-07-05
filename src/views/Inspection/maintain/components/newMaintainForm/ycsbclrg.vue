@@ -960,7 +960,7 @@
       <el-divider content-position="left"><span class="t-blue">其他设备</span></el-divider>
       <el-form-item
         prop="low_check"
-        label="警示装置"
+        label="罐体"
         label-width="70px"
       >
         <el-radio-group v-model="form.low_check">
