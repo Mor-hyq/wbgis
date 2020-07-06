@@ -655,7 +655,7 @@ export default {
     formatterCycle(row, column, cellValue) {
       let name = ''
       for (let i = 0; i < this.cycleOptions.length; i++) {
-        if (this.cycleOptions[i].id === String(cellValue)) {
+        if (this.cycleOptions[i].id === +(cellValue)) {
           name = this.cycleOptions[i].label
           break
         }
