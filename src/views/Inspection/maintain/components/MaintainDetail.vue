@@ -261,6 +261,8 @@ export default {
         if (code === 200) {
           this.form = {
             ...this.form, ...data,
+            notify_person: +data.notify_person,
+            egi_cycle: +data.egi_cycle,
             next_egi_time: data.next_egi_time.split(',')
           }
           if (data.equipment_id) {

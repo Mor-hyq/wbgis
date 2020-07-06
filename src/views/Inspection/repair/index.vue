@@ -131,7 +131,7 @@
         />
         <el-table-column
           align="center"
-          prop="num"
+          prop="asset_num"
           :label="mylang.repairNumber"
         />
         <el-table-column

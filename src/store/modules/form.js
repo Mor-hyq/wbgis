@@ -52,23 +52,23 @@ const state = {
   riskLevelSelect: [], // 风险等级下拉数据
   cycleOptions: [ // 维护周期
     {
-      id: '1',
+      id: 1,
       label: '每日'
     },
     {
-      id: '2',
+      id: 2,
       label: '每周'
     },
     {
-      id: '3',
+      id: 3,
       label: '每月'
     },
     {
-      id: '4',
+      id: 4,
       label: '每半年'
     },
     {
-      id: '5',
+      id: 5,
       label: '每年'
     }
   ],

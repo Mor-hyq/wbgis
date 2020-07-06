@@ -349,16 +349,16 @@ export function editAssetService({
   id,
   pipe_id,
   equipment_id,
-  style_id,
-  error_type_id,
-  title,
+  // style_id,
+  // error_type_id,
+  // title,
   asset_num,
-  budget,
-  plan_start_time,
-  plan_end_time,
+  money,
+  // plan_start_time,
+  // plan_end_time,
   asset_ids,
-  content,
-  location
+  fault,
+  start_time
 } = {}) {
   return request({
     url: replacePlaceHolder(api.editAssetService, { id }),
@@ -366,16 +366,17 @@ export function editAssetService({
     data: {
       pipe_id,
       equipment_id,
-      style_id,
-      error_type_id,
-      title,
+      // style_id,
+      // error_type_id,
+      // title,
       asset_num,
-      budget,
-      plan_start_time,
-      plan_end_time,
+      money,
+      // plan_start_time,
+      // plan_end_time,
       asset_ids,
-      content,
-      location
+      start_time,
+      fault
+      // location
     }
   })
 }
