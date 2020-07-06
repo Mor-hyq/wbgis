@@ -90,7 +90,11 @@
                 <el-input v-model="form.check_text" clearable />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.check_text }}</span>
+            <template v-else>
+              <span v-if="form.check === 2" class="read">
+                {{ form.check_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>

@@ -101,7 +101,11 @@
                     <el-input v-model="form.chass_equipment_fuel_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_fuel_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_fuel === 2" class="read">
+                    {{ form.chass_equipment_fuel_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -124,7 +128,11 @@
                     <el-input v-model="form.chass_equipment_oil_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_oil_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_oil === 2" class="read">
+                    {{ form.chass_equipment_oil_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -149,7 +157,11 @@
                     <el-input v-model="form.chass_equipment_cool_water_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_cool_water_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_cool_water === 2" class="read">
+                    {{ form.chass_equipment_cool_water_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -172,7 +184,11 @@
                     <el-input v-model="form.chass_equipment_light_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_light_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_light === 2" class="read">
+                    {{ form.chass_equipment_light_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -197,7 +213,11 @@
                     <el-input v-model="form.chass_equipment_brake_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_brake_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_brake === 2" class="read">
+                    {{ form.chass_equipment_brake_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -220,7 +240,11 @@
                     <el-input v-model="form.chass_equipment_turn_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_turn_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_turn === 2" class="read">
+                    {{ form.chass_equipment_turn_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -245,7 +269,11 @@
                     <el-input v-model="form.chass_equipment_tyre_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_tyre_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_tyre === 2" class="read">
+                    {{ form.chass_equipment_tyre_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -268,7 +296,11 @@
                     <el-input v-model="form.chass_equipment_hydraulic_oil_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_hydraulic_oil_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_hydraulic_oil === 2" class="read">
+                    {{ form.chass_equipment_hydraulic_oil_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -293,7 +325,11 @@
                     <el-input v-model="form.chass_equipment_leakage_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_leakage_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_leakage === 2" class="read">
+                    {{ form.chass_equipment_leakage_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -316,7 +352,11 @@
                     <el-input v-model="form.chass_equipment_noise_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.chass_equipment_noise_text }}</span>
+                <template v-else>
+                  <span v-if="form.chass_equipment_noise === 2" class="read">
+                    {{ form.chass_equipment_noise_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -352,7 +392,11 @@
                     <el-input v-model="form.body_equipment_valve_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_valve_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_valve === 2" class="read">
+                    {{ form.body_equipment_valve_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -375,7 +419,11 @@
                     <el-input v-model="form.body_equipment_interlock_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_interlock_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_interlock === 2" class="read">
+                    {{ form.body_equipment_interlock_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -400,7 +448,11 @@
                     <el-input v-model="form.body_equipment_deadman_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_deadman_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_deadman === 2" class="read">
+                    {{ form.body_equipment_deadman_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -423,7 +475,11 @@
                     <el-input v-model="form.body_equipment_connector_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_connector_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_connector === 2" class="read">
+                    {{ form.body_equipment_connector_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -448,7 +504,11 @@
                     <el-input v-model="form.body_equipment_hose_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_hose_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_hose === 2" class="read">
+                    {{ form.body_equipment_hose_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -471,7 +531,11 @@
                     <el-input v-model="form.body_equipment_tow_line_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_tow_line_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_tow_line === 2" class="read">
+                    {{ form.body_equipment_tow_line_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -496,7 +560,11 @@
                     <el-input v-model="form.body_equipment_filter_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_filter_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_filter === 2" class="read">
+                    {{ form.body_equipment_filter_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -519,7 +587,11 @@
                     <el-input v-model="form.body_equipment_lead_seal_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_lead_seal_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_lead_seal === 2" class="read">
+                    {{ form.body_equipment_lead_seal_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -544,7 +616,11 @@
                     <el-input v-model="form.body_equipment_car_monitoring_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_car_monitoring_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_car_monitoring === 2" class="read">
+                    {{ form.body_equipment_car_monitoring_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -567,7 +643,11 @@
                     <el-input v-model="form.body_equipment_flameout_device_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_flameout_device_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_flameout_device === 2" class="read">
+                    {{ form.body_equipment_flameout_device_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -592,7 +672,11 @@
                     <el-input v-model="form.body_equipment_height_limit_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_height_limit_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_height_limit === 2" class="read">
+                    {{ form.body_equipment_height_limit_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -615,7 +699,11 @@
                     <el-input v-model="form.body_equipment_hydraulic_device_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_hydraulic_device_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_hydraulic_device === 2" class="read">
+                    {{ form.body_equipment_hydraulic_device_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -640,7 +728,11 @@
                     <el-input v-model="form.body_equipment_leakage_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_leakage_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_leakage === 2" class="read">
+                    {{ form.body_equipment_leakage_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -663,7 +755,11 @@
                     <el-input v-model="form.body_equipment_anticollision_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.body_equipment_anticollision_text }}</span>
+                <template v-else>
+                  <span v-if="form.body_equipment_anticollision === 2" class="read">
+                    {{ form.body_equipment_anticollision_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -699,7 +795,11 @@
                     <el-input v-model="form.oil_quality_sample_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.oil_quality_sample_text }}</span>
+                <template v-else>
+                  <span v-if="form.oil_quality_sample === 2" class="read">
+                    {{ form.oil_quality_sample_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -759,7 +859,11 @@
                     <el-input v-model="form.vehicle_tool_ladder_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_ladder_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_ladder === 2" class="read">
+                    {{ form.vehicle_tool_ladder_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -782,7 +886,11 @@
                     <el-input v-model="form.vehicle_tool_wheel_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_wheel_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_wheel === 2" class="read">
+                    {{ form.vehicle_tool_wheel_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -807,7 +915,11 @@
                     <el-input v-model="form.vehicle_tool_fire_extinguisher_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_fire_extinguisher_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_fire_extinguisher === 2" class="read">
+                    {{ form.vehicle_tool_fire_extinguisher_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -830,7 +942,11 @@
                     <el-input v-model="form.vehicle_tool_oil_list_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_oil_list_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_oil_list === 2" class="read">
+                    {{ form.vehicle_tool_oil_list_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -855,7 +971,11 @@
                     <el-input v-model="form.vehicle_tool_oil_barrel_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_oil_barrel_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_oil_barrel === 2" class="read">
+                    {{ form.vehicle_tool_oil_barrel_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -878,7 +998,11 @@
                     <el-input v-model="form.vehicle_tool_oil_felt_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_oil_felt_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_oil_felt === 2" class="read">
+                    {{ form.vehicle_tool_oil_felt_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -903,7 +1027,11 @@
                     <el-input v-model="form.vehicle_tool_water_detector_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_water_detector_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_water_detector === 2" class="read">
+                    {{ form.vehicle_tool_water_detector_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -926,7 +1054,11 @@
                     <el-input v-model="form.vehicle_tool_oil_filling_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_oil_filling_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_oil_filling === 2" class="read">
+                    {{ form.vehicle_tool_oil_filling_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -951,7 +1083,11 @@
                     <el-input v-model="form.vehicle_tool_warning_device_text" clearable />
                   </el-form-item>
                 </template>
-                <span v-else class="read">{{ form.vehicle_tool_warning_device_text }}</span>
+                <template v-else>
+                  <span v-if="form.vehicle_tool_warning_device === 2" class="read">
+                    {{ form.vehicle_tool_warning_device_text }}
+                  </span>
+                </template>
               </div>
             </el-radio-group>
           </el-form-item>
@@ -975,7 +1111,11 @@
                 <el-input v-model="form.low_check_text" clearable />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.low_check_text }}</span>
+            <template v-else>
+              <span v-if="form.low_check === 2" class="read">
+                {{ form.low_check_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>

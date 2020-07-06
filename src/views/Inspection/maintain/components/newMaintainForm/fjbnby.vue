@@ -79,7 +79,11 @@
                 <el-input v-model="form.valve_level_text" clearable style="width:250px;" />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.valve_level_text }}</span>
+            <template v-else>
+              <span v-if="form.valve_level === 2" class="read">
+                {{ form.valve_level_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -99,7 +103,11 @@
                 <el-input v-model="form.corrosion_text" style="width:250px;" />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.corrosion_text }}</span>
+            <template v-else>
+              <span v-if="form.corrosion === 2" class="read">
+                {{ form.corrosion_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -119,7 +127,11 @@
                 <el-input v-model="form.seal_text" style="width:250px;" />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.seal_text }}</span>
+            <template v-else>
+              <span v-if="form.seal === 2" class="read">
+                {{ form.seal_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -139,7 +151,11 @@
                 <el-input v-model="form.smooth_text" style="width:250px;" />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.smooth_text }}</span>
+            <template v-else>
+              <span v-if="form.smooth === 2" class="read">
+                {{ form.smooth_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>
@@ -159,7 +175,11 @@
                 <el-input v-model="form.bolt_text" style="width:250px;" />
               </el-form-item>
             </template>
-            <span v-else class="read">{{ form.bolt_text }}</span>
+            <template v-else>
+              <span v-if="form.bolt === 2" class="read">
+                {{ form.bolt_text }}
+              </span>
+            </template>
           </div>
         </el-radio-group>
       </el-form-item>
