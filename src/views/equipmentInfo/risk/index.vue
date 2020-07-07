@@ -56,8 +56,8 @@
         </el-table-column>
         <!-- <el-table-column
           align="center"
-          prop="mileage"
-          :label="mylang.mileage"
+          prop="remark"
+          :label="mylang.remark"
         /> -->
         <el-table-column
           :label="mylang.actions"
@@ -70,12 +70,12 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               type="primary"
               style="margin-top:5px;"
               @click="goManagePage(scope.row)"
-            >风险路由管理</el-button>
+            >风险路由管理</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -110,15 +110,30 @@
             />
           </el-select>
         </el-form-item>
-        <!-- <el-form-item prop="mileage" :label="mylang.mileage">
-          <el-input v-model="dialogForm.mileage" clearable />
-        </el-form-item> -->
+        <el-form-item
+          prop="node"
+          label="风险区域"
+        >
+          <el-input v-model="dialogForm.node" clearable @focus="showMap">
+            <i slot="suffix" style="font-size:22px;color:#f56c6c;" class="el-input__icon el-icon-location" />
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="remark" :label="mylang.remark">
+          <el-input
+            v-model="dialogForm.remark"
+            type="textarea"
+            :rows="2"
+            clearable
+          />
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="hideDialog">{{ mylang.cancel }}</el-button>
         <el-button type="primary" @click="handleConfirm">{{ mylang.confirm }}</el-button>
       </div>
     </el-dialog>
+    <GetLngLatArea ref="getmap" :lnglat-pro="dialogForm.node" @confirm="getLT" />
+
   </div>
 </template>
 
@@ -130,9 +145,12 @@ import {
   deleteRisk
 } from '@/api/system'
 import deleteCache from '@/mixins/deleteCache'
-
+import GetLngLatArea from '@/components/GetLngLatArea'
 export default {
   name: 'TunnelRiskRouter',
+  components: {
+    GetLngLatArea
+  },
   mixins: [deleteCache],
   data() {
     return {
@@ -152,8 +170,9 @@ export default {
       dialogTitle: '',
       dialogForm: { // 弹窗中的表单
         name: '',
-        // mileage: '',
-        level: ''
+        remark: '',
+        level: '',
+        node: ''
       },
       editId: '', // 编辑时的id
       dialogDisabled: false, // 编辑时禁止修改
@@ -164,9 +183,6 @@ export default {
         name: [
           { required: true, message: `请输入风险名称` }
         ]
-        // mileage: [
-        //   { required: true, message: `请输入里程` }
-        // ]
       },
       levelOptions: this.$store.state.form.riskRouteLevel
     }
@@ -243,7 +259,7 @@ export default {
       }
       this.dialogForm.name = ''
       this.dialogForm.level = ''
-      // this.dialogForm.mileage = ''
+      this.dialogForm.remark = ''
     },
     handleEdit(row) {
       // 编辑
@@ -254,7 +270,7 @@ export default {
         this.showDialog()
         this.dialogForm.name = row.name
         this.dialogForm.level = row.level
-        // this.dialogForm.mileage = row.mileage
+        this.dialogForm.remark = row.remark
       } else {
         if (this.chooseDelArr.length === 0) {
           this.$message({
@@ -274,7 +290,7 @@ export default {
           this.showDialog()
           this.dialogForm.name = slcrow.name
           this.dialogForm.level = slcrow.level
-          // this.dialogForm.mileage = slcrow.mileage
+          this.dialogForm.remark = slcrow.remark
         }
       }
     },
@@ -404,14 +420,20 @@ export default {
         }
       })
     },
-    goManagePage(row) {
-      this.$router.push({
-        name: 'TunnelRiskRouterManage',
-        params: {
-          id: row.id
-        }
-      })
+    showMap() {
+      this.$refs.getmap.showMap()
     },
+    getLT(data) {
+      this.dialogForm.node = data
+    },
+    // goManagePage(row) {
+    //   this.$router.push({
+    //     name: 'TunnelRiskRouterManage',
+    //     params: {
+    //       id: row.id
+    //     }
+    //   })
+    // },
     filterRisk(level) {
       const arr = this.levelOptions.filter(v => +v.id === +level)
       return arr.length > 0 ? arr[0].level : ''
