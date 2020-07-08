@@ -30,14 +30,14 @@
       <template
         v-else
       >
-        <el-button
+        <!-- <el-button
           type="primary"
           size="mini"
           style="margin:auto;"
           @click="modifyDraw"
         >
           编辑图形
-        </el-button>
+        </el-button> -->
         <el-button
           type="primary"
           size="mini"
@@ -81,7 +81,8 @@ export default {
       map: null,
       drawPolygon: null,
       mouseTool: null,
-      showbtn: true
+      showbtn: true,
+      polyEditor: null
     //   marker: null
     }
   },
@@ -115,7 +116,8 @@ export default {
         'AMap.Scale',
         'AMap.MapType',
         'AMap.Geolocation',
-        'AMap.MouseTool'
+        'AMap.MouseTool',
+        'AMap.PolyEditor'
       ], function() {
         map.addControl(new AMap.ToolBar())
         map.addControl(new AMap.Scale())
@@ -123,7 +125,6 @@ export default {
           defaultType: 1
         }))
         map.addControl(new AMap.Geolocation())
-        map.addControl(new AMap.MouseTool())
       })
       this.mouseTool = new AMap.MouseTool(map)
       this.drawPolygon = function() {
@@ -141,31 +142,49 @@ export default {
         })
       }
       this.mouseTool.on('draw', (e) => {
-        console.log(e)
+        // console.log(e.obj.getPath())
+        // const lnglat = e.obj.getPath().map(v => {
+        //   return [v.lng, v.lat]
+        // })
+
+        // const poly = new AMap.Polygon({
+        //   path: lnglat,
+        //   strokeColor: '#F56C6C',
+        //   // strokeOpacity: 1,
+        //   strokeWeight: 1,
+        //   strokeOpacity: 1,
+        //   fillColor: '#F56C6C',
+        //   fillOpacity: 0.4,
+        //   // 线样式还支持 'dashed'
+        //   strokeStyle: 'solid'
+        // })
+        this.polyEditor = new AMap.PolyEditor(this.map, e.obj)
+        this.polyEditor.open()
+        // this.mouseTool.close(true)
         this.showbtn = false
       })
-    //   var marker = new AMap.Marker({
-    //     position: map.getCenter(),
-    //     // 设置是否可以拖拽
-    //     draggable: true,
-    //     cursor: 'move'
-    //   })
-    //   if (!this.lnglat.lng && !this.lnglat.lat) {
-    //     this.lnglat.lng = map.getCenter().getLng()
-    //     this.lnglat.lat = map.getCenter().getLat()
-    //   }
-    //   marker.setMap(map)
-    //   marker.on('dragend', () => {
-    //     this.lnglat.lng = marker.getPosition().getLng()
-    //     this.lnglat.lat = marker.getPosition().getLat()
-    //   })
-    //   map.on('click', (e) => {
-    //     this.lnglat.lng = e.lnglat.getLng()
-    //     this.lnglat.lat = e.lnglat.getLat()
-    //     marker.setPosition(e.lnglat)
-    //   })
-    //   this.map = map
-    //   this.marker = marker
+      //   var marker = new AMap.Marker({
+      //     position: map.getCenter(),
+      //     // 设置是否可以拖拽
+      //     draggable: true,
+      //     cursor: 'move'
+      //   })
+      //   if (!this.lnglat.lng && !this.lnglat.lat) {
+      //     this.lnglat.lng = map.getCenter().getLng()
+      //     this.lnglat.lat = map.getCenter().getLat()
+      //   }
+      //   marker.setMap(map)
+      //   marker.on('dragend', () => {
+      //     this.lnglat.lng = marker.getPosition().getLng()
+      //     this.lnglat.lat = marker.getPosition().getLat()
+      //   })
+      //   map.on('click', (e) => {
+      //     this.lnglat.lng = e.lnglat.getLng()
+      //     this.lnglat.lat = e.lnglat.getLat()
+      //     marker.setPosition(e.lnglat)
+      //   })
+      //   this.marker = marker
+      this.map = map
     },
     showMap() {
       this.isShow = true
@@ -191,22 +210,28 @@ export default {
         this.drawPolygon()
       }
     },
-    modifyDraw() {
-
-    },
+    // modifyDraw() {
+    //   // this.polyEditor = new AMap.PolyEditor(this.map, polygon)
+    // },
     resetDraw() {
       if (this.mouseTool) {
         this.mouseTool.close(true)
         this.showbtn = true
         this.startDraw()
       }
+      if (this.polyEditor) {
+        this.polyEditor.close()
+      }
     },
     hideMap() {
       this.isShow = false
     },
     handleConfirm() {
-      this.hideMap()
-      this.$emit('confirm', { lngLat: this.lnglat })
+      console.log(this.polyEditor)
+      const lngLat = this.polyEditor.$t
+      console.log(lngLat)
+      // this.$emit('confirm', { lngLat: this.lnglat })
+      // this.hideMap()
     }
   }
 }
