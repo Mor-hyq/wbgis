@@ -90,8 +90,15 @@
         class="custom-class"
         :size="$btnSize"
       >
-        <el-form-item prop="name" label="风险名称">
-          <el-input v-model="dialogForm.name" clearable />
+        <el-form-item
+          prop="name"
+          label="风险名称"
+        >
+          <el-input
+            v-model="dialogForm.name"
+            :disabled="!mapEdit"
+            clearable
+          />
         </el-form-item>
         <el-form-item
           prop="level"
@@ -99,6 +106,7 @@
         >
           <el-select
             v-model="dialogForm.level"
+            :disabled="!mapEdit"
             clearable
             placeholder="请选择风险等级"
           >
@@ -114,14 +122,21 @@
           prop="node"
           label="风险区域"
         >
-          <el-input v-model="dialogForm.node" clearable @focus="showMap">
+          <el-input
+            v-model="dialogForm.node"
+            clearable
+            :disabled="false"
+            :readonly="!mapEdit"
+            @focus="showMap"
+          >
             <i slot="suffix" style="font-size:22px;color:#f56c6c;" class="el-input__icon el-icon-location" />
           </el-input>
         </el-form-item>
-        <el-form-item prop="remark" :label="mylang.remark">
+        <el-form-item prop="remark" label="风险描述">
           <el-input
             v-model="dialogForm.remark"
             type="textarea"
+            :disabled="!mapEdit"
             :rows="2"
             clearable
           />
@@ -132,7 +147,12 @@
         <el-button type="primary" @click="handleConfirm">{{ mylang.confirm }}</el-button>
       </div>
     </el-dialog>
-    <GetLngLatArea ref="getmap" :lnglat-pro="dialogForm.node" @confirm="getLT" />
+    <GetLngLatArea
+      ref="getmap"
+      :lnglat-pro="dialogForm.node"
+      :is-edit="mapEdit"
+      @confirm="getLT"
+    />
 
   </div>
 </template>
@@ -182,9 +202,13 @@ export default {
         ],
         name: [
           { required: true, message: `请输入风险名称` }
+        ],
+        node: [
+          { required: true, message: '请选择风险区域' }
         ]
       },
-      levelOptions: this.$store.state.form.riskRouteLevel
+      levelOptions: this.$store.state.form.riskRouteLevel,
+      mapEdit: true
     }
   },
   created() {
@@ -260,6 +284,8 @@ export default {
       this.dialogForm.name = ''
       this.dialogForm.level = ''
       this.dialogForm.remark = ''
+      this.dialogForm.node = ''
+      this.mapEdit = true
     },
     handleEdit(row) {
       // 编辑
@@ -271,6 +297,8 @@ export default {
         this.dialogForm.name = row.name
         this.dialogForm.level = row.level
         this.dialogForm.remark = row.remark
+        this.dialogForm.node = row.node
+        this.mapEdit = true
       } else {
         if (this.chooseDelArr.length === 0) {
           this.$message({
@@ -291,6 +319,8 @@ export default {
           this.dialogForm.name = slcrow.name
           this.dialogForm.level = slcrow.level
           this.dialogForm.remark = slcrow.remark
+          this.dialogForm.node = slcrow.node
+          this.mapEdit = true
         }
       }
     },
@@ -413,18 +443,27 @@ export default {
       }
     },
     goDetailPage(row) {
-      this.$router.push({
-        name: 'TunnelRiskRouterDetail',
-        params: {
-          id: row.id
-        }
-      })
+      // this.$router.push({
+      //   name: 'TunnelRiskRouterDetail',
+      //   params: {
+      //     id: row.id
+      //   }
+      // })
+      this.dialogTitle = this.mylang.riskLine
+      this.dialogDisabled = true
+      this.editId = row.id
+      this.showDialog()
+      this.dialogForm.name = row.name
+      this.dialogForm.level = row.level
+      this.dialogForm.remark = row.remark
+      this.dialogForm.node = row.node
+      this.mapEdit = false
     },
     showMap() {
       this.$refs.getmap.showMap()
     },
     getLT(data) {
-      this.dialogForm.node = data
+      this.dialogForm.node = JSON.stringify(data.lngLat)
     },
     // goManagePage(row) {
     //   this.$router.push({

@@ -63,6 +63,9 @@
           <!-- <el-form-item>
             <el-checkbox v-model="form.buleShow" @change="hideBlue">隐藏参考线</el-checkbox>
           </el-form-item> -->
+          <el-form-item>
+            <el-checkbox v-model="form.riskArea" @change="hideRisk">隐藏风险区域</el-checkbox>
+          </el-form-item>
         </el-form>
       </div>
       <gis-router-dialog :id="routeId" ref="routerDialog" :title="dialogTitle" />
@@ -156,8 +159,8 @@ import {
   // getFaultTypeChart
 } from '@/api/inspection'
 import {
-  getRiskList,
-  getRiskRouteList
+  getRiskList
+  // getRiskRouteList
 } from '@/api/system'
 import { getAssetChart, getPipeDetail } from '@/api/equipmentInfo'
 import { getGis } from '@/api/gis'
@@ -188,7 +191,8 @@ export default {
         field_value_id_2: '',
         checked: true,
         control: false,
-        buleShow: false
+        buleShow: false,
+        riskArea: false
       },
       dialogTitle: '',
       routeId: '',
@@ -211,13 +215,14 @@ export default {
       chartColors: ['#f56c6c', '#e6a23c', '#5cb87a', '#1989fa', '#6f7ad3'],
       lines: {},
       polyname: 'polyline',
-      isNoRepaire: true // 是否有维修数据
+      isNoRepaire: true, // 是否有维修数据
+      polygonArrs: [],
+      textArrs: []
     }
   },
   created() {
     // 获取管道后在加载地图
     this.getPipeOptions()
-    this.getRiskList()
   },
   mounted() {
     this.initCharts2()
@@ -281,6 +286,7 @@ export default {
         }))
       })
       this.map = map
+      this.getRiskList()
     },
     init() {
       const lngLatArr = this.mapData
@@ -330,6 +336,7 @@ export default {
         polyline.setMap(map)
         map.setFitView(polyline)
       })
+      this.getRiskList()
       // 不需要显示路径坐标点了
       // 创建坐标点图标
       // 默认图标
@@ -977,62 +984,74 @@ export default {
     },
     async getRiskRouteLists(route) {
       try {
-        const { code, data } = await getRiskRouteList({
-          risk_id: route.id,
-          paginate: 200
+        const map = this.map
+        const lngLatArr = route.node ? JSON.parse(route.node) : []
+        // 风险等级线条颜色
+        const strokeColors = ['#F56C6C', '#E6A23C', '#fdfd00', '#409eff']
+        const ind = (+route.level) % 5 - 1
+        const polypath = lngLatArr
+        const polygon = new AMap.Polygon({
+          path: polypath,
+          isOutline: true,
+          zIndex: 2000,
+          strokeWeight: 1,
+          strokeColor: strokeColors[ind],
+          fillColor: strokeColors[ind],
+          fillOpacity: 0.6,
+          strokeOpacity: 1,
+          cursor: 'default'
         })
-        if (code === 200) {
-          if (data.data.length > 0) {
-            const map = this.map
-            const lngLatArr = data.data
-            // 风险等级线条颜色
-            const strokeColors = ['#F56C6C', '#E6A23C', '#fdfd00', '#409eff']
-            const num = (+route.level) % 4
-            const ind = num > 0 ? num - 1 : num
-            const polypath = lngLatArr.map(v => [v.lng, v.lat])
-            const polyline = new AMap.Polygon({
-              path: polypath,
-              isOutline: true,
-              zIndex: 2000,
-              strokeWeight: 1,
-              strokeColor: strokeColors[ind],
-              fillOpacity: 0.3,
-              strokeOpacity: 1,
-              cursor: 'default'
-            })
-            this.lines[this.polyname + '3' + ind] = polyline
-            polyline.setMap(map)
-            const getCenterPoint = function(data) {
-              var lng = 0.0
-              var lat = 0.0
-              for (var i = 0; i < data.length; i++) {
-                if (data[i].length < 1) { continue }
-                lng = lng + parseFloat(data[i].lng)
-                lat = lat + parseFloat(data[i].lat)
-              }
-              lng = lng / data.length
-              lat = lat / data.length
-              return [lng, lat]
-            }
-            const textMap = new AMap.Text({
-              text: route.name,
-              map: this.map,
-              position: getCenterPoint(polypath),
-              clickable: true
-            })
-            AMap.event.addListener(textMap, 'click', function(e) {
-              textMap.hide()
-            })
-            AMap.event.addListener(polyline, 'click', function(e) {
-              textMap.show()
-            })
+        this.lines[this.polyname + '3' + ind] = polygon
+        polygon.setMap(map)
+        const getCenterPoint = function(data) {
+          var lng = 0.0
+          var lat = 0.0
+          for (var i = 0; i < data.length; i++) {
+            if (data[i].length < 1) { continue }
+            lng = lng + parseFloat(data[i].lng)
+            lat = lat + parseFloat(data[i].lat)
           }
+          lng = lng / data.length
+          lat = lat / data.length
+          return [lng, lat]
         }
+        const textMap = new AMap.Text({
+          text: route.name,
+          map: this.map,
+          position: getCenterPoint(polypath),
+          clickable: true
+        })
+        AMap.event.addListener(textMap, 'click', function(e) {
+          textMap.hide()
+        })
+        AMap.event.addListener(polygon, 'click', function(e) {
+          textMap.show()
+        })
+        this.polygonArrs.push(polygon)
+        this.textArrs.push(textMap)
       } catch (error) {
         console.log(error)
       }
+    },
+    hideRisk(val) {
+      // 隐藏风险区域
+      if (!val) {
+        // 显示风险区域
+        this.polygonArrs.forEach(v => {
+          v.show()
+        })
+        this.textArrs.forEach(v => {
+          v.show()
+        })
+      } else {
+        this.polygonArrs.forEach(v => {
+          v.hide()
+        })
+        this.textArrs.forEach(v => {
+          v.hide()
+        })
+      }
     }
-
   }
 }
 </script>

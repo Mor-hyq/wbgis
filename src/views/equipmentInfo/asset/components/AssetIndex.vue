@@ -252,7 +252,12 @@ export default {
               const obj = {}
               v.value.forEach(k => {
                 obj.asset_id = k.asset_id
-                obj[k.name] = k.value
+                if (k.name === 'code') {
+                  // 设备编号用id值
+                  obj[k.name] = v.id
+                } else {
+                  obj[k.name] = k.value
+                }
               })
               return obj
             })

@@ -6,6 +6,7 @@
     custom-class="custom-dialog-class"
     :visible.sync="isShow"
     :close-on-click-modal="false"
+    @close="handleClose"
   >
     <div :id="id" class="map-container" />
     <!-- <el-form class="input-card">
@@ -17,7 +18,7 @@
       </el-form-item>
     </el-form> -->
     <div
-
+      v-if="isEdit"
       class="input-card"
     >
       <el-button
@@ -34,9 +35,9 @@
           type="primary"
           size="mini"
           style="margin:auto;"
-          @click="modifyDraw"
+          @click="closeDraw"
         >
-          编辑图形
+          完成编辑
         </el-button> -->
         <el-button
           type="primary"
@@ -69,20 +70,26 @@ export default {
     lnglatPro: {
       type: String,
       default: ''
+    },
+    isEdit: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       isShow: false,
-      lnglat: {
-        lng: '',
-        lat: ''
-      },
+      // lnglat: {
+      //   lng: '',
+      //   lat: ''
+      // },
       map: null,
       drawPolygon: null,
       mouseTool: null,
       showbtn: true,
-      polyEditor: null
+      polyEditor: null,
+      lngLatArr: null,
+      polygon: null
     //   marker: null
     }
   },
@@ -99,18 +106,23 @@ export default {
   methods: {
     init() {
       let map = null
-      if (this.lnglat.lng && this.lnglat.lat) {
-        map = new AMap.Map(this.id, {
-          center: new AMap.LngLat(this.lnglat.lng, this.lnglat.lat),
-          resizeEnable: true,
-          zoom: 14
-        })
-      } else {
-        map = new AMap.Map(this.id, {
-          resizeEnable: true,
-          zoom: 14
-        })
-      }
+      // if (this.lnglat.lng && this.lnglat.lat) {
+      //   map = new AMap.Map(this.id, {
+      //     center: new AMap.LngLat(this.lnglat.lng, this.lnglat.lat),
+      //     resizeEnable: true,
+      //     zoom: 14
+      //   })
+      // } else {
+      //   map = new AMap.Map(this.id, {
+      //     resizeEnable: true,
+      //     zoom: 14
+      //   })
+      // }
+
+      map = new AMap.Map(this.id, {
+        resizeEnable: true,
+        zoom: 14
+      })
       AMap.plugin([
         'AMap.ToolBar',
         'AMap.Scale',
@@ -126,6 +138,7 @@ export default {
         }))
         map.addControl(new AMap.Geolocation())
       })
+
       this.mouseTool = new AMap.MouseTool(map)
       this.drawPolygon = function() {
         this.mouseTool.polygon({
@@ -148,7 +161,7 @@ export default {
         // })
 
         // const poly = new AMap.Polygon({
-        //   path: lnglat,
+        //   path: e.obj.getPath(),
         //   strokeColor: '#F56C6C',
         //   // strokeOpacity: 1,
         //   strokeWeight: 1,
@@ -160,59 +173,69 @@ export default {
         // })
         this.polyEditor = new AMap.PolyEditor(this.map, e.obj)
         this.polyEditor.open()
-        // this.mouseTool.close(true)
+        this.polyEditor.on('end', (e) => {
+          this.lngLatArr = e.target.getPath().map(v => {
+            return [v.lng, v.lat]
+          })
+        })
         this.showbtn = false
       })
-      //   var marker = new AMap.Marker({
-      //     position: map.getCenter(),
-      //     // 设置是否可以拖拽
-      //     draggable: true,
-      //     cursor: 'move'
-      //   })
-      //   if (!this.lnglat.lng && !this.lnglat.lat) {
-      //     this.lnglat.lng = map.getCenter().getLng()
-      //     this.lnglat.lat = map.getCenter().getLat()
-      //   }
-      //   marker.setMap(map)
-      //   marker.on('dragend', () => {
-      //     this.lnglat.lng = marker.getPosition().getLng()
-      //     this.lnglat.lat = marker.getPosition().getLat()
-      //   })
-      //   map.on('click', (e) => {
-      //     this.lnglat.lng = e.lnglat.getLng()
-      //     this.lnglat.lat = e.lnglat.getLat()
-      //     marker.setPosition(e.lnglat)
-      //   })
-      //   this.marker = marker
       this.map = map
+      if (this.lngLatArr.length > 0) {
+        this.setpolyon(this.lngLatArr)
+      }
     },
     showMap() {
       this.isShow = true
-      const ll = this.lnglatPro.split(',')
-      this.lnglat.lng = ll[0]
-      this.lnglat.lat = ll[1]
+      const ll = this.lnglatPro ? JSON.parse(this.lnglatPro) : []
+      this.lngLatArr = ll
       this.$nextTick(() => {
         if (!this.map) {
           this.init()
         } else {
-          if (ll[0] && ll[1]) {
-            this.map.setCenter(new AMap.LngLat(this.lnglat.lng, this.lnglat.lat))
-            // this.marker.setPosition(new AMap.LngLat(this.lnglat.lng, this.lnglat.lat))
+          if (ll.length > 0) {
+            this.setpolyon(ll)
           } else {
-            this.lnglat.lng = this.map.getCenter().getLng()
-            this.lnglat.lat = this.map.getCenter().getLat()
+            this.showbtn = true
           }
         }
       })
+    },
+    setpolyon(ll) {
+      const poly = new AMap.Polygon({
+        path: ll,
+        strokeColor: '#F56C6C',
+        // strokeOpacity: 1,
+        strokeWeight: 1,
+        strokeOpacity: 1,
+        fillColor: '#F56C6C',
+        fillOpacity: 0.4,
+        strokeStyle: 'solid'
+      })
+      this.polygon = poly
+      if (this.isEdit) {
+        this.polyEditor = new AMap.PolyEditor(this.map, poly)
+        this.polyEditor.open()
+        this.polyEditor.on('end', (e) => {
+          this.lngLatArr = e.target.getPath().map(v => {
+            return [v.lng, v.lat]
+          })
+        })
+        this.showbtn = false
+      }
+      this.map.add(poly)
+      this.map.setFitView([poly])
     },
     startDraw() {
       if (this.drawPolygon) {
         this.drawPolygon()
       }
     },
-    // modifyDraw() {
-    //   // this.polyEditor = new AMap.PolyEditor(this.map, polygon)
-    // },
+    closeDraw() {
+      if (this.polyEditor) {
+        this.polyEditor.close()
+      }
+    },
     resetDraw() {
       if (this.mouseTool) {
         this.mouseTool.close(true)
@@ -221,17 +244,31 @@ export default {
       }
       if (this.polyEditor) {
         this.polyEditor.close()
+        this.polyEditor = null
+      }
+      if (this.polygon) {
+        this.polygon.hide()
+        this.polygon = null
       }
     },
     hideMap() {
       this.isShow = false
     },
     handleConfirm() {
-      console.log(this.polyEditor)
-      const lngLat = this.polyEditor.$t
-      console.log(lngLat)
-      // this.$emit('confirm', { lngLat: this.lnglat })
-      // this.hideMap()
+      this.closeDraw()
+      this.$emit('confirm', { lngLat: this.lngLatArr })
+      this.hideMap()
+    },
+    handleClose() {
+      if (this.polygon) {
+        this.polygon.hide()
+        this.polygon = null
+      }
+      if (this.polyEditor) {
+        this.polyEditor.close()
+        this.polyEditor = null
+      }
+      this.mouseTool.close(true)
     }
   }
 }

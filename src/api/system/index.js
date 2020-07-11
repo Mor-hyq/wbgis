@@ -450,7 +450,8 @@ export function getRiskDetail({
 export function addRisk({
   name,
   level,
-  mileage
+  node,
+  remark
 } = {}) {
   return request({
     url: api.addRisk,
@@ -458,7 +459,8 @@ export function addRisk({
     data: {
       name,
       level,
-      mileage
+      remark,
+      node
     }
   })
 }
@@ -467,7 +469,8 @@ export function editRisk({
   id,
   name,
   level,
-  mileage
+  remark,
+  node
 } = {}) {
   return request({
     url: replacePlaceHolder(api.editRisk, { id }),
@@ -475,7 +478,8 @@ export function editRisk({
     data: {
       name,
       level,
-      mileage
+      remark,
+      node
     }
   })
 }

@@ -223,7 +223,6 @@ export default {
       if (row) {
         this.$router.push({
           name: 'MaintainRecordForm',
-          // path: '/inspect/maintainManage/form',
           query: {
             type: row.equipment_id + '' + row.type,
             id: row.asset_egi_id,
@@ -233,8 +232,21 @@ export default {
       } else {
         if (this.chooseDelArr.length < 0) {
           return
+        } else if (this.chooseDelArr.length > 1) {
+          this.$message({
+            type: 'warning',
+            message: '导出表单只能选择一项'
+          })
         } else {
-          console.log('export')
+          const q = this.chooseDelArr[0]
+          this.$router.push({
+            name: 'MaintainRecordForm',
+            query: {
+              type: q.equipment_id + '' + q.type,
+              id: q.asset_egi_id,
+              peid: q.period
+            }
+          })
         }
       }
     },
