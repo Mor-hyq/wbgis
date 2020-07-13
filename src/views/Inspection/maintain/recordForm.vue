@@ -26,7 +26,7 @@ import xsyjcs from './components/newMaintainForm/xsyjcsTable'
 import glqflqyc from './components/newMaintainForm/glqflqycTable'
 import ycsbclr from './components/newMaintainForm/ycsbclrTable'
 import ycsbclrg from './components/newMaintainForm/ycsbclrgTable'
-
+import glflq from './components/newMaintainForm/glflqTable'
 export default { // 该页面已弃用
   name: 'MaintainRecordForm',
   components: {
@@ -39,7 +39,8 @@ export default { // 该页面已弃用
     xsyjcs,
     glqflqyc,
     ycsbclr,
-    ycsbclrg
+    ycsbclrg,
+    glflq
   },
   data() {
     return {
@@ -101,6 +102,11 @@ export default { // 该页面已弃用
           return {
             name: '航空加油站油车设备、车辆日检查单',
             type: 'ycsbclrg'
+          }
+        case '171':
+          return {
+            name: '过滤器/分离器（预过滤器）压差记录',
+            type: 'glflq'
           }
         default:
           return {}

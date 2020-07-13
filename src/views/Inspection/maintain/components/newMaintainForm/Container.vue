@@ -38,6 +38,10 @@ import djfcsy from './djfcsy'
 import xsyjcs from './xsyjcs'
 import ycsbclr from './ycsbclr'
 import ycsbclrg from './ycsbclrg'
+import glflq from './glflq'
+import jycddm from './jycddm'
+import yljtlwy from './yljtlwy'
+import gytjdx from './gytjdx'
 export default {
   components: {
     ddpspwz,
@@ -49,7 +53,11 @@ export default {
     djfcsy,
     xsyjcs,
     ycsbclr,
-    ycsbclrg
+    ycsbclrg,
+    glflq,
+    jycddm,
+    yljtlwy,
+    gytjdx
   },
   props: {
     visible: {
@@ -143,6 +151,27 @@ export default {
             name: '航空加油站油车设备、车辆日检查单',
             type: 'ycsbclrg'
           }
+        case '171':
+          return {
+            name: '过滤器/分离器（预过滤器）压差记录',
+            type: 'glflq'
+          }
+        case '211':
+          return {
+            name: '加油车呆德曼开闭时间周检查记录',
+            type: 'jycddm'
+          }
+        case '201':
+          return {
+            name: '压力接头滤网月检查清洗记录',
+            type: 'yljtlwy'
+          }
+        case '161':
+          return {
+            name: '灌油台接地线导电性能周检查记录',
+            type: 'gytjdx'
+          }
+
         default:
           return {}
       }

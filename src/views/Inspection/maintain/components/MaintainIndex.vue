@@ -143,7 +143,8 @@
           :label="mylang.maintainState"
         >
           <template slot-scope="scope">
-            <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ getSateName(scope.row) }}({{ scope.row.egiNum }})</span>
+            <!-- <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ getSateName(scope.row) }}({{ scope.row.egiNum }})</span> -->
+            <span class="order-state" :class="{ done: +scope.row.state === 1}">{{ scope.row.state_content }}</span>
           </template>
         </el-table-column>
         <el-table-column
