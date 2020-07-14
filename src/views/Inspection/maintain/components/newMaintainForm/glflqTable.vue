@@ -45,7 +45,7 @@
           <td>{{ list.check_time }}</td>
         </tr>
         <tr>
-          <td class="all-col" colspan="6" style="border-right:none;">检查人：{{ checkMember }}</td>
+          <td class="all-col" colspan="8" style="border-right:none;">检查人：{{ checkMember }}</td>
           <td class="all-col" colspan="3" style="border-left:none;">检查时间：{{ checkTime }}</td>
         </tr>
       </tbody>
@@ -106,9 +106,9 @@ export default {
       print({
         printable: 'print-table',
         type: 'html',
-        maxWidth: 1092,
-        style: '@media print{@page {size:landscape;margin:0;}}',
-        targetStyles: ['*']
+        // maxWidth: 1092,
+        style: '@media print{@page {size:portrait;margin:0 auto;}}.print-table{border:1px solid #666;border-collapse:collapse;margin:0 auto}.print-table.medium-width th{width:120px}.print-table.small-width th{width:100px}.print-table caption{margin-bottom:10px}.print-table th{width:80px}.print-table th,.print-table td{border:1px solid #666;padding:8px 5px}.print-table td{text-align:center}.print-table .all-col{text-align:left;padding:20px 10px}.print-table .all-col div{white-space:pre;padding-left:2em}.print-table .cus-tit{display:inline-block;width:30%}.print-table .cus-tit:last-child{width:40%;text-align:right}.print-table .cus-tit span{font-weight:normal;font-size:16px}'
+
       })
     },
     getName(type) {

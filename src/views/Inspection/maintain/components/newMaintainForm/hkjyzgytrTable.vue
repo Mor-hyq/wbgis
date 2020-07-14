@@ -26,7 +26,7 @@
           <tr>
             <!-- 10号过滤器区域 -->
             <td>闸阀</td>
-            <td>{{ getName(table.area1_gate_valve) }}</td>
+            <td>{{ getName(table.area1_gate_valve) }} </td>
             <td>{{ getName2(table.area1_gate_valve) }}</td>
             <td>{{ table.area1_gate_valve_text }}</td>
             <!-- 11号过滤器区域 -->
@@ -192,8 +192,8 @@
             <td>{{ table.area2_pipeline_connect_text }}</td>
           </tr>
           <tr>
-            <th :colspan="4">灌油棚区域</th>
-            <th :colspan="4">计量器材箱内物品</th>
+            <th :colspan="4">{{ table.area_3_name }}</th>
+            <th :colspan="4">{{ table.area_4_name }}</th>
           </tr>
           <tr>
             <!-- 灌油棚区域 -->
@@ -345,7 +345,7 @@
           </tr>
           <tr>
             <td class="all-col" colspan="5" style="border-right:none;">说明：完好打“√”，有故障或异常打“Χ”并在处置栏内注明原因及处理情况</td>
-            <td class="all-col" colspan="3" style="border-left:none;">检查人：{{ item.check_member }} {{ item.check_time }}</td>
+            <td class="all-col" colspan="3" style="border-left:none;">检查人：{{ table.check_member }} {{ table.check_time }}</td>
           </tr>
         </tbody>
       </table>
@@ -395,34 +395,38 @@ export default {
           this.tableList = data.list.map(v => {
             const form = {
               check_member: v.check_member,
-              check_time: v.check_time
+              check_time: v.check_time,
+              area_1_name: v.area_1_name,
+              area_2_name: v.area_2_name,
+              area_3_name: v.area_3_name,
+              area_4_name: v.area_4_name
             }
-            if (data.area_1_value) {
-              const area = JSON.parse(data.area_1_value)
+            if (v.area_1_value) {
+              const area = JSON.parse(v.area_1_value)
               for (const k in area) {
                 form[k] = area[k]
               }
             }
-            if (data.area_2_value) {
-              const area = JSON.parse(data.area_2_value)
+            if (v.area_2_value) {
+              const area = JSON.parse(v.area_2_value)
               for (const k in area) {
                 form[k] = area[k]
               }
             }
-            if (data.area_3_value) {
-              const area = JSON.parse(data.area_3_value)
+            if (v.area_3_value) {
+              const area = JSON.parse(v.area_3_value)
               for (const k in area) {
                 form[k] = area[k]
               }
             }
-            if (data.area_4_value) {
-              const area = JSON.parse(data.area_4_value)
+            if (v.area_4_value) {
+              const area = JSON.parse(v.area_4_value)
               for (const k in area) {
                 form[k] = area[k]
               }
             }
-            if (data.area_5_value) {
-              const area = JSON.parse(data.area_5_value)
+            if (v.area_5_value) {
+              const area = JSON.parse(v.area_5_value)
               for (const k in area) {
                 form[k] = area[k]
               }
@@ -442,9 +446,8 @@ export default {
       print({
         printable: 'print-table-' + idx,
         type: 'html',
-        maxWidth: 1092,
-        style: '@media print{@page {size:landscape;margin:0;}}',
-        targetStyles: ['*']
+        // maxWidth: 800,
+        style: '@media print{@page {size:portrait;margin:0 auto;}}.print-table{border:1px solid #666;border-collapse:collapse;margin:0 auto}.print-table.medium-width th{width:120px}.print-table.small-width th{width:100px}.print-table caption{margin-bottom:10px}.print-table th{width:80px}.print-table th,.print-table td{border:1px solid #666;padding:8px 5px}.print-table td{text-align:center}.print-table .all-col{text-align:left;padding:20px 10px}.print-table .all-col div{white-space:pre;padding-left:2em}.print-table .cus-tit{display:inline-block;width:30%}.print-table .cus-tit:last-child{width:40%;text-align:right}.print-table .cus-tit span{font-weight:normal;font-size:16px}'
       })
     },
     getName(type) {
@@ -452,7 +455,7 @@ export default {
       return +type === 1 ? '✔' : ''
     },
     getName2(type) {
-      return +type !== 1 ? '×' : ''
+      return +type !== 1 ? '✖' : ''
     }
   }
 }
