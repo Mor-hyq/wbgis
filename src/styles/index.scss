@@ -113,6 +113,11 @@ div:focus {
       width: 120px;
     }
   }
+  &.small-width {
+    th {
+      width: 100px;
+    }
+  }
   caption {
     margin-bottom: 10px;
   }

@@ -27,6 +27,10 @@ import glqflqyc from './components/newMaintainForm/glqflqycTable'
 import ycsbclr from './components/newMaintainForm/ycsbclrTable'
 import ycsbclrg from './components/newMaintainForm/ycsbclrgTable'
 import glflq from './components/newMaintainForm/glflqTable'
+import gytjdx from './components/newMaintainForm/gytjdxTable'
+import hkjyzgytr from './components/newMaintainForm/hkjyzgytrTable'
+import jycddm from './components/newMaintainForm/jycddmTable'
+import yljtlwy from './components/newMaintainForm/yljtlwyTable'
 export default { // 该页面已弃用
   name: 'MaintainRecordForm',
   components: {
@@ -40,12 +44,16 @@ export default { // 该页面已弃用
     glqflqyc,
     ycsbclr,
     ycsbclrg,
-    glflq
+    glflq,
+    gytjdx,
+    hkjyzgytr,
+    jycddm,
+    yljtlwy
   },
   data() {
     return {
       type: this.$route.query.type || '',
-      // type: '111',
+      // type: '162',
       id: this.$route.query.id || '',
       peid: this.$route.query.peid || ''
     }
@@ -107,6 +115,26 @@ export default { // 该页面已弃用
           return {
             name: '过滤器/分离器（预过滤器）压差记录',
             type: 'glflq'
+          }
+        case '211':
+          return {
+            name: '加油车呆德曼开闭时间周检查记录',
+            type: 'jycddm'
+          }
+        case '201':
+          return {
+            name: '压力接头滤网月检查清洗记录',
+            type: 'yljtlwy'
+          }
+        case '161':
+          return {
+            name: '灌油台接地线导电性能周检查记录',
+            type: 'gytjdx'
+          }
+        case '162':
+          return {
+            name: '航空加油站灌油台日检查记录',
+            type: 'hkjyzgytr'
           }
         default:
           return {}

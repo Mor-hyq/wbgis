@@ -1,47 +1,41 @@
 <template>
   <div style="padding-top: 20px;">
     <el-button type="primary" :size="$btnSize" @click="handlePrint">{{ mylang.print }}</el-button>
-    <table id="print-table" class="print-table medium-width " align="center" cellspacing="0" cellpadding="0">
+    <table id="print-table" class="print-table small-width" align="center" cellspacing="0" cellpadding="0">
       <caption>{{ tableName }}</caption>
-      <tr>
-        <th colspan="11" style="text-align:left;font-size:0;">
-          <div class="cus-tit">
-            <span class="tit">测量仪表名称：</span>
-            <span class="cont" />
-          </div>
-          <div class="cus-tit" style="text-align:center;">
-            <span class="tit">型号：</span>
-            <span class="cont" />
-          </div>
-          <div class="cus-tit">
-            <span class="tit">检验有效期：</span>
-            <span class="cont" />
-          </div>
-        </th>
-      </tr>
       <tbody>
         <tr>
-          <td>阳极编号</td>
-          <td
-            v-for="i in 10"
-            :key="i"
-            style="width:60px;"
-          >{{ i }}</td>
+          <th>设备名称</th>
+          <th>开启时间（s）</th>
+          <th>关闭时间（s）</th>
+          <th>流量（L）</th>
+          <th>流速（L/min）</th>
+          <th>使用情况</th>
         </tr>
-        <tr>
-          <td>管道保护电位</td>
-          <td
-            v-for="i in 10"
-            :key="i"
-          >{{ i }}</td>
+        <tr
+          v-for="(list, index) in tableList"
+          :key="index"
+        >
+          <!-- 设备名称 -->
+          <td>{{ list.asset_name }}</td>
+          <!-- 开启时间（s） -->
+          <td>{{ list.open_time }}</td>
+          <!-- 关闭时间（s） -->
+          <td>{{ list.close_time }}</td>
+          <!-- 流量（L） -->
+          <td>{{ list.flow }}</td>
+          <!-- 流速（L/min） -->
+          <td>{{ list.flow_rate }}</td>
+          <!-- 使用情况 -->
+          <td>{{ list.usage }}</td>
         </tr>
         <tr>
           <td>备注</td>
-          <td class="all-col" colspan="10"><div v-html="remark" /></td>
+          <td class="all-col" colspan="5"><div v-html="remark" /></td>
         </tr>
         <tr>
-          <td class="all-col" colspan="6" style="border-right:none;">测量人：{{ checkMember }}</td>
-          <td class="all-col" colspan="4" style="border-left:none;">检查时间：{{ checkTime }}</td>
+          <td class="all-col" colspan="3" style="border-right:none;">检查人：{{ checkMember }}</td>
+          <td class="all-col" colspan="3" style="border-left:none;">检查时间：{{ checkTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -76,7 +70,7 @@ export default {
     }
   },
   created() {
-    // this.getDetail()
+    this.getDetail()
   },
   methods: {
     async getDetail() {

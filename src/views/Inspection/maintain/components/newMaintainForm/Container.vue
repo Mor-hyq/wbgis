@@ -42,6 +42,7 @@ import glflq from './glflq'
 import jycddm from './jycddm'
 import yljtlwy from './yljtlwy'
 import gytjdx from './gytjdx'
+import hkjyzgytr from './hkjyzgytr'
 export default {
   components: {
     ddpspwz,
@@ -57,7 +58,8 @@ export default {
     glflq,
     jycddm,
     yljtlwy,
-    gytjdx
+    gytjdx,
+    hkjyzgytr
   },
   props: {
     visible: {
@@ -170,6 +172,11 @@ export default {
           return {
             name: '灌油台接地线导电性能周检查记录',
             type: 'gytjdx'
+          }
+        case '162':
+          return {
+            name: '航空加油站灌油台日检查记录',
+            type: 'hkjyzgytr'
           }
 
         default:

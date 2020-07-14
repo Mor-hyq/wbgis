@@ -483,7 +483,23 @@ export default {
       const form = {
         check_mid: '',
         check_time: '',
-        weather: ''
+        weather: '',
+        A7_actual_value: '',
+        A7_compare: 1,
+        A7_deal: '',
+        A7_remak: '',
+        A8_actual_value: '',
+        A8_compare: 1,
+        A8_deal: '',
+        A8_remak: '',
+        B7_actual_value: '',
+        B7_compare: 1,
+        B7_deal: '',
+        B7_remak: '',
+        B8_actual_value: '',
+        B8_compare: 1,
+        B8_deal: '',
+        B8_remak: ''
       }
       this.form = form
       // this.$nextTick(() => {

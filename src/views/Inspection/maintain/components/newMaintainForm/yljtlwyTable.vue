@@ -1,47 +1,43 @@
 <template>
   <div style="padding-top: 20px;">
     <el-button type="primary" :size="$btnSize" @click="handlePrint">{{ mylang.print }}</el-button>
-    <table id="print-table" class="print-table medium-width " align="center" cellspacing="0" cellpadding="0">
+    <table id="print-table" class="print-table small-width" align="center" cellspacing="0" cellpadding="0">
       <caption>{{ tableName }}</caption>
-      <tr>
-        <th colspan="11" style="text-align:left;font-size:0;">
-          <div class="cus-tit">
-            <span class="tit">测量仪表名称：</span>
-            <span class="cont" />
-          </div>
-          <div class="cus-tit" style="text-align:center;">
-            <span class="tit">型号：</span>
-            <span class="cont" />
-          </div>
-          <div class="cus-tit">
-            <span class="tit">检验有效期：</span>
-            <span class="cont" />
-          </div>
-        </th>
-      </tr>
       <tbody>
         <tr>
-          <td>阳极编号</td>
-          <td
-            v-for="i in 10"
-            :key="i"
-            style="width:60px;"
-          >{{ i }}</td>
+          <th rowspan="2">设备名称</th>
+          <th colspan="4">加油接头位置</th>
+          <th rowspan="2">处理情况</th>
+          <th rowspan="2">备注</th>
         </tr>
         <tr>
-          <td>管道保护电位</td>
-          <td
-            v-for="i in 10"
-            :key="i"
-          >{{ i }}</td>
+          <th>平台（前）</th>
+          <th>平台（后）</th>
+          <th>前绞盘</th>
+          <th>后绞盘</th>
+        </tr>
+        <tr
+          v-for="(list, index) in tableList"
+          :key="index"
+        >
+          <!-- 设备名称 -->
+          <td>{{ list.asset_name }}</td>
+          <!-- 平台（前） -->
+          <td>{{ list.front_platform }}</td>
+          <!-- 平台（后） -->
+          <td>{{ list.rear_platform }}</td>
+          <!-- 前绞盘 -->
+          <td>{{ list.front_winch }}</td>
+          <!-- 后绞盘 -->
+          <td>{{ list.rear_winch }}</td>
+          <!-- 处理情况 -->
+          <td>{{ list.deal }}</td>
+          <!-- 备注 -->
+          <td>{{ list.remark }}</td>
         </tr>
         <tr>
-          <td>备注</td>
-          <td class="all-col" colspan="10"><div v-html="remark" /></td>
-        </tr>
-        <tr>
-          <td class="all-col" colspan="6" style="border-right:none;">测量人：{{ checkMember }}</td>
-          <td class="all-col" colspan="4" style="border-left:none;">检查时间：{{ checkTime }}</td>
+          <td class="all-col" colspan="4" style="border-right:none;">检查人：{{ checkMember }}</td>
+          <td class="all-col" colspan="3" style="border-left:none;">检查时间：{{ checkTime }}</td>
         </tr>
       </tbody>
     </table>
@@ -70,13 +66,13 @@ export default {
       tableName: '',
       tableList: [],
       checkMember: '',
-      checkTime: '',
+      checkTime: ''
       // abnormalDeal: '',
-      remark: ''
+      // remark: ''
     }
   },
   created() {
-    // this.getDetail()
+    this.getDetail()
   },
   methods: {
     async getDetail() {
@@ -89,7 +85,7 @@ export default {
           this.tableName = data.title
           this.tableList = data.list
           // this.abnormalDeal = data.abnormal_deal
-          this.remark = data.remark
+          // this.remark = data.remark
           this.checkMember = data.check_member
           this.checkTime = data.check_time
         }
