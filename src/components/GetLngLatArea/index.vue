@@ -74,6 +74,10 @@ export default {
     isEdit: {
       type: Boolean,
       default: false
+    },
+    riskName: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -89,7 +93,8 @@ export default {
       showbtn: true,
       polyEditor: null,
       lngLatArr: null,
-      polygon: null
+      polygon: null,
+      textMap: null
     //   marker: null
     }
   },
@@ -120,8 +125,15 @@ export default {
       // }
 
       map = new AMap.Map(this.id, {
+        center: new AMap.LngLat(120.428998, 30.233107),
         resizeEnable: true,
-        zoom: 14
+        zoom: 14,
+        layers: [
+          // 卫星
+          new AMap.TileLayer.Satellite(),
+          // 路网
+          new AMap.TileLayer.RoadNet()
+        ]
       })
       AMap.plugin([
         'AMap.ToolBar',
@@ -225,6 +237,31 @@ export default {
       }
       this.map.add(poly)
       this.map.setFitView([poly])
+      const getCenterPoint = function(data) {
+        var lng = 0.0
+        var lat = 0.0
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].length < 1) { continue }
+          lng = lng + parseFloat(data[i].lng)
+          lat = lat + parseFloat(data[i].lat)
+        }
+        lng = lng / data.length
+        lat = lat / data.length
+        return [lng, lat]
+      }
+      const textMap = new AMap.Text({
+        text: this.riskName,
+        map: this.map,
+        position: getCenterPoint(ll),
+        clickable: true
+      })
+      AMap.event.addListener(textMap, 'click', function(e) {
+        textMap.hide()
+      })
+      AMap.event.addListener(poly, 'click', function(e) {
+        textMap.show()
+      })
+      this.textMap = textMap
     },
     startDraw() {
       if (this.drawPolygon) {
@@ -250,6 +287,10 @@ export default {
         this.polygon.hide()
         this.polygon = null
       }
+      if (this.textMap) {
+        this.textMap.hide()
+        this.textMap = null
+      }
     },
     hideMap() {
       this.isShow = false
@@ -267,6 +308,10 @@ export default {
       if (this.polyEditor) {
         this.polyEditor.close()
         this.polyEditor = null
+      }
+      if (this.textMap) {
+        this.textMap.hide()
+        this.textMap = null
       }
       this.mouseTool.close(true)
     }

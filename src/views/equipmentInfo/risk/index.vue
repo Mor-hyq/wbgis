@@ -151,6 +151,7 @@
       ref="getmap"
       :lnglat-pro="dialogForm.node"
       :is-edit="mapEdit"
+      :risk-name="dialogForm.name"
       @confirm="getLT"
     />
 
