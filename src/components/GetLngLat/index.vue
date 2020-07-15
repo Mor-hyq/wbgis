@@ -72,6 +72,7 @@ export default {
         })
       } else {
         map = new AMap.Map(this.id, {
+          center: new AMap.LngLat(120.428998, 30.233107),
           resizeEnable: true,
           zoom: 14
         })
@@ -85,7 +86,9 @@ export default {
         map.addControl(new AMap.ToolBar())
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
-          defaultType: 1
+          defaultType: 1,
+          showTraffic: true,
+          showRoad: true
         }))
         map.addControl(new AMap.Geolocation())
       })

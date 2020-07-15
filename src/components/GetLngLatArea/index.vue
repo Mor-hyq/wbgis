@@ -123,75 +123,71 @@ export default {
       //     zoom: 14
       //   })
       // }
-
+      const that = this
       map = new AMap.Map(this.id, {
         center: new AMap.LngLat(120.428998, 30.233107),
         resizeEnable: true,
-        zoom: 14,
-        layers: [
-          // 卫星
-          new AMap.TileLayer.Satellite(),
-          // 路网
-          new AMap.TileLayer.RoadNet()
-        ]
+        zoom: 14
       })
       AMap.plugin([
+        'AMap.MouseTool',
         'AMap.ToolBar',
         'AMap.Scale',
         'AMap.MapType',
         'AMap.Geolocation',
-        'AMap.MouseTool',
         'AMap.PolyEditor'
       ], function() {
         map.addControl(new AMap.ToolBar())
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
-          defaultType: 1
+          defaultType: 1,
+          showTraffic: true,
+          showRoad: true
         }))
         map.addControl(new AMap.Geolocation())
-      })
-
-      this.mouseTool = new AMap.MouseTool(map)
-      this.drawPolygon = function() {
-        this.mouseTool.polygon({
-          strokeColor: '#F56C6C',
-          // strokeOpacity: 1,
-          strokeWeight: 1,
-          strokeOpacity: 1,
-          fillColor: '#F56C6C',
-          fillOpacity: 0.4,
-          // 线样式还支持 'dashed'
-          strokeStyle: 'solid'
-          // strokeStyle是dashed时有效
-          // strokeDasharray: [30,10],
-        })
-      }
-      this.mouseTool.on('draw', (e) => {
-        // console.log(e.obj.getPath())
-        // const lnglat = e.obj.getPath().map(v => {
-        //   return [v.lng, v.lat]
-        // })
-
-        // const poly = new AMap.Polygon({
-        //   path: e.obj.getPath(),
-        //   strokeColor: '#F56C6C',
-        //   // strokeOpacity: 1,
-        //   strokeWeight: 1,
-        //   strokeOpacity: 1,
-        //   fillColor: '#F56C6C',
-        //   fillOpacity: 0.4,
-        //   // 线样式还支持 'dashed'
-        //   strokeStyle: 'solid'
-        // })
-        this.polyEditor = new AMap.PolyEditor(this.map, e.obj)
-        this.polyEditor.open()
-        this.polyEditor.on('end', (e) => {
-          this.lngLatArr = e.target.getPath().map(v => {
-            return [v.lng, v.lat]
+        that.mouseTool = new AMap.MouseTool(map)
+        that.drawPolygon = function() {
+          that.mouseTool.polygon({
+            strokeColor: '#F56C6C',
+            // strokeOpacity: 1,
+            strokeWeight: 1,
+            strokeOpacity: 1,
+            fillColor: '#F56C6C',
+            fillOpacity: 0.4,
+            // 线样式还支持 'dashed'
+            strokeStyle: 'solid'
+            // strokeStyle是dashed时有效
+            // strokeDasharray: [30,10],
           })
+        }
+        that.mouseTool.on('draw', (e) => {
+          // console.log(e.obj.getPath())
+          // const lnglat = e.obj.getPath().map(v => {
+          //   return [v.lng, v.lat]
+          // })
+
+          // const poly = new AMap.Polygon({
+          //   path: e.obj.getPath(),
+          //   strokeColor: '#F56C6C',
+          //   // strokeOpacity: 1,
+          //   strokeWeight: 1,
+          //   strokeOpacity: 1,
+          //   fillColor: '#F56C6C',
+          //   fillOpacity: 0.4,
+          //   // 线样式还支持 'dashed'
+          //   strokeStyle: 'solid'
+          // })
+          that.polyEditor = new AMap.PolyEditor(that.map, e.obj)
+          that.polyEditor.open()
+          that.polyEditor.on('end', (e) => {
+            that.lngLatArr = e.target.getPath().map(v => {
+              return [v.lng, v.lat]
+            })
+          })
+          that.showbtn = false
         })
-        this.showbtn = false
       })
+
       this.map = map
       if (this.lngLatArr.length > 0) {
         this.setpolyon(this.lngLatArr)
@@ -237,22 +233,24 @@ export default {
       }
       this.map.add(poly)
       this.map.setFitView([poly])
-      const getCenterPoint = function(data) {
-        var lng = 0.0
-        var lat = 0.0
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].length < 1) { continue }
-          lng = lng + parseFloat(data[i].lng)
-          lat = lat + parseFloat(data[i].lat)
-        }
-        lng = lng / data.length
-        lat = lat / data.length
-        return [lng, lat]
-      }
+      // const getCenterPoint = function(data) {
+      //   var lng = 0.0
+      //   var lat = 0.0
+      //   for (var i = 0; i < data.length; i++) {
+      //     if (data[i].length < 1) { continue }
+      //     lng = lng + parseFloat(data[i].lng)
+      //     lat = lat + parseFloat(data[i].lat)
+      //   }
+      //   lng = lng / data.length
+      //   lat = lat / data.length
+      //   return [lng, lat]
+      // }
       const textMap = new AMap.Text({
         text: this.riskName,
         map: this.map,
-        position: getCenterPoint(ll),
+        // position: getCenterPoint(ll),
+        position: poly.getBounds().northeast,
+        anchor: 'middle-left',
         clickable: true
       })
       AMap.event.addListener(textMap, 'click', function(e) {

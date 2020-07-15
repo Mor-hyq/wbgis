@@ -143,6 +143,7 @@ export default {
               const obj = {}
               v.value.forEach(k => {
                 obj.asset_id = k.asset_id
+                obj.relation = v.relation
                 obj[k.name] = k.value
               })
               return obj
@@ -197,8 +198,9 @@ export default {
     },
     setDisabledFunc(data) {
       // 设置禁止选择
-      const i = this.selectedInfo.findIndex(v => +v.asset_id === +data.asset_id)
-      return i < 0
+      // const i = this.selectedInfo.findIndex(v => +v.asset_id === +data.asset_id)
+      // return i < 0
+      return +data.relation !== 1
     },
     confirmSelect() {
       // 点击确认提交权限数据

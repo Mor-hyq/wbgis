@@ -236,7 +236,13 @@ export default {
           this.total = data.total
           //   this.tableData = data.data || []
           if (data.data && data.data.length > 0) {
-            this.tableField = data.data[0].value
+            const newData = [...data.data[0].value]
+            newData.unshift({
+              hide: 0,
+              name: 'order',
+              title: '序号'
+            })
+            this.tableField = newData
             // const arr = []
             // const tableData = data.data
             // tableData.forEach(v => {
@@ -249,7 +255,9 @@ export default {
             // })
             // this.tableData = arr
             const tableData = data.data.map(v => {
-              const obj = {}
+              const obj = {
+                order: v.id
+              }
               v.value.forEach(k => {
                 obj.asset_id = k.asset_id
                 if (k.name === 'code') {

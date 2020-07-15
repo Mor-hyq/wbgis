@@ -135,7 +135,7 @@ const system = {
           isFixed: true,
           meta: {
             level: '1-1-3',
-            title: '风险线路管理',
+            title: '风险信息设置',
             noCache: false
           }
         }

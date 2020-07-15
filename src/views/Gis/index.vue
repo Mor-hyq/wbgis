@@ -64,7 +64,7 @@
             <el-checkbox v-model="form.buleShow" @change="hideBlue">隐藏参考线</el-checkbox>
           </el-form-item> -->
           <el-form-item>
-            <el-checkbox v-model="form.riskArea" @change="hideRisk">隐藏风险区域</el-checkbox>
+            <el-checkbox v-model="form.riskArea" @change="showRisk">风险信息展示</el-checkbox>
           </el-form-item>
         </el-form>
       </div>
@@ -280,9 +280,9 @@ export default {
         }))
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
-          defaultType: 1,
-          showTraffic: true,
-          showRoad: true
+          defaultType: 1
+          // showTraffic: true,
+          // showRoad: true
         }))
       })
       this.map = map
@@ -309,9 +309,9 @@ export default {
         }))
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
-          defaultType: 1,
-          showTraffic: true,
-          showRoad: true
+          defaultType: 1
+          // showTraffic: true,
+          // showRoad: true
         }))
       })
       this.map = map
@@ -1003,22 +1003,11 @@ export default {
         })
         this.lines[this.polyname + '3' + ind] = polygon
         polygon.setMap(map)
-        const getCenterPoint = function(data) {
-          var lng = 0.0
-          var lat = 0.0
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].length < 1) { continue }
-            lng = lng + parseFloat(data[i].lng)
-            lat = lat + parseFloat(data[i].lat)
-          }
-          lng = lng / data.length
-          lat = lat / data.length
-          return [lng, lat]
-        }
         const textMap = new AMap.Text({
           text: route.name,
           map: this.map,
-          position: getCenterPoint(polypath),
+          position: polygon.getBounds().northeast,
+          anchor: 'middle-left',
           clickable: true
         })
         AMap.event.addListener(textMap, 'click', function(e) {
@@ -1029,13 +1018,17 @@ export default {
         })
         this.polygonArrs.push(polygon)
         this.textArrs.push(textMap)
+        if (!this.riskArea) {
+          polygon.hide()
+          textMap.hide()
+        }
       } catch (error) {
         console.log(error)
       }
     },
-    hideRisk(val) {
+    showRisk(val) {
       // 隐藏风险区域
-      if (!val) {
+      if (val) {
         // 显示风险区域
         this.polygonArrs.forEach(v => {
           v.show()
