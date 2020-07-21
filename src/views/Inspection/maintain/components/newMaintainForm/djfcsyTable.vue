@@ -34,8 +34,8 @@
         </tr>
 
         <tr>
-          <td>备注</td>
-          <td class="all-col" colspan="10"><div v-html="remark" /></td>
+          <td colspan="2">备注</td>
+          <td class="all-col" colspan="9"><div v-html="remark" /></td>
         </tr>
         <tr>
           <td class="all-col" colspan="6" style="border-right:none;">检查人员：{{ checkMember }}</td>
@@ -105,7 +105,12 @@ export default {
     },
     getName(type) {
       // return +type === 1 ? '✔' : (type || '')
-      return +type === 1 ? '✔' : '✖'
+      if (+type === 1) {
+        return '✔'
+      } else if (+type) {
+        return '✖'
+      }
+      return ''
     }
   }
 }

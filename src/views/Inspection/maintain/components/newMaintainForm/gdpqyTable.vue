@@ -92,7 +92,7 @@ export default {
     }
   },
   created() {
-    // this.getDetail()
+    this.getDetail()
   },
   methods: {
     async getDetail() {
