@@ -106,7 +106,7 @@
         </div>
       </div>
       <div class="outer">
-        <h3 class="title">设备故障率</h3>
+        <h3 class="title">维修完成率</h3>
         <div class="inner">
           <div class="chart1 chart2">
             <template v-if="!isNoRepaire && chart2Data.length > 0">
@@ -114,7 +114,7 @@
                 v-for="(item,ind) in chart2Data"
               >
                 <div
-                  v-if="+item.ratio > 0"
+
                   :key="ind"
                   class="progress-box"
                   @click="goAssetPage(item.name)"
@@ -909,31 +909,48 @@ export default {
       try {
         const { code, data } = await getRepaireProgressChart()
         if (code === 200) {
-          const xData = data.xData || []
-          const yData = data.series || []
-          if (yData.length < 2) {
-            // 如果返回的series数据小于两条 则数据有问题
-            this.isNoRepaire = true // 是否有维修数据
-            return
-          }
-          const finishData = [] // series中二维数组相减后得到已完成维修的数据 [0]已完成+维修中 [1]维修中
-          for (let i = 0; i < yData[0].length; i++) {
-            const sum = (+yData[0][i]) - (+yData[1][i])
-            finishData.push(sum)
-          }
-          // 若已完成数据都是0 则显示无维修提示
-          if (finishData.findIndex(v => +v > 0) < 0) {
-            this.isNoRepaire = true
-            return
-          }
+          // const xData = data.xData || []
+          // const yData = data.series || []
+          // if (yData.length < 2) {
+          //   // 如果返回的series数据小于两条 则数据有问题
+          //   this.isNoRepaire = true // 是否有维修数据
+          //   return
+          // }
+          // const finishData = [] // series中二维数组相减后得到已完成维修的数据 [0]已完成+维修中 [1]维修中
+          // for (let i = 0; i < yData[0].length; i++) {
+          //   const sum = (+yData[0][i]) - (+yData[1][i])
+          //   finishData.push(sum)
+          // }
+          // // 若已完成数据都是0 则显示无维修提示
+          // if (finishData.findIndex(v => +v > 0) < 0) {
+          //   this.isNoRepaire = true
+          //   return
+          // }
+          // this.isNoRepaire = false
+          // const percent = finishData.map((x, j) => {
+          //   const y = +yData[0][j]
+          //   if (y === 0) {
+          //     return 0
+          //   }
+          //   return ((x / +yData[0][j]) * 100).toFixed(2)
+          // })
+          // const initData = []
+          // const chartData = xData.map((v, i) => {
+          //   const colori = i % this.chartColors.length
+          //   const obj = {}
+          //   const init = {}
+          //   init.name = v
+          //   init.ratio = +percent[i] > 0 ? 1 : 0
+          //   init.color = this.chartColors[colori]
+          //   obj.name = v
+          //   obj.color = this.chartColors[colori]
+          //   obj.ratio = percent[i] || 0
+          //   initData.push(init)
+          //   return obj
+          // })
           this.isNoRepaire = false
-          const percent = finishData.map((x, j) => {
-            const y = +yData[0][j]
-            if (y === 0) {
-              return 0
-            }
-            return ((x / +yData[0][j]) * 100).toFixed(2)
-          })
+          const xData = data.xData || []
+          const percent = data.percent || []
           const initData = []
           const chartData = xData.map((v, i) => {
             const colori = i % this.chartColors.length
