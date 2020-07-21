@@ -10,7 +10,7 @@
       :disabled="isRead"
       label-width="100px"
     >
-      <el-row :gutter="10">
+      <!-- <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -26,7 +26,7 @@
             :label="mylang.equipmentNumber"
           >{{ eqNum || form.code }}</el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item
@@ -67,12 +67,13 @@
         prop="low_area"
         label="机坪低点排水区域"
       >
-        <el-input
+        <!-- <el-input
           v-if="!isRead"
           v-model="form.low_area"
           clearable
         />
-        <span v-else class="read">{{ form.low_area }}</span>
+        <span v-else class="read">{{ form.low_area }}</span> -->
+        <span class="read">{{ form.low_area }}</span>
       </el-form-item>
       <el-form-item
         prop="visual"
@@ -167,7 +168,7 @@ export default {
       form: {
         check_mid: '',
         check_time: '',
-        low_area: '',
+        low_area: this.eqName || '',
         visual: 1,
         water_detector: 1,
         deal: '',

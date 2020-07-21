@@ -10,7 +10,7 @@
       :disabled="isRead"
       label-width="100px"
     >
-      <el-row :gutter="10">
+      <!-- <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -26,7 +26,7 @@
             :label="mylang.equipmentNumber"
           >{{ eqNum || form.code }}</el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item
@@ -67,12 +67,13 @@
         prop="high_area"
         label="机坪高点排气区域"
       >
-        <el-input
+        <!-- <el-input
           v-if="!isRead"
           v-model="form.high_area"
           clearable
         />
-        <span v-else class="read">{{ form.high_area }}</span>
+        <span v-else class="read">{{ form.high_area }}</span> -->
+        <span class="read">{{ form.high_area }}</span>
       </el-form-item>
       <el-form-item
         prop="visual"
@@ -167,7 +168,7 @@ export default {
       form: {
         check_mid: '',
         check_time: '',
-        high_area: '',
+        high_area: this.eqName || '',
         visual: 1,
         water_detector: 1,
         deal: '',

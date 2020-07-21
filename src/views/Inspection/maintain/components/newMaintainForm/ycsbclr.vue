@@ -11,7 +11,7 @@
       label-width="100px"
     >
       <el-divider content-position="left"><span class="t-blue">基本信息</span></el-divider>
-      <el-row :gutter="5">
+      <!-- <el-row :gutter="5">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -27,7 +27,7 @@
             :label="mylang.equipmentNumber"
           >{{ eqNum || form.code }}</el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item

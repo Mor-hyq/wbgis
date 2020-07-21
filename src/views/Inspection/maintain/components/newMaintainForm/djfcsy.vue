@@ -10,7 +10,7 @@
       :disabled="isRead"
       label-width="120px"
     >
-      <el-row :gutter="10">
+      <!-- <el-row :gutter="10">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
@@ -26,7 +26,7 @@
             :label="mylang.equipmentNumber"
           >{{ eqNum || form.code }}</el-form-item>
         </el-col>
-      </el-row>
+      </el-row> -->
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item
@@ -67,12 +67,13 @@
         prop="ground_area"
         label="地井阀区域"
       >
-        <el-input
+        <!-- <el-input
           v-if="!isRead"
           v-model="form.ground_area"
           clearable
         />
-        <span v-else class="read">{{ form.ground_area }}</span>
+        <span v-else class="read">{{ form.ground_area }}</span> -->
+        <span class="read">{{ form.ground_area }}</span>
       </el-form-item>
       <el-form-item
         prop="check"
@@ -161,7 +162,7 @@ export default {
         check_mid: '',
         check_time: '',
         check: 1,
-        ground_area: '',
+        ground_area: this.eqName || '',
         check_text: '',
         close_time: '',
         remark: ''
