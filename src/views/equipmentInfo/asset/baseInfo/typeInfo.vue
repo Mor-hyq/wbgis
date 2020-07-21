@@ -81,7 +81,15 @@
           prop="code"
           :label="mylang.number"
         >
-          <el-input v-model="dialogForm.code" :readonly="dialogDisabled" clearable />
+          <!-- <el-input
+            v-model="dialogForm.code"
+            :readonly="dialogDisabled"
+            clearable
+          /> -->
+          <el-input
+            v-model="dialogForm.code"
+            clearable
+          />
         </el-form-item>
         <el-form-item prop="name" :label="mylang.typeName">
           <el-input v-model="dialogForm.name" clearable />
