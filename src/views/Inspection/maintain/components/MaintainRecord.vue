@@ -16,6 +16,7 @@
               clearable
               :size="$btnSize"
               placeholder="全部"
+              @change="equipmentChange"
             >
               <el-option
                 v-for="pipe in eTypeOptions"
@@ -25,8 +26,39 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
+          <!-- <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
             <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
+          </el-form-item> -->
+          <el-form-item
+            prop="asset_id"
+            :label="mylang.equipmentName"
+          >
+            <el-select
+              v-model="searchForm.asset_id"
+              clearable
+            >
+              <el-option
+                v-for="pipe in eNameOptions"
+                :key="pipe.asset_id"
+                :value="pipe.asset_id"
+                :label="pipe.name"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item prop="cycle" :label="mylang.maintainCycle">
+            <el-select
+              v-model="searchForm.cycle"
+              clearable
+              :size="$btnSize"
+              placeholder="全部"
+            >
+              <el-option
+                v-for="cycle in cycleOptions"
+                :key="cycle.id"
+                :value="cycle.id"
+                :label="cycle.label"
+              />
+            </el-select>
           </el-form-item>
           <!-- <el-form-item prop="plan_time" :label="mylang.plan + mylang.maintainDate">
             <el-date-picker
@@ -57,21 +89,6 @@
                 :key="option.id"
                 :label="option.label"
                 :value="option.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item prop="cycle" :label="mylang.maintainCycle">
-            <el-select
-              v-model="searchForm.cycle"
-              clearable
-              :size="$btnSize"
-              placeholder="全部"
-            >
-              <el-option
-                v-for="cycle in cycleOptions"
-                :key="cycle.id"
-                :value="cycle.id"
-                :label="cycle.label"
               />
             </el-select>
           </el-form-item>
@@ -257,6 +274,7 @@ import {
   getMaintainRecord2,
   // deleteMaintainRecord,
   // editMaintainRecord,
+  getAssetNameState,
   getAssetTypeState
 } from '@/api/inspection'
 import config from '@/config'
@@ -280,10 +298,12 @@ export default {
         equipment_id: '',
         field_value_id_2: '',
         state: '',
-        cycle: ''
+        cycle: '',
+        asset_id: ''
       },
       maintainOptions: [],
       eTypeOptions: [],
+      eNameOptions: [],
       stateOptions: [{
         id: '1',
         // label: this.mylang.abnormal
@@ -350,6 +370,7 @@ export default {
       egi_time = '',
       equipment_id = '',
       field_value_id_2 = '',
+      asset_id = '',
       state = '',
       cycle = ''
     } = {}) {
@@ -359,6 +380,7 @@ export default {
         //  plan_time,
         egi_time, equipment_id,
         field_value_id_2,
+        asset_id,
         state,
         cycle })
     },
@@ -367,6 +389,7 @@ export default {
       egi_time = '',
       equipment_id = '',
       field_value_id_2 = '',
+      asset_id = '',
       state = '',
       cycle = '',
       page = this.listQuery.page,
@@ -381,6 +404,7 @@ export default {
           egi_time: Array.isArray(egi_time) ? egi_time.join() : egi_time,
           equipment_id,
           field_value_id_2,
+          asset_id,
           state,
           cycle
         })
@@ -403,6 +427,7 @@ export default {
         egi_time: search.egi_time,
         equipment_id: search.equipment_id,
         field_value_id_2: search.field_value_id_2,
+        asset_id: search.asset_id,
         state: search.state,
         cycle: search.cycle
       })
@@ -416,6 +441,7 @@ export default {
         egi_time: data.search.egi_time,
         equipment_id: data.search.equipment_id,
         field_value_id_2: data.search.field_value_id_2,
+        asset_id: data.search.asset_id,
         state: data.search.state,
         cycle: data.search.cycle
       })
@@ -645,11 +671,21 @@ export default {
       if (this.$store.state.form.belongPipe.length < 1) {
         this.$store.dispatch('form/setBelongPipe').then(() => {
           const pipeOptions = this.$store.state.form.belongPipe
+          this.pipeId = pipeOptions[0].id
           this.getEquipmentOptions(pipeOptions[0].id)
         })
       } else {
         const pipeOptions = this.$store.state.form.belongPipe
+        this.pipeId = pipeOptions[0].id
         this.getEquipmentOptions(pipeOptions[0].id)
+      }
+    },
+    equipmentChange(val) {
+      // 重选设备类型 设备也要重新选择
+      this.searchForm.asset_id = ''
+      this.eNameOptions = []
+      if (this.pipeId && this.searchForm.equipment_id) {
+        this.getEquipmentNameOptions()
       }
     },
     async getEquipmentOptions(id) {
@@ -659,6 +695,19 @@ export default {
         })
         if (code === 200) {
           this.eTypeOptions = data || []
+        }
+      } catch (error) {
+        //
+      }
+    },
+    async getEquipmentNameOptions() {
+      try {
+        const { code, data } = await getAssetNameState({
+          id: this.pipeId,
+          equipment_id: this.searchForm.equipment_id
+        })
+        if (code === 200) {
+          this.eNameOptions = data || []
         }
       } catch (error) {
         //
