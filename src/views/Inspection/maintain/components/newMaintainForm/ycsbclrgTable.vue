@@ -283,9 +283,15 @@ export default {
       })
     },
     getName(type, text) {
+      if (!type) {
+        return ''
+      }
       return +type === 1 ? '✔' : (text || '')
     },
     getName2(type) {
+      if (!type) {
+        return ''
+      }
       return +type ? '✔' : ''
     }
   }

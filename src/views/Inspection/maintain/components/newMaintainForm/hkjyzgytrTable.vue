@@ -452,9 +452,15 @@ export default {
     },
     getName(type) {
       //   return +type === 1 ? '✔' : (type || '')
+      if (!type) {
+        return ''
+      }
       return +type === 1 ? '✔' : ''
     },
     getName2(type) {
+      if (!type) {
+        return ''
+      }
       return +type !== 1 ? '✖' : ''
     }
   }

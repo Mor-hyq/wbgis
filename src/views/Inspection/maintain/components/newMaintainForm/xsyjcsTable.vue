@@ -107,6 +107,9 @@ export default {
       })
     },
     getName(type) {
+      if (!type) {
+        return ''
+      }
       return +type === 1 ? '✔' : (type || '')
     }
   }
