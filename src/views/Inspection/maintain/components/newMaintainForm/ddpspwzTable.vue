@@ -43,7 +43,7 @@
           <!-- 目视结论 合格-->
           <td>{{ getName(list.deal_visual_1) }}</td>
           <!-- 目视结论 不合格-->
-          <td>{{ getName(list.vdeal_visual_2) }}</td>
+          <td>{{ getName(list.deal_visual_2) }}</td>
           <!-- 检查人员 -->
           <td>{{ list.check_member }}</td>
           <!-- 检查日期 -->

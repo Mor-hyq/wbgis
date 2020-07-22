@@ -104,13 +104,7 @@ export default {
       })
     },
     getName(type) {
-      // return +type === 1 ? '✔' : (type || '')
-      if (+type === 1) {
-        return '✔'
-      } else if (+type) {
-        return '✖'
-      }
-      return ''
+      return +type === 1 ? '✔' : (type || '')
     }
   }
 }

@@ -230,8 +230,11 @@ export default {
           }
         })
       } else {
-        if (this.chooseDelArr.length < 0) {
-          return
+        if (this.chooseDelArr.length < 1) {
+          this.$message({
+            type: 'warning',
+            message: '请选择导出表单'
+          })
         } else if (this.chooseDelArr.length > 1) {
           this.$message({
             type: 'warning',

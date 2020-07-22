@@ -282,7 +282,7 @@ export default {
       return +type === 1 ? '✔' : (text || '')
     },
     getName2(type) {
-      return +type === 1 ? '✔' : (type || '')
+      return +type ? '✔' : ''
     }
   }
 }
