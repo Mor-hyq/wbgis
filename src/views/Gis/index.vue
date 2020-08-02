@@ -85,6 +85,7 @@
                 v-for="(item,ind) in chart1Data"
                 :key="ind"
                 class="progress"
+                @click="goAssetIndexPage(item.eq_id)"
               >
                 <span class="name" :title="item.name">{{ item.name }}</span>
                 <span class="num">{{ item.num }}</span>
@@ -114,7 +115,6 @@
                 v-for="(item,ind) in chart2Data"
               >
                 <div
-
                   :key="ind"
                   class="progress-box"
                   @click="goAssetPage(item.name)"
@@ -661,6 +661,7 @@ export default {
         if (code === 200) {
           const xData = data.xData || []
           const yData = data.series || []
+          const eqIds = data.equipment_id || []
           const initData = []
           // const max = Math.max.apply(null, yData)
           const chartData = xData.map((v, i) => {
@@ -672,6 +673,7 @@ export default {
             // init.color = this.chartColors[colori]
             obj.name = v
             obj.num = yData[i]
+            obj.eq_id = eqIds[i]
             // obj.color = this.chartColors[colori]
             // obj.ratio = parseFloat((+yData[i] / max) * 100).toFixed(2)
             obj.ratio = 50
@@ -1061,6 +1063,15 @@ export default {
           v.hide()
         })
       }
+    },
+    goAssetIndexPage(id) {
+      this.$store.commit('form/SET_ASSET_TAB', id + '')
+      this.$router.push({
+        name: 'AssetIndex',
+        query: {
+          eq_id: id
+        }
+      })
     }
   }
 }
@@ -1180,6 +1191,7 @@ export default {
           background-color: #F1F4F7;
           overflow: hidden;
           margin-top: 8px;
+          cursor: pointer;
           .name {
             position: absolute;
             top: 0;

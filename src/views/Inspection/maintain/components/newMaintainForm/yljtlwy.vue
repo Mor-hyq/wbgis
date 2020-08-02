@@ -10,23 +10,24 @@
       :disabled="isRead"
       label-width="120px"
     >
-      <!-- <el-row :gutter="5">
+      <el-row :gutter="5">
         <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentType"
           >{{ eqType || form.equipment_name }}</el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="16">
           <el-form-item
             :label="mylang.equipmentName"
           >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
-        <el-col :span="8">
+        <!-- <el-col :span="8">
           <el-form-item
             :label="mylang.equipmentNumber"
           >{{ eqNum || form.code }}</el-form-item>
-        </el-col>
-      </el-row> -->
+        </el-col> -->
+      </el-row>
+      <div class="custom-divider" />
       <el-row :gutter="10">
         <el-col :span="10">
           <el-form-item

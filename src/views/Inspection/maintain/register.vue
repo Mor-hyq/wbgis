@@ -29,7 +29,18 @@
             </el-select>
           </el-form-item>
           <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
-            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
+            <!-- <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable /> -->
+            <el-select
+              v-model="searchForm.field_value_id_2"
+              clearable
+            >
+              <el-option
+                v-for="pipe in eNameOptions"
+                :key="pipe.asset_id"
+                :value="pipe.name"
+                :label="pipe.name"
+              />
+            </el-select>
           </el-form-item>
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
 
@@ -128,6 +139,7 @@
 <script>
 import dayjs from 'dayjs'
 import {
+  getAssetNameState,
   getMaintainRegisterList
 } from '@/api/inspection'
 import MaintainContainer from './components/newMaintainForm/Container'
@@ -139,8 +151,9 @@ export default {
   data() {
     return {
       id: this.$route.query.id || '',
+      eq_id: this.$route.query.eq_id || '',
       searchForm: {
-        state: '',
+        state: '0',
         field_value_id_2: ''
       },
       stateOptions: [{
@@ -150,6 +163,7 @@ export default {
         id: '1',
         label: '已维护'
       }],
+      eNameOptions: [],
       realSearch: {},
       total: 0,
       listQuery: {
@@ -175,7 +189,12 @@ export default {
     }
   },
   created() {
-    this.initTableData()
+    if (this.eq_id) {
+      this.getPipeOptions()
+    }
+  },
+  mounted() {
+    this.handleSearch()
   },
   methods: {
     initTableData({
@@ -292,6 +311,30 @@ export default {
         }
       }
       return name
+    },
+    getPipeOptions() {
+      if (this.$store.state.form.belongPipe.length < 1) {
+        this.$store.dispatch('form/setBelongPipe').then(() => {
+          const pipeOptions = this.$store.state.form.belongPipe
+          this.getEquipmentOptions(pipeOptions[0].id)
+        })
+      } else {
+        const pipeOptions = this.$store.state.form.belongPipe
+        this.getEquipmentOptions(pipeOptions[0].id)
+      }
+    },
+    async getEquipmentOptions(id) {
+      try {
+        const { code, data } = await getAssetNameState({
+          id,
+          equipment_id: this.eq_id
+        })
+        if (code === 200) {
+          this.eNameOptions = data || []
+        }
+      } catch (error) {
+        //
+      }
     }
   }
 }

@@ -10,8 +10,8 @@
     >
       <template slot="search">
         <el-form ref="searchForm" :model="searchForm" :size="$btnSize" inline>
-          <el-form-item prop="name" :label="mylang.typeName">
-            <el-input v-model="searchForm.name" :placeholder="`请输入${mylang.typeName}`" clearable />
+          <el-form-item prop="name" :label="mylang.equipmentName">
+            <el-input v-model="searchForm.name" :placeholder="`请输入${mylang.equipmentName}`" clearable />
           </el-form-item>
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
         </el-form>
@@ -131,7 +131,8 @@ export default {
       this.tableData = []
       try {
         const { code, data } = await getAssetList({
-          page, paginate, name,
+          page, paginate,
+          field_value_id_2: name,
           equipment_id: this.equipmentId
         })
         this.tableLoading = false
@@ -260,6 +261,9 @@ export default {
       // 清空seletedList值
       this.selectedList = []
       this.$refs.tables.clearSelection()
+    },
+    clearSearch() {
+      this.searchForm.name = ''
     }
   }
 }

@@ -4,6 +4,7 @@
     :visible.sync="visible"
     custom-class="dialog-custom"
     width="90%"
+    @close="beforeClose"
   >
     <asset-list ref="assetlist" :equipment-id="equipId" is-components :selected-info="selectedInfo" />
     <div slot="footer" class="dialog-footer">
@@ -87,6 +88,11 @@ export default {
         const ids = arr.map(v => v.asset_id).join()
         this.linkAsset(ids)
       })
+    },
+    beforeClose() {
+      if (this.$refs.assetlist) {
+        this.$refs.assetlist.clearSearch()
+      }
     }
   }
 }

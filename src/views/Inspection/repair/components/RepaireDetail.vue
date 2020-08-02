@@ -271,6 +271,7 @@
               <el-select
                 v-model="cform.overhaul_mid"
                 clearable
+                allow-create
                 filterable
               >
                 <el-option
@@ -312,7 +313,7 @@
                 <el-option
                   v-for="item in memberOptions"
                   :key="item.id"
-                  :value="item.id"
+                  :value="item.nickname"
                   :label="item.nickname"
                 />
               </el-select>
@@ -449,11 +450,13 @@
           <td colspan="5">{{ form.start_time }}</td>
         </tr>
         <tr>
-          <td>检修人</td>
-          <td>{{ filterName(cform.overhaul_mid) }}</td>
+          <td style="width:100px">检修人</td>
+          <!-- <td>{{ filterName(cform.overhaul_mid) }}</td> -->
+          <td style="width:150px;" />
           <td>{{ cform.service_time }}</td>
           <td>验收人</td>
-          <td>{{ filterName(cform.accept_mid) }}</td>
+          <!-- <td>{{ filterName(cform.accept_mid) }}</td> -->
+          <td style="width:150px;" />
           <td>{{ cform.accept_time }}</td>
         </tr>
       </table>
@@ -990,6 +993,7 @@ export default {
       print({
         printable: 'print-table',
         type: 'html',
+        style: '@media print{@page {size:portrait;margin:0 auto;}}',
         targetStyles: ['*']
       })
     }

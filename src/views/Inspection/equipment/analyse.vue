@@ -230,10 +230,18 @@ export default {
           this.charts.getZr().on('click', (params) => {
             const pointInPixel = [params.offsetX, params.offsetY]
             if (this.charts.containPixel('grid', pointInPixel)) {
-              const xIndex = this.charts.convertFromPixel({ seriesIndex: 0 }, [params.offsetX, params.offsetY])[0]
+              const xIndexArr = this.charts.convertFromPixel({ seriesIndex: 0 }, pointInPixel)
+              let tabindex = this.activeName
+              if (params.target) {
+                tabindex = params.target.seriesIndex + 1 + '' || this.activeName
+              }
+              this.activeName = tabindex
+              const xIndex = xIndexArr[0]
               this.curMoth = xIndex + 1
               this.curSlc = xIndex
-              this.initTabs()
+              this.$nextTick(() => {
+                this.initTabs()
+              })
               this.charts.setOption(option)
             }
           })

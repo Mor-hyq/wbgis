@@ -6,9 +6,9 @@
           <div class="subtit">{{ mylang.equipmentType }}</div>
           <el-menu :default-active="active" @select="changeType">
             <el-menu-item
-              v-for="(item, ind) in typeList"
+              v-for="(item) in typeList"
               :key="item.id"
-              :index="String(ind)"
+              :index="String(item.id)"
             >
               {{ item.name }}
             </el-menu-item>
@@ -188,12 +188,12 @@ export default {
     this.$_deleteOtherView()
   },
   methods: {
-    changeType(index) {
-      this.$store.commit('form/SET_ASSET_TAB', index)
-      this.active = index
+    changeType(id) {
+      this.$store.commit('form/SET_ASSET_TAB', id)
+      this.active = id
       this.searchForm.field_value_id_2 = ''
-      this.equipment_id = this.typeList[index].id
-      this.equipment_name = this.typeList[index].name
+      this.equipment_id = id
+      this.equipment_name = this.typeList.find(v => +v.id === +id).name
       this.initTableData()
     },
     async getEquipmentTypeAll() {
@@ -203,8 +203,11 @@ export default {
           this.typeList = data
           // this.equipment_id = this.typeList[0].id
           // this.equipment_name = this.typeList[0].name
-          this.equipment_id = this.typeList[this.active].id
-          this.equipment_name = this.typeList[this.active].name
+          if (+this.active < 1) {
+            this.active = data[0].id + ''
+          }
+          this.equipment_id = this.active
+          this.equipment_name = data.find(v => +v.id === +this.active).name
           this.initTableData()
         }
       } catch (error) {

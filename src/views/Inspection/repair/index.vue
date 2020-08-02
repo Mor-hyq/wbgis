@@ -64,6 +64,9 @@
               />
             </el-select>
           </el-form-item>
+          <el-form-item prop="overhaul_mid" label="检修人员">
+            <el-input v-model="searchForm.overhaul_mid" :placeholder="`请输入检修人员`" clearable />
+          </el-form-item>
           <!-- <el-form-item prop="title" :label="mylang.repairTitle">
             <el-input v-model="searchForm.title" :placeholder="`请输入${mylang.repairTitle}`" clearable />
           </el-form-item> -->
@@ -125,7 +128,7 @@
         />
         <el-table-column
           align="center"
-          prop="username"
+          prop="useoverhaul_mid"
 
           :label="mylang.orderMember"
         />
@@ -133,6 +136,11 @@
           align="center"
           prop="asset_num"
           :label="mylang.repairNumber"
+        />
+        <el-table-column
+          align="center"
+          prop="overhaul_mid"
+          label="检修人员"
         />
         <el-table-column
           align="center"
@@ -210,7 +218,8 @@ export default {
         // field_value_id_2: '',
         equipment_id: '',
         state: '',
-        start_time: ''
+        start_time: '',
+        overhaul_mid: ''
       },
       pipeOptions: [],
       stateOptions: [{
@@ -267,7 +276,8 @@ export default {
       // field_value_id_2 = '',
       equipment_id = '',
       pipe_id = '',
-      state = ''
+      state = '',
+      overhaul_mid = ''
     } = {}) {
       this.listQuery.page = 1
       this.getList({
@@ -275,6 +285,7 @@ export default {
         // title,
         start_time,
         state,
+        overhaul_mid,
         // field_value_id_2,
         equipment_id })
     },
@@ -283,6 +294,7 @@ export default {
       start_time = '',
       // field_value_id_2 = '',
       equipment_id = '',
+      overhaul_mid = '',
       pipe_id = '',
       state = '',
       page = this.listQuery.page,
@@ -298,7 +310,8 @@ export default {
           start_time: time,
           pipe_id, state,
           // field_value_id_2,
-          equipment_id
+          equipment_id,
+          overhaul_mid
         })
         this.tableLoading = false
         if (code === 200) {
@@ -318,6 +331,7 @@ export default {
         start_time: search.start_time,
         // field_value_id_2: search.field_value_id_2,
         equipment_id: search.equipment_id,
+        overhaul_mid: search.overhaul_mid,
         pipe_id: search.pipe_id,
         state: search.state
       })
@@ -331,6 +345,7 @@ export default {
         start_time: data.search.start_time,
         // field_value_id_2: data.search.field_value_id_2,
         equipment_id: data.search.equipment_id,
+        overhaul_mid: data.search.overhaul_mid,
         pipe_id: data.search.pipe_id,
         state: data.state
       })
@@ -490,6 +505,7 @@ export default {
             start_time: this.realSearch.start_time,
             // field_value_id_2: this.realSearch.field_value_id_2,
             equipment_id: this.realSearch.equipment_id,
+            overhaul_mid: this.realSearch.overhaul_mid,
             pipe_id: this.realSearch.pipe_id,
             state: this.realSearch.state
           })

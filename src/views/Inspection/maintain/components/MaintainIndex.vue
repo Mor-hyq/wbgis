@@ -607,7 +607,8 @@ export default {
       this.$router.push({
         name: 'MaintainRecord',
         query: {
-          id: row.id
+          id: row.id,
+          eq_id: row.equipment_id
         }
       })
     },

@@ -327,6 +327,7 @@ export function getAssetServiceList({
   field_id_2 = '',
   field_value_id_2,
   start_time,
+  overhaul_mid,
   page = 1,
   paginate = 10
 } = {}) {
@@ -341,6 +342,7 @@ export function getAssetServiceList({
       field_id_2,
       field_value_id_2,
       start_time,
+      overhaul_mid,
       page,
       paginate
     }
