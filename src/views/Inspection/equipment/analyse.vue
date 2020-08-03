@@ -233,7 +233,8 @@ export default {
               const xIndexArr = this.charts.convertFromPixel({ seriesIndex: 0 }, pointInPixel)
               let tabindex = this.activeName
               if (params.target) {
-                tabindex = params.target.seriesIndex + 1 + '' || this.activeName
+                // tabindex = params.target.seriesIndex + 1 + '' || this.activeName
+                tabindex = 2 - params.target.seriesIndex + '' || this.activeName
               }
               this.activeName = tabindex
               const xIndex = xIndexArr[0]

@@ -60,6 +60,7 @@
               v-model="form.type"
               clearable
               style="width:100%;"
+              @change="maintainChanged"
             >
               <el-option
                 v-for="type in maintainOptions"
@@ -401,6 +402,13 @@ export default {
       // } else {
       //   this.maintainOptions = this.$store.state.form.maintainSelect
       // }
+    },
+    maintainChanged(val) {
+      if (!val) {
+        this.form.egi_cycle = ''
+      } else {
+        this.form.egi_cycle = this.maintainOptions.find(v => v.type === val).cycle
+      }
     },
     getCheckMember() {
       if (this.$store.state.form.checkMember.length < 1) {

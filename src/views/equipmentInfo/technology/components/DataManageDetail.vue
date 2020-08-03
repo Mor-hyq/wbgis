@@ -50,7 +50,13 @@
         </div>
         <el-input v-model="form.fileLen" style="display:none;" />
         <el-button type="primary" @click="handleChoose">选择附件</el-button>
-        <input ref="fileId" style="display:none;" type="file" @change="handleChange">
+        <input
+          ref="fileId"
+          style="display:none;"
+          type="file"
+          accept="image/*,application/pdf"
+          @change="handleChange"
+        >
       </el-form-item>
       <!-- <el-button v-if="(isEdit || isRead) && form.fileLen" style="display:inline-block;" @click="downFile">下载附件</el-button> -->
       <el-form-item
