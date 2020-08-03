@@ -47,7 +47,9 @@ export default {
       this.equipId = options.equipId
       this.$nextTick(() => {
         this.selectedInfo = options.selectedInfo
-        this.$refs.assetlist.initTableData()
+        this.$refs.assetlist.searchForm.type = 'relation'
+        this.$refs.assetlist.handleSearch()
+        // this.$refs.assetlist.initTableData()
       })
     },
     async linkAsset(ids) {

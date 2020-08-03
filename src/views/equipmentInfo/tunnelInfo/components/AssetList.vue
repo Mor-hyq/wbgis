@@ -93,7 +93,8 @@ export default {
   data() {
     return {
       searchForm: {
-        name: ''
+        name: '',
+        type: ''
       },
       realSearch: {},
       total: 0,
@@ -117,13 +118,15 @@ export default {
     initTableData({
       page = 1,
       paginate = this.listQuery.limit,
-      name = ''
+      name = '',
+      type = ''
     } = {}) {
       this.listQuery.page = 1
-      this.getList({ page, paginate, name })
+      this.getList({ page, paginate, name, type })
     },
     async getList({
       name = '',
+      type = '',
       page = this.listQuery.page,
       paginate = this.listQuery.limit
     } = {}) {
@@ -133,7 +136,8 @@ export default {
         const { code, data } = await getAssetList({
           page, paginate,
           field_value_id_2: name,
-          equipment_id: this.equipmentId
+          equipment_id: this.equipmentId,
+          type
         })
         this.tableLoading = false
         if (code === 200) {
@@ -166,7 +170,8 @@ export default {
       const search = this.$refs.mytable.handleSearch()
       this.realSearch = search
       this.initTableData({
-        name: search.name
+        name: search.name,
+        type: search.type
       })
     },
     handleChange(data) {
@@ -174,7 +179,8 @@ export default {
       this.getList({
         page: data.page.page,
         paginate: data.page.limit,
-        name: data.search.name
+        name: data.search.name,
+        type: data.search.type
       })
     },
     handleDetail(row) {
@@ -264,6 +270,7 @@ export default {
     },
     clearSearch() {
       this.searchForm.name = ''
+      this.searchForm.type = ''
     }
   }
 }

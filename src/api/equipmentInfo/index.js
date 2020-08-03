@@ -513,7 +513,8 @@ export function getAssetList({
   page = 1,
   paginate = 10,
   equipment_id,
-  field_value_id_2
+  field_value_id_2,
+  type
 } = {}) {
   const params = {
     page,
@@ -522,6 +523,7 @@ export function getAssetList({
     field_value_id_2,
     field_id_2: ''
   }
+  type && (params.type = type)
   return request({
     url: api.getAssetList,
     method: 'get',
