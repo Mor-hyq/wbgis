@@ -50,11 +50,17 @@
         </div>
         <el-input v-model="form.fileLen" style="display:none;" />
         <el-button type="primary" @click="handleChoose">选择附件</el-button>
-        <input
+        <!-- <input
           ref="fileId"
           style="display:none;"
           type="file"
           accept="image/*,application/pdf"
+          @change="handleChange"
+        > -->
+        <input
+          ref="fileId"
+          style="display:none;"
+          type="file"
           @change="handleChange"
         >
       </el-form-item>

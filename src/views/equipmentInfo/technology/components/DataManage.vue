@@ -55,7 +55,6 @@
         <el-table-column
           align="center"
           prop="title"
-          show-overflow-tooltip
           :label="mylang.fileTitle"
         >
           <template slot-scope="scope">
@@ -75,7 +74,6 @@
         <el-table-column
           align="center"
           prop="file_type_name"
-          show-overflow-tooltip
           :label="mylang.fileType"
         />
         <el-table-column
@@ -84,11 +82,11 @@
           width="180"
         >
           <template slot-scope="scope">
-            <el-button
+            <!-- <el-button
               :size="$btnSize"
               type="success"
               @click="goDetailPage(scope.row)"
-            >{{ mylang.read }}</el-button>
+            >{{ mylang.read }}</el-button> -->
             <el-button
               :size="$btnSize"
               type="primary"
