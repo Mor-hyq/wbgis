@@ -10,9 +10,9 @@
     >
       <template v-if="!isComponent" slot="search">
         <el-form ref="searchForm" :model="searchForm" :size="$btnSize" inline>
-          <el-form-item prop="pipe_name" :label="mylang.pipeName">
+          <!-- <el-form-item prop="pipe_name" :label="mylang.pipeName">
             <el-input v-model="searchForm.pipe_name" :placeholder="`请输入${mylang.pipeName}`" clearable />
-          </el-form-item>
+          </el-form-item> -->
           <!-- <el-form-item prop="pipe_name" :label="mylang.pipeName">
             <el-select
               v-model="searchForm.pipe_name"
@@ -96,11 +96,11 @@
           type="selection"
           width="55"
         />
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           prop="pipe_name"
           :label="mylang.pipeName"
-        />
+        /> -->
         <el-table-column
           align="center"
           prop="equipment_name"
