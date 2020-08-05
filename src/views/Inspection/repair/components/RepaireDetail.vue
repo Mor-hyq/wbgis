@@ -277,7 +277,7 @@
                 <el-option
                   v-for="item in memberOptions"
                   :key="item.id"
-                  :value="item.id"
+                  :value="item.nickname"
                   :label="item.nickname"
                 />
               </el-select>
@@ -313,7 +313,7 @@
                 <el-option
                   v-for="item in memberOptions"
                   :key="item.id"
-                  :value="item.nickname"
+                  :value="item.id"
                   :label="item.nickname"
                 />
               </el-select>
