@@ -106,6 +106,11 @@
           prop="equipment_name"
           :label="mylang.equipmentType"
         />
+        <el-table-column
+          align="center"
+          prop="table_name"
+          label="维护内容"
+        />
         <!-- <el-table-column
           align="center"
           prop="asset_name"
