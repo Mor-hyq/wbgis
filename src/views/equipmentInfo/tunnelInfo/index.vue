@@ -150,6 +150,7 @@
               @click="goEditPage(scope.row)"
             >{{ mylang.modify }}</el-button> -->
             <el-button
+              v-if="scope.row.id == 22"
               :size="$btnSize"
               type="primary"
               style="margin-top:5px;"

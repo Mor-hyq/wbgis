@@ -26,8 +26,8 @@
         >
           <template slot="search">
             <el-form ref="searchForm" :model="searchForm" :size="$btnSize" inline>
-              <el-form-item prop="name" :label="mylang.typeName">
-                <el-input v-model="searchForm.name" :placeholder="`请输入${mylang.typeName}`" clearable />
+              <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
+                <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
               </el-form-item>
               <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
             </el-form>

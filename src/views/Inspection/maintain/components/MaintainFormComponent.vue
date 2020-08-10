@@ -69,15 +69,20 @@
           type="selection"
           width="55"
         />
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           prop="pipe_name"
           :label="mylang.pipeName"
-        />
+        /> -->
         <el-table-column
           align="center"
           prop="equipment_name"
           :label="mylang.equipmentType"
+        />
+        <el-table-column
+          align="center"
+          prop="table_name"
+          label="维护内容"
         />
         <el-table-column
           align="center"
