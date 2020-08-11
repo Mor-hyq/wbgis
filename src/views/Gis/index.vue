@@ -217,7 +217,8 @@ export default {
       polyname: 'polyline',
       isNoRepaire: true, // 是否有维修数据
       polygonArrs: [],
-      textArrs: []
+      textArrs: [],
+      infoWindow: null
     }
   },
   created() {
@@ -286,6 +287,7 @@ export default {
         }))
       })
       this.map = map
+      this.infoWindow = new AMap.InfoWindow()
       this.getRiskList()
     },
     init() {
@@ -315,6 +317,7 @@ export default {
         }))
       })
       this.map = map
+      this.infoWindow = new AMap.InfoWindow()
       const strokeColors = ['#f00', '#00f']
       lngLatArr.forEach((all, idx) => {
         const polypath = all.map(v => v.lnglat)
@@ -1005,6 +1008,7 @@ export default {
     },
     async getRiskRouteLists(route) {
       try {
+        const that = this
         const map = this.map
         const lngLatArr = route.node ? JSON.parse(route.node) : []
         // 风险等级线条颜色
@@ -1026,17 +1030,20 @@ export default {
         polygon.setMap(map)
         const textMap = new AMap.Text({
           text: route.name,
-          map: this.map,
+          map: map,
           position: polygon.getBounds().northeast,
           anchor: 'middle-left',
           clickable: true
         })
         AMap.event.addListener(textMap, 'click', function(e) {
-          textMap.hide()
+          // textMap.hide()
+          const content = `<p style="font-size:14px;"><strong>风险描述：</strong>${route.remark || '无'}</p>`
+          that.infoWindow.setContent(content)
+          that.infoWindow.open(map, polygon.getBounds().getCenter())
         })
-        AMap.event.addListener(polygon, 'click', function(e) {
-          textMap.show()
-        })
+        // AMap.event.addListener(polygon, 'click', function(e) {
+        //   textMap.show()
+        // })
         this.polygonArrs.push(polygon)
         this.textArrs.push(textMap)
         if (!this.riskArea) {
