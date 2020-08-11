@@ -211,7 +211,9 @@ export default {
                 // this.$store.commit('user/SET_LOGIN', getLoginStatus())
                 this.$store.commit('user/SET_LOGIN', result.data)
                 this.errorMessage = ''
-                const newPath = this.redirect || '/'
+                // const newPath = this.redirect || '/'
+                // 重新登录跳转至首页
+                const newPath = '/'
                 this.loading = false
                 this.$router.push({ path: newPath })
                 notify()

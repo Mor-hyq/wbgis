@@ -125,7 +125,7 @@
         <el-table-column
           align="center"
           prop="next_egi_time"
-          :label="`下次${mylang.maintainDate}`"
+          :label="`本次${mylang.maintainDate}`"
         />
         <el-table-column
           align="center"

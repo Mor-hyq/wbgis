@@ -59,7 +59,7 @@
         <el-col :span="6">
           <el-card class="t-green">
             <div slot="header" class="color">
-              <span>下次维护时间</span>
+              <span>本次维护时间</span>
             </div>
             <div>{{ getStringTime(info.next_egi_time) }}</div>
           </el-card>

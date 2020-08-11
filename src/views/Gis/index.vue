@@ -472,31 +472,33 @@ export default {
         if (i === 0 && this.form.field_value_id_2) {
           this.map.setCenter(v.lnglat)
         }
-        const marker = new AMap.Marker({
-          icon: blueIcon,
-          position: v.lnglat,
-          zIndex: 101,
-          map: this.map,
-          extData: {
-            name: v.name
-          },
-          label: {
-            content: v.name,
-            offset: new AMap.Pixel(20, 0)
-          }
-        })
-        markers.push(marker)
-        // 点击标记点 显示信息窗体
-        AMap.event.addListener(marker, 'click', function(e) {
-          // that.dialogTitle = v.name
-          // that.routeId = v.asset_id
-          // that.$refs.routerDialog.show()
-          that.$refs.assetDialog.show({
-            eid: that.form.equipment_id,
-            id: v.asset_id,
-            title: v.name
+        if (v.lnglat.length === 2) {
+          const marker = new AMap.Marker({
+            icon: blueIcon,
+            position: v.lnglat,
+            zIndex: 101,
+            map: this.map,
+            extData: {
+              name: v.name
+            },
+            label: {
+              content: v.name,
+              offset: new AMap.Pixel(20, 0)
+            }
           })
-        })
+          markers.push(marker)
+          // 点击标记点 显示信息窗体
+          AMap.event.addListener(marker, 'click', function(e) {
+            // that.dialogTitle = v.name
+            // that.routeId = v.asset_id
+            // that.$refs.routerDialog.show()
+            that.$refs.assetDialog.show({
+              eid: that.form.equipment_id,
+              id: v.asset_id,
+              title: v.name
+            })
+          })
+        }
       })
       this.searchMarker = markers
     },

@@ -439,11 +439,11 @@
         </tr>
         <tr>
           <td>检修内容</td>
-          <td colspan="5">{{ cform.content }}</td>
+          <td colspan="5" class="c-min-height">{{ cform.content }}</td>
         </tr>
         <tr>
           <td>验收情况</td>
-          <td colspan="5">{{ cform.accept }}</td>
+          <td colspan="5" class="c-min-height">{{ cform.accept }}</td>
         </tr>
         <tr>
           <td>报修时间</td>
@@ -993,8 +993,8 @@ export default {
       print({
         printable: 'print-table',
         type: 'html',
-        style: '@media print{@page {size:portrait;margin:0 auto;}}',
-        targetStyles: ['*']
+        style: '@media print{@page {size:portrait;margin:0 auto;}}.print-table{border:1px solid #666;border-collapse:collapse;margin:0 auto}.print-table.medium-width th{width:120px}.print-table.small-width th{width:100px}.print-table caption{margin-bottom:10px;font-size: 16px;font-weight: bold;}.print-table th{width:80px}.print-table th,.print-table td{border:1px solid #666;padding:8px 5px}.print-table td{text-align:center}.print-table .all-col{text-align:left;padding:20px 10px}.print-table .all-col div{white-space:pre;padding-left:2em}.print-table .cus-tit{display:inline-block;width:30%}.print-table .cus-tit:last-child{width:40%;text-align:right}.print-table .cus-tit span{font-weight:normal;font-size:16px}.print-table .c-min-height{height:350px!important;}'
+        // targetStyles: ['*']
       })
     }
   }
@@ -1063,5 +1063,8 @@ export default {
   .pre-wrap {
     white-space: pre-wrap;
   }
+}
+.c-min-height {
+  height: 100px;
 }
 </style>

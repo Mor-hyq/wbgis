@@ -126,12 +126,12 @@
 
           label="报修时间"
         />
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           prop="useoverhaul_mid"
 
           :label="mylang.orderMember"
-        />
+        /> -->
         <el-table-column
           align="center"
           prop="asset_num"
