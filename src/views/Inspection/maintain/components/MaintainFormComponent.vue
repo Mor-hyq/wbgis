@@ -135,7 +135,7 @@ export default {
   data() {
     return {
       searchForm: {
-        state: '',
+        state: '1',
         equipment_id: '',
         cycle: ''
       },
@@ -161,7 +161,10 @@ export default {
   },
   created() {
     this.getPipeOptions()
-    this.initTableData()
+    // this.initTableData()
+  },
+  mounted() {
+    this.handleSearch()
   },
   methods: {
     initTableData({
