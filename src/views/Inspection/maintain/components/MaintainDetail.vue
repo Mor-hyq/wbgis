@@ -120,6 +120,7 @@
             /> -->
             <el-date-picker
               v-model="form.next_egi_time"
+              :disabled="isEdit"
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
