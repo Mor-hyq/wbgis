@@ -77,9 +77,9 @@
         </el-form>
       </template>
       <div v-if="!isComponent" style="margin-bottom:8px;">
-        <el-button type="primary" :size="$btnSize" @click="goCreatePage">{{ mylang.add }}</el-button>
-        <el-button type="primary" :size="$btnSize" @click="goEditPage(false)">{{ mylang.modify }}</el-button>
-        <el-button type="danger" :size="$btnSize" plain @click="handleDelete">{{ mylang.delete }}</el-button>
+        <!-- <el-button type="primary" :size="$btnSize" @click="goCreatePage">{{ mylang.add }}</el-button> -->
+        <!-- <el-button type="primary" :size="$btnSize" @click="goEditPage(false)">{{ mylang.modify }}</el-button> -->
+        <!-- <el-button type="danger" :size="$btnSize" plain @click="handleDelete">{{ mylang.delete }}</el-button> -->
         <el-button type="primary" :size="$btnSize" plain @click="handleExport">{{ mylang.export }}</el-button>
       </div>
       <el-table
