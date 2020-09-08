@@ -1,5 +1,4 @@
 import Layout from '@/layout'
-// import MainContainer from '@/components/MainContainer'
 
 const emergency = {
   path: '/emergency',
@@ -235,41 +234,6 @@ const emergency = {
         noCache: true
       }
     },
-    // {
-    //   path: 'exercise',
-    //   name: 'Exercise',
-    //   component: MainContainer,
-    //   meta: {
-    //     level: '1-7',
-    //     title: '应急演练管理',
-    //     icon: 'svg-role',
-    //     noCache: true
-    //   },
-    //   children: [
-    //     {
-    //       path: 'exerciseIndex',
-    //       name: 'ExerciseIndex',
-    //       component: () => import('@/views/emergency/exercise/index'),
-    //       meta: {
-    //         level: '1-7-1',
-    //         title: '应急演练信息',
-    //         noCache: true
-    //       }
-    //     },
-    //     {
-    //       path: 'exerciseDetail',
-    //       name: 'ExerciseDetail',
-    //       component: () => import('@/views/emergency/exercise/detail'),
-    //       hidden: true,
-    //       meta: {
-    //         level: '1-7-1-1',
-    //         title: '演练计划详情',
-    //         noCache: true,
-    //         activeMenu: '/emergency/exercise/exerciseIndex'
-    //       }
-    //     }
-    //   ]
-    // },
     {
       path: 'measures',
       name: 'Measures',

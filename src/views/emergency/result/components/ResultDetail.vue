@@ -32,19 +32,6 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <!-- <el-form-item
-            prop="type"
-            :label="mylang.accidentType"
-          >
-            <el-select v-model="form.type" clearable>
-              <el-option
-                v-for="type in typeOptions"
-                :key="type.id"
-                :value="type.id"
-                :label="type.type"
-              />
-            </el-select>
-          </el-form-item> -->
           <el-form-item
             prop="fault_state"
             :label="`${mylang.accidentPlace}`"
@@ -142,7 +129,6 @@ export default {
       planVisible: false,
       form: {
         order: '',
-        // type: '',
         fault_time: '',
         fault_state: '',
         fault_describe: '',
@@ -155,9 +141,6 @@ export default {
         order: [
           { required: true, message: `请输入${this.mylang.number}` }
         ],
-        // type: [
-        //   { required: true, message: `请输入${this.mylang.accidentType}` }
-        // ],
         fault_time: [
           { required: true, message: `请输入${this.mylang.accidentTime}` }
         ],

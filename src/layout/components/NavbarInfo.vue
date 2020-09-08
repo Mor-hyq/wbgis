@@ -1,36 +1,5 @@
 <template>
   <div class="right-menu">
-    <!-- <el-dropdown
-      class="message-container"
-      trigger="hover"
-    >
-      消息内容 无接口先写死
-      <div class="message-wrapper">
-        <i class="el-icon-message-solid" />
-        消息
-        <span class="nums">1</span>
-      </div>
-      <el-dropdown-menu slot="dropdown" class="message-dropdown">
-        <el-dropdown-item>
-          <div class="empty-box">暂无消息！</div>
-        </el-dropdown-item>
-        <el-dropdown-item>
-          <div class="title">
-            <span>消息</span>
-            <span class="more">查看更多</span>
-          </div>
-        </el-dropdown-item>
-        <el-dropdown-item>
-          <div class="message">
-            <div class="tit">
-              <span>来自 职工社区</span>
-              <span>2019-07-22 08:38:49</span>
-            </div>
-            <p class="cont" @click="goMessageDetail">林忠义申请创建到位，请审核。</p>
-          </div>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown> -->
     <el-dropdown
       class="avatar-container"
       trigger="click"
@@ -70,8 +39,6 @@
 <script>
 import { logout } from '@/api/login'
 import { mapGetters } from 'vuex'
-// import { isExternal } from '@/utils/validate'
-// import config from '@/config'
 import PasswordDialog from '@/components/PasswordDialog'
 import notify from '@/utils/notify'
 
@@ -112,27 +79,7 @@ export default {
     },
     handleNotify() {
       notify()
-    },
-    goUserPage() {
-      // const url = document.location.protocol + '//' + document.domain + '/web/index.php?c=user&a=profile&'
-      // window.location.href = url
-      // if (isExternal(url)) {
-      //   window.location.href = url
-      // } else {
-      //   this.$router.push({
-      //     path: url
-      //   })
-      // }
     }
-    // goMessageDetail(url) {
-    //   if (isExternal(url)) {
-    //     window.location.href = url
-    //   } else {
-    //     this.$router.push({
-    //       path: url
-    //     })
-    //   }
-    // }
   }
 }
 </script>

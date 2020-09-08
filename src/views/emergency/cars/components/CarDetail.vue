@@ -208,15 +208,11 @@ export default {
         const { code } = await addCar(this.form)
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'Cars' })
           this.$message({
             type: 'success',
             message: '创建成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'Cars'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)
@@ -236,15 +232,11 @@ export default {
         const { code } = await editCar({ id: this.id, ...this.form })
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'Cars' })
           this.$message({
             type: 'success',
             message: '修改成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'Cars'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)

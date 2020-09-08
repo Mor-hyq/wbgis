@@ -1,9 +1,6 @@
 <template>
   <div class="gis-wrapper">
     <div class="map-wrapper">
-      <!-- <div class="fengxian-pic">
-        <img :src="fengxianPic" alt="">
-      </div> -->
       <div id="container" class="container custom-map" />
       <div class="head">
         <el-form inline :size="btnSize">
@@ -35,9 +32,6 @@
               />
             </el-select>
           </el-form-item>
-          <!-- <el-form-item :label="mylang.equipmentName">
-            <el-input v-model="form.name" clearable />
-          </el-form-item> -->
           <el-form-item
             :label="mylang.equipmentName"
           >
@@ -54,15 +48,6 @@
             </el-select>
           </el-form-item>
           <el-button type="primary" icon="el-icon-search" :size="btnSize" @click="handleSearch">{{ mylang.search }}</el-button>
-          <!-- <el-form-item style="margin-left:10px;">
-            <el-checkbox v-model="form.checked" @change="checkChange">显示维护维修设备</el-checkbox>
-          </el-form-item> -->
-          <!-- <el-form-item>
-            <el-checkbox v-model="form.control" @change="checkChange2">显示机坪供油机位风险图</el-checkbox>
-          </el-form-item> -->
-          <!-- <el-form-item>
-            <el-checkbox v-model="form.buleShow" @change="hideBlue">隐藏参考线</el-checkbox>
-          </el-form-item> -->
           <el-form-item>
             <el-checkbox v-model="form.riskArea" @change="showRisk">风险信息展示</el-checkbox>
           </el-form-item>
@@ -89,7 +74,6 @@
               >
                 <span class="name" :title="item.name">{{ item.name }}</span>
                 <span class="num">{{ item.num }}</span>
-                <!-- <em class="pro" :style="{width: `${item.ratio}%`}" /> -->
                 <em class="pro" :style="barStyle(item)" />
               </div>
             </template>
@@ -100,9 +84,7 @@
         <h3 class="title">设备完好率</h3>
         <div class="inner">
           <div class="chart">
-            <!-- <div :id="chartId1" class="column-chart" /> -->
             <div :id="chartId2" class="column-chart" />
-            <!-- <div :id="chartId3" class="column-chart" /> -->
           </div>
         </div>
       </div>
@@ -156,11 +138,9 @@ import {
   getAssetNameState,
   getRepaireProgressChart,
   getIntactChart
-  // getFaultTypeChart
 } from '@/api/inspection'
 import {
   getRiskList
-  // getRiskRouteList
 } from '@/api/system'
 import { getAssetChart, getPipeDetail } from '@/api/equipmentInfo'
 import { getGis } from '@/api/gis'
@@ -205,7 +185,6 @@ export default {
       iconTypeRed: require('@/assets/images/icon_bsz_r.png'),
       iconTypeYellow: require('@/assets/images/icon_bsz_y.png'),
       iconTypeBlue: require('@/assets/images/icon_gdss_1.png'),
-      // fengxianPic: require('@/assets/images/fengxian.jpg'),
       fengxianPic: '',
       pipeInfo: '',
       pipeLength: 0,
@@ -282,8 +261,6 @@ export default {
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
           defaultType: 1
-          // showTraffic: true,
-          // showRoad: true
         }))
       })
       this.map = map
@@ -292,13 +269,10 @@ export default {
     },
     init() {
       const lngLatArr = this.mapData
-      // const that = this
-      // const markers = []
       // 创建地图实例
       const map = new AMap.Map('container', {
         center: new AMap.LngLat(lngLatArr[0][0].lnglat[0], lngLatArr[0][0].lnglat[1]),
         resizeEnable: true
-        // zoom: 13
       })
       AMap.plugin([
         'AMap.ToolBar',
@@ -312,8 +286,6 @@ export default {
         map.addControl(new AMap.Scale())
         map.addControl(new AMap.MapType({
           defaultType: 1
-          // showTraffic: true,
-          // showRoad: true
         }))
       })
       this.map = map
@@ -332,127 +304,11 @@ export default {
           lineCap: 'round',
           outlineColor: '#fff'
         })
-        // AMap.event.addListener(polyline, 'click', function(e) {
-        //   console.log(e)
-        // })
         this.lines[this.polyname + idx] = polyline
         polyline.setMap(map)
         map.setFitView(polyline)
       })
       this.getRiskList()
-      // 不需要显示路径坐标点了
-      // 创建坐标点图标
-      // 默认图标
-      // const defaultIcon = new AMap.Icon({
-      //   image: '//webapi.amap.com/theme/v1.3/markers/n/mark_bs.png'
-      // })
-      // 选中图标
-      // const clickIcon = new AMap.Icon({
-      //   image: '//webapi.amap.com/theme/v1.3/markers/n/mark_rs.png'
-      // })
-      // 红色类型图标
-      // const redIcon = new AMap.Icon({
-      //   image: this.iconTypeRed
-      // })
-      // 黄色类型图标
-      // const yellowIcon = new AMap.Icon({
-      //   image: this.iconTypeYellow
-      // })
-      // 蓝色类型图标
-      // const blueIcon = new AMap.Icon({
-      //   image: this.iconTypeBlue
-      // })
-      // 起止点图标
-      // const startIcon = new AMap.Icon({
-      //   image: this.iconStart,
-      //   imageOffset: new AMap.Pixel(-2, -2),
-      //   imageSize: new AMap.Size(28, 34)
-      // })
-      // function resetMarker() {
-      //   markers.forEach(v => {
-      //     v.setIcon(defaultIcon)
-      //   })
-      // }
-      // 不需要显示路径坐标点了
-      // lngLatArr.forEach((v, i) => {
-      //   // 创建坐标点实例
-      //   const marker = new AMap.Marker({
-      //     icon: (i === 0) || (i === lngLatArr.length - 1) ? startIcon : redIcon,
-      //     position: v.lnglat,
-      //     zIndex: 101,
-      //     map: map,
-      //     extData: {
-      //       order: v.order,
-      //       selected: v.selected
-      //     },
-      //     label: {
-      //       content: (i === 0 && '管道首端') || (i === lngLatArr.length - 1 && '管道末端') || v.order,
-      //       offset: new AMap.Pixel(20, 0)
-      //     }
-      //   })
-      //   markers.push(marker)
-      //   // 点击标记点 显示信息窗体
-      //   AMap.event.addListener(marker, 'click', function(e) {
-      //     // if (e.target.getExtData().selected) {
-      //     //   return
-      //     // }
-      //     // e.target.setExtData({
-      //     //   ...e.target.getExtData(),
-      //     //   selected: true
-      //     // })
-      //     // resetMarker()
-      //     // marker.setIcon(clickIcon)
-      //     that.dialogTitle = v.order
-      //     that.routeId = v.id
-      //     that.$refs.routerDialog.show()
-      //     // const info = new AMap.InfoWindow({
-      //     //   anchor: 'bottom-left',
-      //     //   offset: new AMap.Pixel(0, -20),
-      //     //   content: v.order // 使用默认信息窗体框样式，显示信息内容
-      //     // })
-      //     // info.open(map, lngLatArr[i].lnglat)
-      //     // info.on('close', function() {
-      //     //   marker.setExtData({
-      //     //     ...marker.getExtData(),
-      //     //     selected: false
-      //     //   })
-      //     //   marker.setIcon(defaultIcon)
-      //     // })
-      //   })
-      // })
-
-      // 创建路径图层
-      // const object3Dlayer = new AMap.Object3DLayer({ zIndex: 200 })
-      // map.add(object3Dlayer)
-      // for (let i = 0; i < lngLatArr.length; i++) {
-      //   // const ri = Math.floor(Math.random() * 3)
-      //   // const color = ['rgba(255,0,0,0.5)', 'rgba(0,255,0,0.5)', 'rgba(0,0,255,0.5)']
-      //   const color = '#f00'
-      //   const j = i + 1 >= lngLatArr.length ? lngLatArr.length : i + 1
-      //   const path = [new AMap.LngLat(lngLatArr[i].lnglat[0], lngLatArr[i].lnglat[1]), new AMap.LngLat(lngLatArr[j].lnglat[0], lngLatArr[j].lnglat[1])]
-      //   // const line = new AMap.Object3D.MeshLine({
-      //   //   path,
-      //   //   color: color,
-      //   //   width: 5
-      //   // })
-      //   // const path = [[lngLatArr[i].lnglat[0], lngLatArr[i].lnglat[1]], [lngLatArr[j].lnglat[0], lngLatArr[j].lnglat[1]]]
-      //   const polyline = new AMap.Polyline({
-      //     path,
-      //     isOutline: true,
-      //     strokeColor: color,
-      //     strokeOpacity: 0.5,
-      //     lineJoin: 'round',
-      //     lineCap: 'round',
-      //     outlineColor: '#fff'
-      //   })
-      //   polyline.setMap(map)
-      // }
-      // const line = new AMap.Object3D.MeshLine({
-      //   path: lngLatArr.map(v => new AMap.LngLat(v.lnglat[0], v.lnglat[1])),
-      //   color: color[ri],
-      //   width: 5
-      // })
-      // object3Dlayer.add(line)
     },
     hideBlue(val) {
       if (val) {
@@ -492,9 +348,6 @@ export default {
           markers.push(marker)
           // 点击标记点 显示信息窗体
           AMap.event.addListener(marker, 'click', function(e) {
-            // that.dialogTitle = v.name
-            // that.routeId = v.asset_id
-            // that.$refs.routerDialog.show()
             that.$refs.assetDialog.show({
               eid: that.form.equipment_id,
               id: v.asset_id,
@@ -574,10 +427,8 @@ export default {
       }
     },
     checkChange(val) {
-      // if (this.searchMarker.length > 0) {
       this.clearSearchMarkers()
       this.initSearchMap()
-      // }
     },
     checkChange2(val) {
       if (this.map) {
@@ -591,9 +442,7 @@ export default {
           })
           this.imageLayer = imageLayer
           this.map.setLayers([...layers, imageLayer])
-          // this.isFengxian = true
         } else {
-          // this.isFengxian = false
           this.map.remove([this.imageLayer])
         }
       }
@@ -657,7 +506,6 @@ export default {
     },
     initCharts1() {
       // 管道概况图表
-      // this.charts1 = echarts.init(document.getElementById(this.chartId1))
       this.setOptions1()
     },
     async setOptions1() {
@@ -668,19 +516,14 @@ export default {
           const yData = data.series || []
           const eqIds = data.equipment_id || []
           const initData = []
-          // const max = Math.max.apply(null, yData)
           const chartData = xData.map((v, i) => {
-            // const colori = i % this.chartColors.length
             const obj = {}
             const init = {}
             init.name = v
             init.ratio = 0
-            // init.color = this.chartColors[colori]
             obj.name = v
             obj.num = yData[i]
             obj.eq_id = eqIds[i]
-            // obj.color = this.chartColors[colori]
-            // obj.ratio = parseFloat((+yData[i] / max) * 100).toFixed(2)
             obj.ratio = 50
             initData.push(init)
             return obj
@@ -689,91 +532,6 @@ export default {
           setTimeout(() => {
             this.chart1Data = chartData
           }, 300)
-          // this.charts1.setOption({
-          //   title: {
-          //     text: '设备数量统计',
-          //     x: 'center',
-          //     y: 5,
-          //     textStyle: {
-          //       fontSize: 14,
-          //       textAlign: 'center'
-          //     }
-          //   },
-          //   tooltip: {
-          //     trigger: 'axis',
-          //     axisPointer: { // 坐标轴指示器，坐标轴触发有效
-          //       type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-          //     }
-          //   },
-          //   grid: {
-          //     top: 40,
-          //     left: '2%',
-          //     right: '2%',
-          //     bottom: 10,
-          //     containLabel: true
-          //   },
-          //   xAxis: {
-          //     type: 'category',
-          //     data: data.xData,
-          //     axisTick: {
-          //       alignWithLabel: true
-          //     },
-
-          //     axisLabel: {
-          //       interval: 0,
-          //       fontSize: 10,
-          //       // rotate: 60,
-          //       margin: 5,
-          //       formatter: function(val) {
-          //         let ret = ''
-          //         const maxLength = 2
-          //         const valLength = val.length
-          //         const rowN = Math.ceil(valLength / maxLength)
-          //         if (rowN > 1) {
-          //           for (let k = 0; k < rowN; k++) {
-          //             let temp = ''
-          //             const start = k * maxLength
-          //             const end = start + maxLength
-          //             temp = val.substring(start, end) + '\n'
-          //             ret += temp
-          //           }
-          //           return ret
-          //         } else {
-          //           return val
-          //         }
-          //       }
-
-          //     },
-          //     axisLine: {
-          //       lineStyle: {
-          //         color: '#57617B'
-          //       }
-          //     }
-          //   },
-          //   yAxis: [{
-          //     type: 'value',
-          //     axisTick: {
-          //       show: false
-          //     },
-          //     axisLine: {
-          //       lineStyle: {
-          //         color: '#57617B'
-          //       }
-          //     },
-          //     max: function(value) {
-          //       return parseInt(value.max) + 3
-          //     }
-          //   }],
-          //   series: [{
-          //     data: data.series,
-          //     type: 'bar',
-          //     itemStyle: {
-          //       color: '#1890FF'
-          //     },
-          //     animationDuration: 1500,
-          //     barMaxWidth: 10
-          //   }]
-          // })
         }
       } catch (error) {
         console.log(error)
@@ -787,80 +545,7 @@ export default {
     async setOptions2() {
       try {
         const { code, data } = await getIntactChart()
-        // 多层嵌套图表 改为扇形图表
-        // if (code === 200) {
-        //   const series1 = []
-        //   const series2 = []
-        //   const length = data.xData.length
-        //   let innerLen = 1
-        //   if (length > 6) {
-        //     innerLen = 3
-        //   } else {
-        //     innerLen = Math.ceil(length / 2)
-        //   }
-        //   data.xData.forEach((v, i) => {
-        //     const obj = {}
-        //     obj.name = v
-        //     obj.value = data.series[i]
-        //     if (i < innerLen) {
-        //       series1.push(obj)
-        //     } else {
-        //       series2.push(obj)
-        //     }
-        //   })
 
-        //   this.charts2.setOption({
-        //     // title: {
-        //     //   text: '故障设备统计',
-        //     //   x: 'center',
-        //     //   textStyle: {
-        //     //     fontSize: 14,
-        //     //     textAlign: 'center'
-        //     //   }
-        //     // },
-        //     tooltip: {
-        //       trigger: 'item',
-        //       formatter: '{b}:{c} ({d}%)'
-        //     },
-        //     legend: {
-        //       orient: 'vertical',
-        //       x: 'left',
-        //       data: data.xData
-        //     },
-        //     // series: [{
-        //     //   data: series,
-        //     //   type: 'pie',
-        //     //   radius: '50%',
-        //     //   center: ['50%', '40%'],
-        //     //   animationDuration: 1000
-        //     // }]
-        //     series: [
-        //       {
-        //         type: 'pie',
-        //         selectedMode: 'single',
-        //         radius: [0, '30%'],
-        //         center: ['50%', '60%'],
-        //         label: {
-        //           normal: {
-        //             position: 'inner'
-        //           }
-        //         },
-        //         labelLine: {
-        //           normal: {
-        //             show: false
-        //           }
-        //         },
-        //         data: series1
-        //       },
-        //       {
-        //         type: 'pie',
-        //         radius: ['40%', '55%'],
-        //         center: ['50%', '60%'],
-        //         data: series2
-        //       }
-        //     ]
-        //   })
-        // }
         if (code === 200) {
           const series = data.xData.map((v, i) => {
             const obj = {}
@@ -908,53 +593,12 @@ export default {
       }
     },
     initCharts3() {
-      // 设备维修效率 暨设备故障率
-      // this.charts3 = echarts.init(document.getElementById(this.chartId3))
       this.setOptions3()
     },
     async setOptions3() {
       try {
         const { code, data } = await getRepaireProgressChart()
         if (code === 200) {
-          // const xData = data.xData || []
-          // const yData = data.series || []
-          // if (yData.length < 2) {
-          //   // 如果返回的series数据小于两条 则数据有问题
-          //   this.isNoRepaire = true // 是否有维修数据
-          //   return
-          // }
-          // const finishData = [] // series中二维数组相减后得到已完成维修的数据 [0]已完成+维修中 [1]维修中
-          // for (let i = 0; i < yData[0].length; i++) {
-          //   const sum = (+yData[0][i]) - (+yData[1][i])
-          //   finishData.push(sum)
-          // }
-          // // 若已完成数据都是0 则显示无维修提示
-          // if (finishData.findIndex(v => +v > 0) < 0) {
-          //   this.isNoRepaire = true
-          //   return
-          // }
-          // this.isNoRepaire = false
-          // const percent = finishData.map((x, j) => {
-          //   const y = +yData[0][j]
-          //   if (y === 0) {
-          //     return 0
-          //   }
-          //   return ((x / +yData[0][j]) * 100).toFixed(2)
-          // })
-          // const initData = []
-          // const chartData = xData.map((v, i) => {
-          //   const colori = i % this.chartColors.length
-          //   const obj = {}
-          //   const init = {}
-          //   init.name = v
-          //   init.ratio = +percent[i] > 0 ? 1 : 0
-          //   init.color = this.chartColors[colori]
-          //   obj.name = v
-          //   obj.color = this.chartColors[colori]
-          //   obj.ratio = percent[i] || 0
-          //   initData.push(init)
-          //   return obj
-          // })
           this.isNoRepaire = false
           const xData = data.xData || []
           const percent = data.percent || []
@@ -1036,14 +680,10 @@ export default {
           clickable: true
         })
         AMap.event.addListener(textMap, 'click', function(e) {
-          // textMap.hide()
           const content = `<p style="font-size:14px;"><strong>风险描述：</strong>${route.remark || '无'}</p>`
           that.infoWindow.setContent(content)
           that.infoWindow.open(map, polygon.getBounds().getCenter())
         })
-        // AMap.event.addListener(polygon, 'click', function(e) {
-        //   textMap.show()
-        // })
         this.polygonArrs.push(polygon)
         this.textArrs.push(textMap)
         if (!this.riskArea) {
@@ -1186,7 +826,6 @@ export default {
         }
       }
       .chart1 {
-        // height: 17vh;
         height: 22vh;
         overflow-y: auto;
         padding: 0 8px 5px;

@@ -279,16 +279,7 @@ export default {
 
 <style lang="scss" scoped>
 .asset-aside {
-    // position: relative;
     padding-top: 15px;
-    // .fixed {
-        // position: fixed;
-        // top: 115px;
-        // left: 20px;
-        // position: absolute;
-        // top: 0;
-        // left: 0;
-    // }
     .el-menu {
         border: solid 1px #e6e6e6;
         max-height: 75vh;

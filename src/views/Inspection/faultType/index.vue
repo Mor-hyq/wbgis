@@ -56,12 +56,6 @@
               type="primary"
               @click="handleEdit(scope.row)"
             >{{ mylang.modify }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>

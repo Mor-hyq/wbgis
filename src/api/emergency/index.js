@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 import api from './api'
-// 替换请求链接中的占位符的方法
 import { replacePlaceHolder } from '@/utils/index'
 
 // 应急人员
@@ -618,7 +617,6 @@ export function addPlan({
   material_ids,
   assist_ids,
   measure_ids,
-  // emerge_worker_ids,
   push_app,
   email,
   content
@@ -637,7 +635,6 @@ export function addPlan({
     email,
     content
   }
-  // (+push_app === 1) && (data.emerge_worker_ids = emerge_worker_ids)
   return request({
     url: api.addPlan,
     method: 'post',
@@ -676,7 +673,6 @@ export function editPlan({
   material_ids,
   assist_ids,
   measure_ids,
-  // emerge_worker_ids,
   push_app,
   email,
   content
@@ -692,7 +688,6 @@ export function editPlan({
       team_ids,
       car_ids,
       material_ids,
-      // emerge_worker_ids,
       assist_ids,
       measure_ids,
       push_app,

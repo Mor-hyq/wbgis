@@ -36,14 +36,6 @@
             />
           </el-select>
         </div>
-        <!-- <div class="inline">
-          <el-input
-            v-model="searchForm.asset_name"
-            clearable
-            :size="$btnSize"
-            placeholder="设备名称"
-          />
-        </div> -->
         <div class="inline">
           <el-date-picker
             v-model="searchForm.year"
@@ -117,13 +109,6 @@ export default {
     this.$_deleteOtherView()
     this.getPipeOptions()
   },
-  // mounted() {
-  //   // this.initCharts(true)
-  //   // this.$nextTick(() => {
-  //   //   this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
-  //   //   this.$refs['tab' + this.activeName].handleSearch()
-  //   // })
-  // },
   methods: {
     initCharts(isinit) {
       if (!isinit) {
@@ -139,7 +124,6 @@ export default {
           pipe_id: this.searchForm.pipeId,
           equipment_id: this.searchForm.equipId,
           year: this.searchForm.year
-          // field_value_id_2: this.searchForm.asset_name
         })
         if (code === 200) {
           const color = ['#2c6ee7', '#f03c3c']
@@ -151,7 +135,6 @@ export default {
               data: v,
               itemStyle: {
                 normal: {
-                  // color: color[i],
                   color: function(params) {
                     const key = params.dataIndex
                     if (key === that.curSlc) {
@@ -203,7 +186,6 @@ export default {
                 return parseInt(value.max) + 5
               },
               triggerEvent: true
-              // boundaryGap: [0, 0.01]
             },
             xAxis: [{
               type: 'category',
@@ -218,7 +200,6 @@ export default {
               },
               axisLabel: {
                 fontSize: 12
-                // rotate: 60
               },
               data: data.xData
             }],
@@ -233,7 +214,6 @@ export default {
               const xIndexArr = this.charts.convertFromPixel({ seriesIndex: 0 }, pointInPixel)
               let tabindex = this.activeName
               if (params.target) {
-                // tabindex = params.target.seriesIndex + 1 + '' || this.activeName
                 tabindex = 2 - params.target.seriesIndex + '' || this.activeName
               }
               this.activeName = tabindex
@@ -261,10 +241,8 @@ export default {
       const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
       this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
       this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
-      // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
       this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
       this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
-      // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
       this.$refs['tab' + this.activeName].handleSearch()
     },
     pipeChange(val) {
@@ -289,10 +267,8 @@ export default {
               const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
               this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
               this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
-              // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
               this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
               this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
-              // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
               this.$refs['tab' + this.activeName].handleSearch()
             })
           }
@@ -310,10 +286,8 @@ export default {
               const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
               this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
               this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
-              // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
               this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
               this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
-              // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
               this.$refs['tab' + this.activeName].handleSearch()
             })
           }
@@ -343,10 +317,8 @@ export default {
           const etime = dayjs(time).endOf('month').format('YYYY-MM-DD')
           this.$refs['tab' + this.activeName].searchForm.egi_time = stime + ',' + etime
           this.$refs['tab' + this.activeName].searchForm.start_time = stime + ',' + etime
-          // this.$refs['tab' + this.activeName].searchForm.time = this.searchForm.year + '-' + this.curMoth
           this.$refs['tab' + this.activeName].searchForm.pipe_id = this.searchForm.pipeId
           this.$refs['tab' + this.activeName].searchForm.equipment_id = this.searchForm.equipId
-          // this.$refs['tab' + this.activeName].searchForm.field_value_id_2 = this.searchForm.asset_name
 
           this.$refs['tab' + this.activeName].handleSearch()
         })

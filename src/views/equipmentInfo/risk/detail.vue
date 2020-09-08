@@ -14,11 +14,6 @@
       class="tableBox"
       tooltip-effect="dark"
     >
-      <!-- <el-table-column
-        align="center"
-        prop="mileage"
-        :label="mylang.mileage"
-      /> -->
       <el-table-column
         align="center"
         prop="lng"
@@ -55,7 +50,6 @@ export default {
     }
   },
   created() {
-    // this.getLevelOptions()
     this.getList()
     this.getDetail()
   },
@@ -92,15 +86,6 @@ export default {
       const arr = this.levelOptions.filter(v => +v.id === +level)
       return arr.length > 0 ? arr[0].level : ''
     }
-    // getLevelOptions() {
-    //   if (this.$store.state.form.riskLevelSelect.length < 1) {
-    //     this.$store.dispatch('form/setRiskLevelSelect').then(() => {
-    //       this.levelOptions = this.$store.state.form.riskLevelSelect
-    //     })
-    //   } else {
-    //     this.levelOptions = this.$store.state.form.riskLevelSelect
-    //   }
-    // }
   }
 }
 </script>

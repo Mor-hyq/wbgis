@@ -1,6 +1,3 @@
-// const Config = require('@/config')
-// const mode = Config.mode
-
 const api = {
   // 获取表单csrftoken
   loginToken: 'admin/index/csrfotoken',
@@ -13,16 +10,5 @@ const api = {
   // 用户权限接口
   permission: 'admin/menu'
 }
-
-// local模式接口添加
-// if (mode === 'local') {
-//   for (const k in api) {
-//     if (api[k].indexOf('?') < 0) {
-//       api[k] = `${api[k]}?debug=cross`
-//     } else {
-//       api[k] = `${api[k]}&debug=cross`
-//     }
-//   }
-// }
 
 export default api

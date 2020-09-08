@@ -34,11 +34,6 @@
             prop="equipment_id"
             :label="`${mylang.equipmentType}`"
           >
-            <!-- <el-select
-              v-model="form.equipment_id"
-              clearable
-              @change="equipmentChange"
-            > -->
             <el-select
               v-model="form.equipment_id"
               clearable
@@ -113,11 +108,6 @@
             prop="next_egi_time"
             :label="`下次${mylang.maintainDate}`"
           >
-            <!-- <el-date-picker
-              v-model="form.next_egi_time"
-              type="date"
-              placeholder="选择日期"
-            /> -->
             <el-date-picker
               v-model="form.next_egi_time"
               :disabled="isEdit"
@@ -156,7 +146,6 @@ import {
   addAssetEgi,
   editAssetEgi,
   getAssetEgiDetail,
-  // getAssetNameState,
   getAssetTypeState,
   getAssetFormList
 } from '@/api/inspection'
@@ -196,9 +185,6 @@ export default {
         equipment_id: [
           { required: true, message: `请选择${this.mylang.equipmentType}` }
         ],
-        // asset_id: [
-        //   { required: true, message: `请选择${this.mylang.equipment}` }
-        // ],
         type: [
           { required: true, message: `请选择维护表单` }
         ],
@@ -230,7 +216,6 @@ export default {
     }
   },
   created() {
-    // this.getMaintainOptions()
     this.getPipeOptions()
     this.getCheckMember()
     if (this.isEdit || this.isRead) {
@@ -270,7 +255,6 @@ export default {
           if (data.equipment_id) {
             this.getEquipmentOptions()
             this.getMaintainOptions()
-            // this.getEquipmentNameOptions()
           }
         }
       } catch (error) {
@@ -340,21 +324,12 @@ export default {
     pipeChange(val) {
       // 重选管道 设备类型与设备名称也要重新选择
       this.form.equipment_id = ''
-      // this.form.asset_id = ''
       this.eTypeOptions = []
       this.eNameOptions = []
       if (this.form.pipe_id) {
         this.getEquipmentOptions()
       }
     },
-    // equipmentChange(val) {
-    //   // 重选设备类型 设备也要重新选择
-    //   // this.form.asset_id = ''
-    //   this.eNameOptions = []
-    //   // if (this.form.pipe_id && this.form.equipment_id) {
-    //   //   this.getEquipmentNameOptions()
-    //   // }
-    // },
     equipmentChanged(val) {
       if (val) {
         this.getMaintainOptions()
@@ -396,13 +371,6 @@ export default {
       } catch (error) {
         this.maintainOptions = []
       }
-      // if (this.$store.state.form.maintainSelect.length < 1) {
-      //   this.$store.dispatch('form/setMaintainSelect').then(() => {
-      //     this.maintainOptions = this.$store.state.form.maintainSelect
-      //   })
-      // } else {
-      //   this.maintainOptions = this.$store.state.form.maintainSelect
-      // }
     },
     maintainChanged(val) {
       if (!val) {
@@ -420,20 +388,6 @@ export default {
         this.memberOptions = this.$store.state.form.checkMember
       }
     }
-    // async getEquipmentNameOptions() {
-    //   try {
-    //     const { code, data } = await getAssetNameState({
-    //       id: this.form.pipe_id,
-    //       equipment_id: this.form.equipment_id
-    //     })
-    //     if (code === 200) {
-    //       this.eNameOptions = data || []
-    //     }
-    //   } catch (error) {
-    //     console.log(error)
-    //     //
-    //   }
-    // }
   }
 }
 </script>

@@ -64,18 +64,6 @@
           >
             <el-input v-model="form.region" clearable />
           </el-form-item>
-          <!-- <el-form-item
-            prop="thumb"
-            :label="`${mylang.picture}`"
-          >
-            <upload-image
-              v-model="form.thumb"
-              :multiple="false"
-              :length="1"
-              :disabled="isRead"
-              :img-limit-size="8"
-            />
-          </el-form-item> -->
         </el-col>
         <el-col :span="12">
           <el-form-item
@@ -84,12 +72,6 @@
           >
             <el-input v-model="form.name" clearable />
           </el-form-item>
-          <!-- <el-form-item
-            prop="length"
-            :label="`${mylang.pipeRealLength}(m)`"
-          >
-            <el-input v-model="form.length" type="number" clearable />
-          </el-form-item> -->
           <el-form-item
             prop="ground_elevation"
             :label="`${mylang.groundElevation}(m)`"

@@ -375,10 +375,6 @@ export default {
     return {
       tableName: '',
       tableList: []
-    //   checkMember: '',
-    //   checkTime: ''
-      // abnormalDeal: '',
-      // remark: ''
     }
   },
   created() {
@@ -434,17 +430,12 @@ export default {
             }
             return form
           })
-          // this.abnormalDeal = data.abnormal_deal
-          // this.remark = data.remark
-        //   this.checkMember = data.check_member
-        //   this.checkTime = data.check_time
         }
       } catch (error) {
         console.log(error)
       }
     },
     getName(type) {
-      //   return +type === 1 ? '✔' : (type || '')
       if (!type) {
         return ''
       }

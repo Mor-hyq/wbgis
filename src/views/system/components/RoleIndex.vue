@@ -80,11 +80,6 @@
                 type="success"
                 @click="goDetailPage(scope.row)"
               >{{ mylang.detail }}</el-button>
-              <!-- <el-button
-                :size="$btnSize"
-                type="primary"
-                @click="handleEdit(scope.row)"
-              >{{ mylang.modify }}</el-button> -->
               <el-button
                 :size="$btnSize"
                 type="primary"
@@ -92,13 +87,6 @@
               >
                 {{ mylang.setAuthority }}
               </el-button>
-              <!-- <el-button
-                :size="$btnSize"
-                type="danger"
-                plain
-                style="margin-top:5px;"
-                @click="handleDeleteItem(scope.row)"
-              >{{ mylang.delete }}</el-button> -->
             </template>
             <template v-else>
               <el-button

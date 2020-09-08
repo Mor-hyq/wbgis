@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 import api from './api'
-// 替换请求链接中的占位符的方法
 import { replacePlaceHolder } from '@/utils/index'
 
 // 管道管理页面->
@@ -458,54 +457,6 @@ export function getFieldList({
     }
   })
 }
-// 获取字段详情
-// export function getFieldDetail({
-//   id
-// } = {}) {
-//   return request({
-//     url: replacePlaceHolder(api.getFieldDetail, { id }),
-//     method: 'get'
-//   })
-// }
-// // 创建字段
-// export function addField({
-//   equipment_id,
-//   name,
-//   title,
-//   type,
-//   require,
-//   hide,
-//   default,
-//   validate
-// } = {}) {
-//   return request({
-//     url: api.addField,
-//     method: 'post',
-//     data: {
-//       equipment_id,
-//       name,
-//       title,
-//       type,
-//       require,
-//       hide,
-//       default,
-//       validate
-//     }
-//   })
-// }
-// // 删除字段
-// export function deleteField({
-//   id = 1,
-//   ids
-// } = {}) {
-//   return request({
-//     url: replacePlaceHolder(api.deleteField, { id }),
-//     method: 'delete',
-//     params: {
-//       ids
-//     }
-//   })
-// }
 
 // 设备资产
 // 获取设备资产列表

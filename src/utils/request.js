@@ -3,8 +3,6 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import Qs from 'qs'
 import dayjs from 'dayjs'
-// import router from '@/router'
-// import { getToken } from '@/utils/auth'
 
 // 导入 项目配置 文件
 import ProjectConfig from '@/config'
@@ -38,14 +36,6 @@ const trimData = (data) => {
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-    // config.headers['content-type'] = 'application/json'
-    // if (store.getters.token) {
-    //   // let each request carry token
-    //   // ['X-Token'] is a custom headers key
-    //   // please modify it according to the actual situation
-    //   config.headers['X-Token'] = getToken()
-    // }
     // 去除params参数中的前后空格
     if (config.params) {
       trimData(config.params)
@@ -83,7 +73,6 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // 重新登录
-    // if (res.code === 403 || res.code === 40003) {
     if (res.code === 403) {
       // 加锁 避免多个异步请求同时返回403时触发多次跳转
       const loginLock = sessionStorage.getItem('loginLock') || ''
@@ -115,14 +104,10 @@ service.interceptors.response.use(
         })
       }
     }
-    // return Promise.reject(new Error(res.message || 'Error'))
-    // } else {
     return res
-    // }
   },
   (error) => {
     // 403错误重新登录
-    // if (error.message.indexOf('403') > 0) {
     if (error && error.response) {
       if (error.response.status === 403) {
         const loginLock = sessionStorage.getItem('loginLock') || ''
@@ -141,7 +126,6 @@ service.interceptors.response.use(
             store.dispatch('user/resetToken').then(() => {
               location.reload()
             })
-            // return Promise.reject(error)
           })
         }
       } else {

@@ -30,49 +30,8 @@
                 name="password"
                 @keyup.enter.native="handleLogin"
               />
-              <!-- <span class="show-pwd" @click="showPwd">
-                  <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                </span> -->
+
             </el-form-item>
-
-            <!-- <el-form-item v-if="isNeedSmsCode" prop="phone">
-              <span class="svg-container">
-
-              </span>
-              <el-input
-                ref="phone"
-                v-model="loginForm.phone"
-                clearable
-                placeholder="请输入手机号码"
-                name="phone"
-                type="text"
-              />
-            </el-form-item> -->
-            <!--
-            <div v-if="isNeedSmsCode" type="flex" class="tips">
-              <div>
-                <el-form-item style="margin-bottom:0;" prop="smscode">
-                  <el-input
-                    ref="smscode"
-                    v-model="loginForm.smscode"
-                    clearable
-                    placeholder="请输入验证码"
-                    name="smscode"
-                    type="text"
-                    @keyup.enter.native="handleLogin"
-                  />
-                </el-form-item>
-              </div>
-              <div>
-                <clock-down ref="clockDown" @click="getSmsCode" />
-              </div>
-            </div> -->
-
-            <!-- <div class="tips">
-              <el-checkbox v-model="loginForm.isremember">记住我</el-checkbox>
-              <el-button type="primary" size="mini" @click="resetPassword">忘记密码</el-button>
-            </div> -->
-
             <el-button class="login-btn" :loading="loading" type="primary" @click.native.prevent="handleLogin">登录</el-button>
           </el-form>
         </div>
@@ -86,19 +45,12 @@
 <script>
 import { validatePasswordFunc, validateSmsCodeFunc, validatePhoneFunc } from '@/utils/validateFunc'
 import { getCsrfToken, sendCode, login } from '@/api/login'
-// import { getRouteAuth } from '@/api/common'
-// import config from '@/config'
+
 import { mapGetters } from 'vuex'
 import notify from '@/utils/notify'
 
-// import { getLoginStatus } from '@/utils/auth'
-// import ClockDown from '@/components/ClockDown'
-// import { lowerFirst } from 'lodash'
 export default {
   name: 'Login',
-  components: {
-    // ClockDown
-  },
   data() {
     return {
       loginForm: {
@@ -122,10 +74,6 @@ export default {
     }
   },
   computed: {
-    // isNeedSmsCode() {
-    //   // 暂时登录不发送短信
-    //   return false
-    // },
     ...mapGetters([
       'isLogin'
     ])
@@ -207,11 +155,8 @@ export default {
               if (code === 200) {
                 // 存储用户信息
                 this.$store.commit('user/SET_USERINFO', data)
-                // this.$store.commit('user/SET_USERNAME', data.username)
-                // this.$store.commit('user/SET_LOGIN', getLoginStatus())
                 this.$store.commit('user/SET_LOGIN', result.data)
                 this.errorMessage = ''
-                // const newPath = this.redirect || '/'
                 // 重新登录跳转至首页
                 const newPath = '/'
                 this.loading = false
@@ -250,12 +195,8 @@ export default {
 </script>
 
 <style lang="scss">
-/* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
 $bg:#283443;
-// $light_gray:#fff;
-// $cursor: #fff;
 $light_gray:#333;
 $cursor: #333;
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -393,14 +334,7 @@ $light_gray:#eee;
       }
     }
   }
-  // .svg-container {
-  //   padding: 5px 5px 5px 10px;
-  //   color: $dark_gray;
-  //   vertical-align: middle;
-  //   width: 30px;
-  //   font-size: 20px;
-  //   display: inline-block;
-  // }
+
   .icon {
     display: inline-block;
     width: 25px;
@@ -428,10 +362,6 @@ $light_gray:#eee;
   }
   .login-btn {
     width: 100%;
-    // background-color: #47a6ff;
-    // &:hover {
-    //   opacity: 0.8;
-    // }
   }
   .show-pwd {
     position: absolute;

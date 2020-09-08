@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 import api from './api'
-// 替换请求链接中的占位符的方法
 import { replacePlaceHolder } from '@/utils/index'
 
 // 检查与维修
@@ -155,7 +154,6 @@ export function getMaintainRecord({
 }
 // 获取维护记录（新）
 export function getMaintainRecord2({
-  // plan_time,
   egi_time,
   equipment_id,
   field_value_id_2,
@@ -170,11 +168,8 @@ export function getMaintainRecord2({
     url: api.getMaintainRecord2,
     method: 'get',
     params: {
-      // plan_time,
       egi_time,
       equipment_id,
-      // field_id_2,
-      // field_value_id_2,
       asset_id,
       state,
       cycle,
@@ -275,18 +270,11 @@ export function deleteMaintainTable({
 export function addAssetService({
   pipe_id,
   equipment_id,
-  // style_id,
-  // error_type_id,
-  // title,
   asset_num,
   money,
-  // plan_start_time,
-  // plan_end_time,
   asset_ids,
   fault,
   start_time
-  // content,
-  // location
 } = {}) {
   return request({
     url: api.addAssetService,
@@ -294,18 +282,11 @@ export function addAssetService({
     data: {
       pipe_id,
       equipment_id,
-      // style_id,
-      // error_type_id,
-      // title,
       asset_num,
       money,
-      // plan_start_time,
-      // plan_end_time,
       start_time,
       asset_ids,
       fault
-      // content,
-      // location
     }
   })
 }
@@ -323,7 +304,6 @@ export function getAssetServiceList({
   pipe_id,
   state,
   equipment_id,
-  // title,
   field_id_2 = '',
   field_value_id_2,
   start_time,
@@ -338,7 +318,6 @@ export function getAssetServiceList({
       pipe_id,
       state,
       equipment_id,
-      // title,
       field_id_2,
       field_value_id_2,
       start_time,
@@ -353,13 +332,8 @@ export function editAssetService({
   id,
   pipe_id,
   equipment_id,
-  // style_id,
-  // error_type_id,
-  // title,
   asset_num,
   money,
-  // plan_start_time,
-  // plan_end_time,
   asset_ids,
   fault,
   start_time
@@ -370,17 +344,11 @@ export function editAssetService({
     data: {
       pipe_id,
       equipment_id,
-      // style_id,
-      // error_type_id,
-      // title,
       asset_num,
       money,
-      // plan_start_time,
-      // plan_end_time,
       asset_ids,
       start_time,
       fault
-      // location
     }
   })
 }
@@ -395,12 +363,6 @@ export function completeAssetService({
   accept_time,
   content,
   accept
-  // constracter,
-  // phone,
-  // workload,
-  // start_time,
-  // end_time,
-  // result
 } = {}) {
   return request({
     url: replacePlaceHolder(api.completeAssetService, { id }),
@@ -414,12 +376,6 @@ export function completeAssetService({
       accept_time,
       content,
       accept
-      // constracter,
-      // phone,
-      // workload,
-      // start_time,
-      // end_time,
-      // result
     }
   })
 }
@@ -522,8 +478,6 @@ export function getAssetAnalyse({
       pipe_id,
       equipment_id,
       year
-      // field_id_2,
-      // field_value_id_2
     }
   })
 }

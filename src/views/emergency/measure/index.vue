@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <TopLabel :label="$route.meta.title" /> -->
     <measure-index ref="measure" />
   </div>
 </template>

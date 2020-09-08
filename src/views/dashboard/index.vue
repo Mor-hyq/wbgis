@@ -1,26 +1,16 @@
 <template>
   <div>
     <header-item :is-show-nav="true" />
-    <!-- <div class="dashboard-container">
-      <div class="dashboard-text">name: {{ userInfo.username }}</div>
-    </div> -->
   </div>
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import HeaderItem from '@/components/Header'
 export default {
   name: 'Dashboard',
   components: {
     HeaderItem
   }
-
-  // computed: {
-  //   ...mapGetters([
-  //     'userInfo'
-  //   ])
-  // }
 }
 </script>
 

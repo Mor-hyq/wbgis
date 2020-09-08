@@ -2,21 +2,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 Vue.use(Router)
-
-/* Layout 一级路由容器 */
-// import Layout from '@/layout'
-
-// 二级路由容器
-// import MainContainer from '@/components/MainContainer'
-
 /* Router Modules */
 import gis from './modules/gis'
 import inspect from './modules/inspect'
 import emergency from './modules/emergency'
 import equipmentInfo from './modules/equipmentInfo'
 import system from './modules/system'
-// import generateFormRouter from './modules/generateForm'
-// import activityManageRouter from './modules/activity'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -35,8 +26,8 @@ import system from './modules/system'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
     level: '1' 路由层级 1-1 1-2
     permission: [{ 路由中的按钮权限
-      title: '删除视频', 权限树中显示的label
-      value: 'delete'  判断用的值
+      title: '', 权限树中显示的label
+      value: ''  判断用的值
     }, {
       title: '复制到自由训练',
       value: 'copy'
@@ -80,21 +71,6 @@ export const constantRoutes = [ // 该路由不设置name值
       title: '首页'
     }
   }
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   name: 'home',
-  //   children: [{
-  //     path: 'dashboard',
-  //     name: 'Dashboard',
-  //     component: () => import('@/views/dashboard/index'),
-  //     meta: { title: '首页', icon: 'dashboard' }
-  //   }]
-  // }
-
-  // 404 page must be placed at the end !!!
-  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 /**
@@ -108,17 +84,9 @@ export const asyncRoutes = [
   equipmentInfo,
   emergency,
   system
-  // generateFormRouter,
-  // activityManageRouter
-  // { // 外链写法
-  //   name: 'external-link',
-  //   path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //   meta: { title: '本地外链', icon: 'link' }
-  // }
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
@@ -129,12 +97,6 @@ export const DynamicRoutes = [{
   redirect: '/404',
   hidden: true
 }]
-// asyncRoutes.map((v, i) => {
-//   if (v && v.children && v.children.length === 0) {
-//     asyncRoutes.slice(i, 1)
-//   }
-// })
-// asyncRoutes.push({ path: '*', redirect: '/404', hidden: true })
 
 const router = createRouter()
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465

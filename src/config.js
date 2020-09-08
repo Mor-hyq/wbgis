@@ -9,15 +9,12 @@ module.exports = {
   dev: {// 开发联测环境配置
     url: {
       baseURL: 'http://api.leizikeji.top/',
-      // baseURL: 'http://plane.leizikeji.top/',
       timeout: 60000
     }
   },
   prod: {// 生产环境配置
     url: {
-      // baseURL: 'http://api.leizikeji.top/',
       baseURL: window.$requestHttp,
-      // baseURL: 'http://plane.leizikeji.top/',
       timeout: 60000 // 超时时间
     }
   }

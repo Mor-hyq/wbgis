@@ -38,20 +38,6 @@ export default {
   components: {
     GFormItem
   },
-  //   props: {
-  //     title: {
-  //       type: String,
-  //       default: ''
-  //     },
-  //     id: {
-  //       type: [String, Number],
-  //       default: ''
-  //     },
-  //     eid: {
-  //       type: [String, Number],
-  //       default: ''
-  //     }
-  //   },
   data() {
     return {
       formObj: [],

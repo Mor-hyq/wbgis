@@ -16,7 +16,6 @@ const equipmentInfo = {
       path: 'accountManage',
       name: 'EquipmentAccountManage',
       component: MainContainer,
-      // alwaysShow: true,
       meta: {
         level: '1-1',
         title: '设备台账管理',
@@ -24,16 +23,6 @@ const equipmentInfo = {
         noCache: true
       },
       children: [
-        // {
-        //   path: 'equipmentAccount',
-        //   name: 'EquipmentAccount',
-        //   component: () => import('@/views/Inspection/equipment/index'),
-        //   meta: {
-        //     level: '1-1-1',
-        //     title: '设备台账',
-        //     noCache: false
-        //   }
-        // },
         {
           path: 'assetIndex',
           name: 'AssetIndex',

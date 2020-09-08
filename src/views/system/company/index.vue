@@ -71,26 +71,7 @@
         >
           <template slot-scope="scope">{{ scope.row.remark || '无' }}</template>
         </el-table-column>
-        <!-- <el-table-column
-          :label="mylang.actions"
-          align="center"
-          width="100"
-        >
-          <template slot-scope="scope">
-            <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="handleEdit(scope.row)"
-            >{{ mylang.modify }}</el-button>
-            <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              style="margin-top:5px;"
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button>
-          </template>
-        </el-table-column> -->
+
       </el-table>
     </my-table>
     <el-dialog :title="dialogTitle" custom-class="dialog-custom" :visible.sync="dialogTableVisible" @close="handleClose">

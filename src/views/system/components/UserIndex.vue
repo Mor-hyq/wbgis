@@ -123,12 +123,6 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="primary"
-              :disabled="scope.row | filterUid(userInfo.id)"
-              @click="handleEdit(scope.row)"
-            >{{ mylang.modify }}</el-button> -->
             <el-button
               :size="$btnSize"
               type="primary"
@@ -142,13 +136,6 @@
               style="margin-top:5px;"
               @click="handlePassword(scope.row)"
             >{{ mylang.modify + mylang.password }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              :disabled="scope.row | filterUid(userInfo.id)"
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>

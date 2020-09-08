@@ -21,11 +21,6 @@
             :label="mylang.equipmentName"
           >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
-        <!-- <el-col :span="8">
-          <el-form-item
-            :label="mylang.equipmentNumber"
-          >{{ eqNum || form.code }}</el-form-item>
-        </el-col> -->
       </el-row>
       <div class="custom-divider" />
       <el-row :gutter="10">
@@ -68,12 +63,6 @@
         prop="ground_area"
         label="地井阀区域"
       >
-        <!-- <el-input
-          v-if="!isRead"
-          v-model="form.ground_area"
-          clearable
-        />
-        <span v-else class="read">{{ form.ground_area }}</span> -->
         <span class="read">{{ form.ground_area }}</span>
       </el-form-item>
       <el-form-item
@@ -278,9 +267,6 @@ export default {
         remark: ''
       }
       this.form = form
-      // this.$nextTick(() => {
-      //   this.$refs.form.clearValidate()
-      // })
     },
     getCheckMember() {
       if (this.$store.state.form.checkMember.length < 1) {

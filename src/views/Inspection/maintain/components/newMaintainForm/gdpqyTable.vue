@@ -2,7 +2,6 @@
   <div style="padding-top: 20px;">
     <el-button type="primary" :size="$btnSize" @click="handlePrint()">{{ mylang.print }}</el-button>
     <table id="print-table" class="print-table" align="center" cellspacing="0" cellpadding="0">
-      <!-- <caption>{{ tableName }}</caption> -->
       <thead><th :colspan="11">{{ tableName }}</th></thead>
       <tbody>
         <tr>
@@ -50,9 +49,6 @@
           <!-- 检查日期 -->
           <td>{{ list.check_time }}</td>
         </tr>
-        <!-- <tr>
-          <td class="all-col" colspan="9">异常处理：<div v-html="abnormalDeal" /></td>
-        </tr> -->
         <tr>
           <td class="all-col" colspan="11">备注：<div v-html="remark" /></td>
         </tr>
@@ -87,7 +83,6 @@ export default {
     return {
       tableName: '',
       tableList: [],
-      // abnormalDeal: '',
       remark: '',
       checkMember: '',
       checkTime: ''
@@ -113,7 +108,6 @@ export default {
               ['deal_visual_' + v.deal_visual]: v.deal_visual
             }
           })
-          // this.abnormalDeal = data.abnormal_deal
           this.remark = data.remark
           this.checkMember = data.check_member
           this.checkTime = data.check_time

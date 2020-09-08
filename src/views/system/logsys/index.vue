@@ -41,38 +41,17 @@
           prop="department_name"
           :label="mylang.department"
         />
-        <!-- <el-table-column
-          align="center"
-          prop=""
-          :label="mylang.funcModule"
-        /> -->
         <el-table-column
           align="center"
           prop="name"
           :label="mylang.operatorType"
         />
-        <!-- <el-table-column
-          align="center"
-          prop=""
-          :label="mylang.operatorResult"
-        /> -->
-        <!-- <el-table-column
-          align="center"
-          prop=""
-          :label="mylang.operatorDate"
-        /> -->
         <el-table-column
           align="center"
           prop="ip"
           show-overflow-tooltip
           :label="mylang.ip"
         />
-        <!-- <el-table-column
-          align="center"
-          prop=""
-          show-overflow-tooltip
-          :label="mylang.failureCause"
-        /> -->
       </el-table>
     </my-table>
   </div>

@@ -66,11 +66,6 @@
         tooltip-effect="dark"
         @selection-change="handleSelectionChange"
       >
-        <!-- <el-table-column
-          align="center"
-          type="selection"
-          width="55"
-        /> -->
         <el-table-column
           align="center"
           prop="pipe_name"

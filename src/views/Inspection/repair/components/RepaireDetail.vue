@@ -48,44 +48,7 @@
               />
             </el-select>
           </el-form-item>
-          <!-- <el-form-item
-            prop="title"
-            :label="`${mylang.repaireOrder + mylang.title}`"
-          >
-            <el-input v-model="form.title" clearable />
-          </el-form-item> -->
-          <!-- <el-form-item
-            prop="error_type_id"
-            :label="`${mylang.faultType}`"
-          >
-            <el-select
-              v-model="form.error_type_id"
-              clearable
-            >
-              <el-option
-                v-for="pipe in faultOptions"
-                :key="pipe.id"
-                :value="pipe.id"
-                :label="pipe.error"
-              />
-            </el-select>
-          </el-form-item> -->
-          <!-- <el-form-item
-            prop="style_id"
-            :label="`${mylang.repaireMeasure}`"
-          >
-            <el-select
-              v-model="form.style_id"
-              clearable
-            >
-              <el-option
-                v-for="pipe in measureOptions"
-                :key="pipe.id"
-                :value="pipe.id"
-                :label="pipe.style"
-              />
-            </el-select>
-          </el-form-item> -->
+
         </el-col>
         <el-col :span="12">
           <el-form-item
@@ -104,35 +67,13 @@
               readonly
             />
           </el-form-item>
-          <!-- <el-form-item
-            prop="plan_start_time"
-            :label="`${mylang.plan + mylang.startTime}`"
-          >
-            <el-date-picker
-              v-model="form.plan_start_time"
-              type="date"
-              :placeholder="mylang.startTime"
-              clearable
-            />
-          </el-form-item>
-          <el-form-item
-            prop="plan_end_time"
-            :label="`${mylang.plan + mylang.endTime}`"
-          >
-            <el-date-picker
-              v-model="form.plan_end_time"
-              type="date"
-              :placeholder="mylang.endTime"
-              clearable
-            />
-          </el-form-item> -->
+
         </el-col>
       </el-row>
       <el-form-item
         prop="asset_ids"
         :label="`${mylang.choose + mylang.equipment}`"
       >
-        <!-- <el-input v-model="form.asset_ids" style="display:none" clearable /> -->
         <el-button type="primary" style="margin-bottom:10px;" @click="showDialog">{{ mylang.choose }}</el-button>
         <el-row v-if="equipData.length > 0" class="link-role" type="flex">
           <el-col :span="20">
@@ -155,96 +96,19 @@
           clearable
         />
       </el-form-item>
-      <!-- <el-form-item
-        prop="content"
-        :label="`${mylang.repaireContent}`"
-      > -->
+
       <el-form-item
         prop="fault"
         label="故障现象及判断"
       >
         <el-input v-model="form.fault" type="textarea" :rows="isRead ? '' : 5" />
       </el-form-item>
-      <!-- <el-form-item
-        prop="location"
-        :label="`${mylang.repaireLocation}`"
-      >
-        <el-input v-model="form.location" type="textarea" :rows="isRead ? '' : 5" />
-      </el-form-item> -->
+
     </el-form>
     <template v-if="type === 'done'">
       <el-divider />
       <el-tag>维修施工详情</el-tag>
-      <!-- <el-form
-        ref="cform"
-        :rules="isRead ? {} :cformRules"
-        :model="cform"
-        label-suffix=":"
-        label-width="auto"
-        :size="$btnSize"
-        class="custom-class"
-        style="padding-top:10px;"
-        :disabled="isRead"
-      >
-        <el-row :gutter="25">
-          <el-col :span="12">
-            <el-form-item
-              prop="constract_unit"
-              :label="`${mylang.constructionCompany}`"
-            >
-              <el-input v-model="cform.constract_unit" clearable />
-            </el-form-item>
-            <el-form-item
-              prop="phone"
-              :label="`${mylang.contact}`"
-            >
-              <el-input v-model="cform.phone" type="number" clearable />
-            </el-form-item>
-            <el-form-item
-              prop="start_time"
-              :label="`${mylang.actual + mylang.startTime}`"
-            >
-              <el-date-picker
-                v-model="cform.start_time"
-                type="date"
-                :placeholder="mylang.startTime"
-                clearable
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              prop="constracter"
-              :label="`${mylang.constructer}`"
-            >
-              <el-input v-model="cform.constracter" clearable />
-            </el-form-item>
-            <el-form-item
-              prop="workload"
-              :label="`${mylang.workload}`"
-            >
-              <el-input v-model="cform.workload" clearable />
-            </el-form-item>
-            <el-form-item
-              prop="end_time"
-              :label="`${mylang.actual + mylang.endTime}`"
-            >
-              <el-date-picker
-                v-model="cform.end_time"
-                type="date"
-                :placeholder="mylang.endTime"
-                clearable
-              />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item
-          prop="result"
-          :label="`${mylang.repairResult}`"
-        >
-          <el-input v-model="cform.result" type="textarea" :rows="isRead ? '' : 5" />
-        </el-form-item>
-      </el-form> -->
+
       <el-form
         ref="cform"
         :rules="isRead ? {} :cformRules"
@@ -357,78 +221,7 @@
       custom-class="dialog-custom"
       append-to-body
     >
-      <!-- <ul
-        id="print-table"
-        class="origin-table"
-      >
-        <li class="center">
-          <span class="width1 tit flex-center">设备维护维修工单</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.repaireOrder + mylang.title }}</span>
-          <span class="text-left width1">{{ form.title }}</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.belongPipe }}</span>
-          <span class="text-left width25">{{ tablePipeName }}</span>
-          <span class="width20 tit">{{ mylang.equipmentType }}</span>
-          <span class="text-left width25">{{ tableEtypeName }}</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.equipmentQuantity }}</span>
-          <span class="text-left width25">{{ form.asset_num }}</span>
-          <span class="width20 tit">{{ mylang.equipmentName }}</span>
-          <span class="text-left width25">{{ tableTypeName }}</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.faultType }}</span>
-          <span class="text-left width25">{{ tableFaultName }}</span>
-          <span class="width20 tit">{{ mylang.budgetMoney }}</span>
-          <span class="text-left width25">{{ form.money }}元</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.repaireMeasure }}</span>
-          <span class="text-left width25">{{ tableRepairType }}</span>
-          <span class="width20 tit">{{ mylang.repaireLocation }}</span>
-          <span class="text-left width25">{{ form.location }}</span>
-        </li>
-        <li class="center">
-          <span class="width20 tit">{{ mylang.plan + mylang.startTime }}</span>
-          <span class="text-left width25">{{ form.plan_start_time }}</span>
-          <span class="width20 tit">{{ mylang.plan + mylang.endTime }}</span>
-          <span class="text-left">{{ form.plan_end_time }}</span>
-        </li>
-        <li class="center">
-          <span class="width-1em tit">{{ mylang.repaireContent }}</span>
-          <span class="text-left min-height width1 pre-wrap">{{ form.fault }}</span>
-        </li>
-        <li class="center">
-          <span class="width-1em tit">维护结果</span>
-          <div class="width1" style="border-left:none;">
-            <div class="center inner-li">
-              <span class="width20 tit">{{ mylang.constructionCompany }}</span>
-              <span class="width25">{{ cform.construct_union }}</span>
-              <span class="width20 tit">{{ mylang.constructer }}</span>
-              <span class="width25">{{ cform.real_money }}</span>
-            </div>
-            <div class="center inner-li">
-              <span class="width20 tit">{{ mylang.phone }}</span>
-              <span class="width25">{{ cform.phone }}</span>
-              <span class="width20 tit">{{ mylang.workload }}</span>
-              <span class="width25">{{ cform.workload }}</span>
-            </div>
-            <div class="center inner-li">
-              <span class="width1 min-height text-left pre-wrap">{{ cform.content }}</span>
-            </div>
-            <div class="center inner-li" style="border-bottom:none;">
-              <span class="width20 tit">{{ mylang.actual + mylang.startTime }}</span>
-              <span class="width25">{{ cform.start_time }}</span>
-              <span class="width20 tit">{{ mylang.actual + mylang.endTime }}</span>
-              <span class="width25">{{ cform.accept_time }}</span>
-            </div>
-          </div>
-        </li>
-      </ul> -->
+
       <table id="print-table" class="print-table" align="center" cellspacing="0" cellpadding="0">
         <caption>设备检修记录</caption>
         <tr style="height:100px;">
@@ -451,11 +244,9 @@
         </tr>
         <tr>
           <td style="width:100px">检修人</td>
-          <!-- <td>{{ filterName(cform.overhaul_mid) }}</td> -->
           <td style="width:150px;" />
           <td>{{ cform.service_time }}</td>
           <td>验收人</td>
-          <!-- <td>{{ filterName(cform.accept_mid) }}</td> -->
           <td style="width:150px;" />
           <td>{{ cform.accept_time }}</td>
         </tr>
@@ -476,7 +267,6 @@ import {
   completeAssetService,
   getAssetTypeState
 } from '@/api/inspection'
-// import { validatePhone2Func } from '@/utils/validateFunc'
 import LinkEquipment from './LinkEquipment'
 import deleteCache from '@/mixins/deleteCache'
 import print from 'print-js'
@@ -502,101 +292,17 @@ export default {
     }
   },
   data() {
-    // const validateTime1 = (rule, value, callback) => {
-    //   if (rule.required) {
-    //   // 必填时的校验
-    //     if (value === '') {
-    //       callback(new Error(`请选择${this.mylang.plan + this.mylang.startTime}`))
-    //     } else if (this.form.plan_end_time && value > this.form.plan_end_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   } else {
-    //     // 非必填时校验
-    //     if (this.form.plan_end_time && value > this.form.plan_end_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   }
-    // }
-    // const validateTime2 = (rule, value, callback) => {
-    //   if (rule.required) {
-    //   // 必填时的校验
-    //     if (!this.form.plan_start_time) {
-    //       callback(new Error(`请先选择${this.mylang.plan + this.mylang.startTime}`))
-    //     } else if (value === '') {
-    //       callback(new Error(`请选择${this.mylang.plan + this.mylang.endTime}`))
-    //     } else if (value < this.form.plan_start_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   } else {
-    //     // 非必填时校验
-    //     if (value < this.form.plan_start_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   }
-    // }
-    // const validateTime3 = (rule, value, callback) => {
-    //   if (rule.required) {
-    //   // 必填时的校验
-    //     if (value === '') {
-    //       callback(new Error(`请选择${this.mylang.actual + this.mylang.startTime}`))
-    //     } else if (this.cform.end_time && value > this.cform.end_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   } else {
-    //     // 非必填时校验
-    //     if (this.cform.end_time && value > this.cform.end_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   }
-    // }
-    // const validateTime4 = (rule, value, callback) => {
-    //   if (rule.required) {
-    //   // 必填时的校验
-    //     if (!this.cform.start_time) {
-    //       callback(new Error(`请先选择${this.mylang.actual + this.mylang.startTime}`))
-    //     } else if (value === '') {
-    //       callback(new Error(`请选择${this.mylang.actual + this.mylang.endTime}`))
-    //     } else if (value < this.cform.start_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   } else {
-    //     // 非必填时校验
-    //     if (value < this.form.plan_start_time) {
-    //       callback(new Error(`${this.mylang.startTime}不能大于${this.mylang.endTime}`))
-    //     } else {
-    //       callback()
-    //     }
-    //   }
-    // }
     return {
       form: {
         pipe_id: '',
         equipment_id: '',
-        // style_id: '',
-        // error_type_id: '',
-        // title: '',
+
         asset_num: '',
         money: '',
-        // plan_start_time: '',
-        // plan_end_time: '',
+
         start_time: '',
         asset_ids: '',
         fault: ''
-        // location: ''
       },
       formRules: {
         pipe_id: [
@@ -605,27 +311,14 @@ export default {
         equipment_id: [
           { required: true, message: `请选择${this.mylang.equipmentType}` }
         ],
-        // style_id: [
-        //   { required: true, message: `请选择${this.mylang.repaireMeasure}` }
-        // ],
-        // error_type_id: [
-        //   { required: true, message: `请选择${this.mylang.faultType}` }
-        // ],
-        // title: [
-        //   { required: true, message: `请输入${this.mylang.repaireOrder + this.mylang.title}` }
-        // ],
+
         asset_num: [
           { required: true, message: `请输入${this.mylang.equipmentQuantity}` }
         ],
         money: [
           { required: false, message: `请输入${this.mylang.budgetMoney}` }
         ],
-        // plan_start_time: [
-        //   { required: true, trigger: 'change', validator: validateTime1 }
-        // ],
-        // plan_end_time: [
-        //   { required: true, trigger: 'change', validator: validateTime2 }
-        // ],
+
         start_time: [
           { required: true, trigger: 'change', message: '请选择报修时间' }
         ],
@@ -638,8 +331,6 @@ export default {
         real_money: '',
         overhaul_mid: '',
         accept_mid: '',
-        // start_time: '',
-        // end_time: '',
         service_time: '',
         accept_time: '',
         content: '',
@@ -664,12 +355,6 @@ export default {
         service_time: [
           { required: true, trigger: 'change', message: '请选择维修时间' }
         ],
-        // start_time: [
-        //   { required: true, trigger: 'change', validator: validateTime3 }
-        // ],
-        // end_time: [
-        //   { required: true, trigger: 'change', validator: validateTime4 }
-        // ],
         accept: [
           { required: true, message: `请输入验收情况` }
         ]
@@ -679,8 +364,6 @@ export default {
       eTypeOptions: [],
       eNameOptions: [],
       memberOptions: [],
-      // measureOptions: [],
-      // faultOptions: [],
       equipData: [],
       printVisible: false,
       tableInfo: {}
@@ -701,14 +384,6 @@ export default {
       const obj = this.eTypeOptions.find(v => v.id === this.form.equipment_id)
       return obj ? obj.name : ''
     }
-    // tableFaultName() {
-    //   const obj = this.faultOptions.find(v => v.id === this.form.error_type_id)
-    //   return obj ? obj.error : ''
-    // },
-    // tableRepairType() {
-    //   const obj = this.measureOptions.find(v => v.id === this.form.error_type_id)
-    //   return obj ? obj.style : ''
-    // }
   },
   watch: {
     equipData: {
@@ -723,8 +398,6 @@ export default {
   created() {
     this.getPipeOptions()
     this.getCheckMember()
-    // this.getMeasureOptions()
-    // this.getFaultOptions()
     if (this.isEdit || this.isRead || this.type === 'done') {
       this.getDetail()
     }
@@ -770,17 +443,13 @@ export default {
           this.form = {
             pipe_id: data.pipe_id,
             equipment_id: data.equipment_id,
-            // style_id: data.style_id,
-            // error_type_id: data.error_type_id,
-            // title: data.title,
+
             asset_num: data.asset_num,
             money: data.money,
-            // plan_start_time: data.start_time,
-            // plan_end_time: data.end_time,
+
             start_time: data.start_time,
             asset_ids: data.asset_ids,
             fault: data.fault
-            // location: data.location
           }
           this.tableInfo.assetName = data.asset_ids_value
           this.cform = {
@@ -788,8 +457,7 @@ export default {
             real_money: data.real_money,
             overhaul_mid: +data.overhaul_mid || data.overhaul_mid,
             accept_mid: +data.accept_mid || data.accept_mid,
-            // start_time: data.act_start_time,
-            // end_time: data.act_end_time,
+
             service_time: data.service_time,
             accept_time: data.accept_time,
             content: data.content,
@@ -940,24 +608,7 @@ export default {
         this.pipeOptions = this.$store.state.form.belongPipe
       }
     },
-    // getMeasureOptions() {
-    //   if (this.$store.state.form.inspectTypeSelect.length < 1) {
-    //     this.$store.dispatch('form/setInspectTypeSelect').then(() => {
-    //       this.measureOptions = this.$store.state.form.inspectTypeSelect
-    //     })
-    //   } else {
-    //     this.measureOptions = this.$store.state.form.inspectTypeSelect
-    //   }
-    // },
-    // getFaultOptions() {
-    //   if (this.$store.state.form.faultTypeSelect.length < 1) {
-    //     this.$store.dispatch('form/setFaultTypeSelect').then(() => {
-    //       this.faultOptions = this.$store.state.form.faultTypeSelect
-    //     })
-    //   } else {
-    //     this.faultOptions = this.$store.state.form.faultTypeSelect
-    //   }
-    // },
+
     async getEquipmentOptions() {
       try {
         const { code, data } = await getAssetTypeState({
@@ -994,7 +645,7 @@ export default {
         printable: 'print-table',
         type: 'html',
         style: '@media print{@page {size:portrait;margin:0 auto;}}.print-table{border:1px solid #666;border-collapse:collapse;margin:0 auto}.print-table.medium-width th{width:120px}.print-table.small-width th{width:100px}.print-table caption{margin-bottom:10px;font-size: 16px;font-weight: bold;}.print-table th{width:80px}.print-table th,.print-table td{border:1px solid #666;padding:8px 5px}.print-table td{text-align:center}.print-table .all-col{text-align:left;padding:20px 10px}.print-table .all-col div{white-space:pre;padding-left:2em}.print-table .cus-tit{display:inline-block;width:30%}.print-table .cus-tit:last-child{width:40%;text-align:right}.print-table .cus-tit span{font-weight:normal;font-size:16px}.print-table .c-min-height{height:350px!important;}'
-        // targetStyles: ['*']
+
       })
     }
   }

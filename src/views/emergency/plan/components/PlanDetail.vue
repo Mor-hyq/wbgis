@@ -313,39 +313,6 @@
           <el-radio :label="0">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <!-- 暂时隐藏选择发送人员 -->
-      <!-- <el-form-item
-        v-if="form.push_app === 1"
-        prop="emerge_worker_ids"
-        :label="mylang.sendTos"
-      >
-        <el-button type="primary" class="inner-btn" @click="show('sendto')">{{ mylang.choose }}</el-button>
-        <el-row v-if="sendtoData.length > 0" class="link-role" type="flex">
-          <el-col :span="20">
-            <el-tag
-              v-for="(item) in sendtoData"
-              :key="item.id"
-              style="margin:0 5px 5px 0;"
-            >{{ item.name }}</el-tag>
-          </el-col>
-        </el-row>
-      </el-form-item> -->
-      <!-- 暂时隐藏邮箱 -->
-      <!-- <el-form-item
-        prop="email"
-        :label="mylang.openEmail"
-      >
-        <el-radio-group v-model="form.email">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item> -->
-      <!-- <el-form-item
-        prop="content"
-        :label="mylang.sendContent"
-      >
-        <el-input v-model="form.content" type="textarea" :rows="isRead ? '' : 5" />
-      </el-form-item> -->
     </el-form>
 
     <div v-if="!isRead" style="margin-top:20px;">
@@ -397,8 +364,6 @@ export default {
         measure_ids: '',
         push_app: '',
         emerge_worker_ids: ''
-        // email: '',
-        // content: ''
       },
       selectData: {},
       formRules: {
@@ -408,9 +373,6 @@ export default {
         type: [
           { required: true, trigger: 'change', message: `请选择${this.mylang.accidentType}` }
         ],
-        // email: [
-        //   { required: true, trigger: 'change', message: `请选择是否开启邮件提醒` }
-        // ],
         push_app: [
           { required: true, trigger: 'change', message: `请选择是否开启移动APP推送` }
         ],
@@ -485,11 +447,6 @@ export default {
     }
   },
   created() {
-    // this.getLevelOptions()
-    // this.getTypeOptions()
-    // if (this.isEdit || this.isRead) {
-    //   this.getDetail()
-    // }
     this.init()
   },
   methods: {
@@ -569,8 +526,6 @@ export default {
             type: data.type,
             level: data.level, // 这个应该传value值
             push_app: data.accident_deal.push_app
-            // email: data.accident_deal.email,
-            // content: data.accident_deal.content
           }
           this.staffData = data.worker_list || []
           this.fireTeamData = data.team_list || []
@@ -669,7 +624,6 @@ export default {
     adown(row) {
       const url = this.returnDownUrl(row)
       window.location.href = url
-      // window.open(url)
     },
     returnDownUrl(row, type) {
       const mode = config.mode

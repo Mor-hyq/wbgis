@@ -54,11 +54,6 @@
             >{{ filterRisk(scope.row.level) }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          align="center"
-          prop="remark"
-          :label="mylang.remark"
-        /> -->
         <el-table-column
           :label="mylang.actions"
           align="center"
@@ -70,12 +65,6 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <!-- <el-button
-              size="mini"
-              type="primary"
-              style="margin-top:5px;"
-              @click="goManagePage(scope.row)"
-            >风险路由管理</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -213,7 +202,6 @@ export default {
     }
   },
   created() {
-    // this.getLevelOptions()
     this.initTableData()
     this.$_deleteOtherView()
   },
@@ -444,12 +432,6 @@ export default {
       }
     },
     goDetailPage(row) {
-      // this.$router.push({
-      //   name: 'TunnelRiskRouterDetail',
-      //   params: {
-      //     id: row.id
-      //   }
-      // })
       this.dialogTitle = this.mylang.riskLine
       this.dialogDisabled = true
       this.editId = row.id
@@ -466,27 +448,10 @@ export default {
     getLT(data) {
       this.dialogForm.node = JSON.stringify(data.lngLat)
     },
-    // goManagePage(row) {
-    //   this.$router.push({
-    //     name: 'TunnelRiskRouterManage',
-    //     params: {
-    //       id: row.id
-    //     }
-    //   })
-    // },
     filterRisk(level) {
       const arr = this.levelOptions.filter(v => +v.id === +level)
       return arr.length > 0 ? arr[0].level : ''
     }
-    // getLevelOptions() {
-    //   if (this.$store.state.form.riskLevelSelect.length < 1) {
-    //     this.$store.dispatch('form/setRiskLevelSelect').then(() => {
-    //       this.levelOptions = this.$store.state.form.riskLevelSelect
-    //     })
-    //   } else {
-    //     this.levelOptions = this.$store.state.form.riskLevelSelect
-    //   }
-    // }
   }
 }
 </script>

@@ -1,17 +1,12 @@
 <template>
   <div class="record-wrap">
     <go-back />
-    <!-- <TopLabel :label="labelName" /> -->
     <!-- 动态组件 展示对应名称的组件 -->
     <component
       :is="componentName.type"
       :id="id"
       :peid="peid"
     />
-    <!-- <fjyjc
-      :id="id"
-      :peid="peid"
-    /> -->
   </div>
 </template>
 
@@ -31,7 +26,7 @@ import gytjdx from './components/newMaintainForm/gytjdxTable'
 import hkjyzgytr from './components/newMaintainForm/hkjyzgytrTable'
 import jycddm from './components/newMaintainForm/jycddmTable'
 import yljtlwy from './components/newMaintainForm/yljtlwyTable'
-export default { // 该页面已弃用
+export default { //
   name: 'MaintainRecordForm',
   components: {
     fjyjc,

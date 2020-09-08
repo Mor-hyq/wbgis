@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <TopLabel :label="$route.meta.title" /> -->
     <my-table
       ref="mytable"
       :search-data.sync="searchForm"
@@ -85,18 +84,6 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="goEditPage(scope.row)"
-            >{{ mylang.modify }}</el-button> -->
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              style="margin-top:5px;"
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -106,11 +93,9 @@
 
 <script>
 import { getPlanList, deletePlan } from '@/api/emergency'
-// import deleteCache from '@/mixins/deleteCache'
 
 export default {
   name: 'PlansIndex',
-  //   mixins: [deleteCache],
   data() {
     return {
       searchForm: {
@@ -135,7 +120,6 @@ export default {
     this.getLevelOptions()
     this.getTypeOptions()
     this.initTableData()
-    // this.$_deleteOtherView()
   },
   methods: {
     initTableData({

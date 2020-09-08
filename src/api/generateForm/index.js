@@ -1,6 +1,5 @@
 import request from '@/utils/request'
 import formApi from './apiMap'
-// 替换请求链接中的占位符的方法
 import { replacePlaceHolder } from '@/utils/index'
 
 // 创建活动模板接口

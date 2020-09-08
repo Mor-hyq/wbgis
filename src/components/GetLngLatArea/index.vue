@@ -9,14 +9,6 @@
     @close="handleClose"
   >
     <div :id="id" class="map-container" />
-    <!-- <el-form class="input-card">
-      <el-form-item label="经度：" class="input-item">
-        <el-input v-model="lnglat.lng" size="mini" type="number" clearable />
-      </el-form-item>
-      <el-form-item label="纬度：" class="input-item">
-        <el-input v-model="lnglat.lat" size="mini" type="number" clearable />
-      </el-form-item>
-    </el-form> -->
     <div
       v-if="isEdit"
       class="input-card"
@@ -31,14 +23,6 @@
       <template
         v-else
       >
-        <!-- <el-button
-          type="primary"
-          size="mini"
-          style="margin:auto;"
-          @click="closeDraw"
-        >
-          完成编辑
-        </el-button> -->
         <el-button
           type="primary"
           size="mini"
@@ -83,10 +67,6 @@ export default {
   data() {
     return {
       isShow: false,
-      // lnglat: {
-      //   lng: '',
-      //   lat: ''
-      // },
       map: null,
       drawPolygon: null,
       mouseTool: null,
@@ -95,34 +75,11 @@ export default {
       lngLatArr: null,
       polygon: null,
       textMap: null
-    //   marker: null
     }
-  },
-  watch: {
-    // lnglat: {
-    //   handler(val) {
-    //     if (this.marker && val.lng && val.lat) {
-    //       this.marker.setPosition(new AMap.LngLat(val.lng, val.lat))
-    //     }
-    //   },
-    //   deep: true
-    // }
   },
   methods: {
     init() {
       let map = null
-      // if (this.lnglat.lng && this.lnglat.lat) {
-      //   map = new AMap.Map(this.id, {
-      //     center: new AMap.LngLat(this.lnglat.lng, this.lnglat.lat),
-      //     resizeEnable: true,
-      //     zoom: 14
-      //   })
-      // } else {
-      //   map = new AMap.Map(this.id, {
-      //     resizeEnable: true,
-      //     zoom: 14
-      //   })
-      // }
       const that = this
       map = new AMap.Map(this.id, {
         center: new AMap.LngLat(120.428998, 30.233107),
@@ -149,34 +106,14 @@ export default {
         that.drawPolygon = function() {
           that.mouseTool.polygon({
             strokeColor: '#F56C6C',
-            // strokeOpacity: 1,
             strokeWeight: 1,
             strokeOpacity: 1,
             fillColor: '#F56C6C',
             fillOpacity: 0.4,
-            // 线样式还支持 'dashed'
             strokeStyle: 'solid'
-            // strokeStyle是dashed时有效
-            // strokeDasharray: [30,10],
           })
         }
         that.mouseTool.on('draw', (e) => {
-          // console.log(e.obj.getPath())
-          // const lnglat = e.obj.getPath().map(v => {
-          //   return [v.lng, v.lat]
-          // })
-
-          // const poly = new AMap.Polygon({
-          //   path: e.obj.getPath(),
-          //   strokeColor: '#F56C6C',
-          //   // strokeOpacity: 1,
-          //   strokeWeight: 1,
-          //   strokeOpacity: 1,
-          //   fillColor: '#F56C6C',
-          //   fillOpacity: 0.4,
-          //   // 线样式还支持 'dashed'
-          //   strokeStyle: 'solid'
-          // })
           that.polyEditor = new AMap.PolyEditor(that.map, e.obj)
           that.polyEditor.open()
           that.polyEditor.on('end', (e) => {
@@ -213,7 +150,6 @@ export default {
       const poly = new AMap.Polygon({
         path: ll,
         strokeColor: '#F56C6C',
-        // strokeOpacity: 1,
         strokeWeight: 1,
         strokeOpacity: 1,
         fillColor: '#F56C6C',
@@ -233,22 +169,9 @@ export default {
       }
       this.map.add(poly)
       this.map.setFitView([poly])
-      // const getCenterPoint = function(data) {
-      //   var lng = 0.0
-      //   var lat = 0.0
-      //   for (var i = 0; i < data.length; i++) {
-      //     if (data[i].length < 1) { continue }
-      //     lng = lng + parseFloat(data[i].lng)
-      //     lat = lat + parseFloat(data[i].lat)
-      //   }
-      //   lng = lng / data.length
-      //   lat = lat / data.length
-      //   return [lng, lat]
-      // }
       const textMap = new AMap.Text({
         text: this.riskName,
         map: this.map,
-        // position: getCenterPoint(ll),
         position: poly.getBounds().northeast,
         anchor: 'middle-left',
         clickable: true
@@ -331,7 +254,6 @@ export default {
           top: 20px;
           left: 100px;
           z-index: 5;
-        //   transform: translate3d(-50%, 0, 0);
           padding: 9px 15px;
           border-radius: 0.4rem;
           background-color: #fff;

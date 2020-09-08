@@ -139,32 +139,6 @@ const system = {
             noCache: false
           }
         }
-        // {
-        //   path: 'tunnelRiskRouterDetail/:id',
-        //   name: 'TunnelRiskRouterDetail',
-        //   component: () => import('@/views/equipmentInfo/risk/detail'),
-        //   hidden: true,
-        //   isFixed: true,
-        //   meta: {
-        //     level: '1-1-3-1',
-        //     title: '风险路由详情',
-        //     activeMenu: '/system/pipeManage/tunnelRiskRouter',
-        //     noCache: true
-        //   }
-        // },
-        // {
-        //   path: 'tunnelRiskRouterManage/:id',
-        //   name: 'TunnelRiskRouterManage',
-        //   component: () => import('@/views/equipmentInfo/risk/manage'),
-        //   hidden: true,
-        //   isFixed: true,
-        //   meta: {
-        //     level: '1-1-3-2',
-        //     title: '风险路由管理',
-        //     activeMenu: '/system/pipeManage/tunnelRiskRouter',
-        //     noCache: true
-        //   }
-        // }
       ]
     },
     {

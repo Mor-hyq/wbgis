@@ -21,11 +21,6 @@
             :label="mylang.equipmentName"
           >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
-        <!-- <el-col :span="8">
-          <el-form-item
-            :label="mylang.equipmentNumber"
-          >{{ eqNum || form.code }}</el-form-item>
-        </el-col> -->
       </el-row>
       <div class="custom-divider" />
       <el-row :gutter="10">
@@ -285,9 +280,6 @@ export default {
         usage: ''
       }
       this.form = form
-      // this.$nextTick(() => {
-      //   this.$refs.form.clearValidate()
-      // })
     },
     getCheckMember() {
       if (this.$store.state.form.checkMember.length < 1) {

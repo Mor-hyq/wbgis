@@ -52,13 +52,9 @@
 <script>
 import { addMeasure, editMeasure, getMeasureDetail } from '@/api/emergency'
 import deleteCache from '@/mixins/deleteCache'
-// import Tinymce from '@/components/Tinymce'
 
 export default {
   name: 'MeasureComponentDetail',
-  components: {
-    // Tinymce
-  },
   mixins: [deleteCache],
   props: {
     isEdit: {

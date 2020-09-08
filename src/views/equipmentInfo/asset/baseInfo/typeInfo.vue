@@ -46,25 +46,7 @@
           prop="name"
           :label="mylang.typeName"
         />
-        <!-- <el-table-column
-          :label="mylang.actions"
-          align="center"
-          width="100"
-        >
-          <template slot-scope="scope">
-            <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="handleEdit(scope.row)"
-            >{{ mylang.modify }}</el-button>
-            <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button>
-          </template>
-        </el-table-column> -->
+
       </el-table>
     </my-table>
     <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" @close="handleClose">
@@ -81,11 +63,6 @@
           prop="code"
           :label="mylang.number"
         >
-          <!-- <el-input
-            v-model="dialogForm.code"
-            :readonly="dialogDisabled"
-            clearable
-          /> -->
           <el-input
             v-model="dialogForm.code"
             clearable

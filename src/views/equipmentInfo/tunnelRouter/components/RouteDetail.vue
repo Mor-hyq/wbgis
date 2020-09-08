@@ -79,12 +79,6 @@
           >
             <el-input v-model="form.name" clearable />
           </el-form-item>
-          <!-- <el-form-item
-            prop="length"
-            :label="`${mylang.pipeRealLength}(m)`"
-          >
-            <el-input v-model="form.length" type="number" clearable />
-          </el-form-item> -->
           <el-form-item
             prop="ground_elevation"
             :label="`${mylang.groundElevation}(m)`"
@@ -163,7 +157,6 @@ export default {
         order: '',
         name: '',
         mileage: '',
-        // length: '',
         latitude_longtitude: '',
         ground_elevation: '',
         pipe_depth: '',
@@ -187,9 +180,6 @@ export default {
         name: [
           { required: true, message: `请输入${this.mylang.routeName}` }
         ],
-        // length: [
-        //   { required: true, message: `请输入${this.mylang.pipeRealLength}` }
-        // ],
         latitude_longtitude: [
           { required: true, message: `请选择${this.mylang.lnglat}` }
         ],

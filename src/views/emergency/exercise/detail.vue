@@ -88,25 +88,6 @@
         >
           <template slot-scope="scope">{{ scope.row.remark || '无' }}</template>
         </el-table-column>
-        <!-- <el-table-column
-          :label="mylang.actions"
-          align="center"
-          width="100"
-        >
-          <template slot-scope="scope">
-            <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="handleEdit(scope.row)"
-            >{{ mylang.modify }}</el-button>
-            <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
     </my-table>
     <exercise-plan-dialog-form ref="dialogForm" @confirm="dialogConfirm" />

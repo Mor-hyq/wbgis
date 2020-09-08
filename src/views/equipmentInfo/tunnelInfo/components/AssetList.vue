@@ -16,17 +16,6 @@
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
         </el-form>
       </template>
-      <!-- <el-row v-if="selectedList.length > 0" class="link-role" type="flex">
-        <el-col :span="20">
-          <el-tag
-            v-for="(item, index) in selectedList"
-            :key="item.role_id"
-            style="margin:0 5px 5px 0;"
-            closable
-            @close="handleClose(item, index)"
-          >{{ item.name }}</el-tag>
-        </el-col>
-      </el-row> -->
       <el-table
         ref="tables"
         v-loading="tableLoading"
@@ -109,11 +98,6 @@ export default {
       selectedList: []
     }
   },
-  watch: {
-    selectedInfo(val) {
-      // this.resetSelected()
-    }
-  },
   methods: {
     initTableData({
       page = 1,
@@ -154,9 +138,6 @@ export default {
               return obj
             })
             this.tableData = tableData
-            // this.$nextTick(() => {
-            //   this.setTableSelection()
-            // })
           } else {
             this.tableData = []
           }
@@ -191,22 +172,9 @@ export default {
     },
     // components函数
     setTableSelection() {
-      // 设置表格数据为已选状态
-      // if (this.selectedList.length > 0) {
-      //   this.selectedList.forEach((row) => {
-      //     const i = this.tableData.findIndex(v => +v.asset_id === +row.asset_id)
-      //     if (i >= 0) {
-      //       this.$nextTick(() => {
-      //         this.$refs.tables.toggleRowSelection(this.tableData[i], true)
-      //       })
-      //     }
-      //   })
-      // }
     },
     setDisabledFunc(data) {
       // 设置禁止选择
-      // const i = this.selectedInfo.findIndex(v => +v.asset_id === +data.asset_id)
-      // return i < 0
       return +data.relation !== 1
     },
     confirmSelect() {

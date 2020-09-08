@@ -13,16 +13,6 @@
           <el-form-item prop="title" :label="mylang.fileTitle">
             <el-input v-model="searchForm.title" :placeholder="`请输入${mylang.fileTitle}`" clearable />
           </el-form-item>
-          <!-- <el-form-item prop="file_type_id" :label="mylang.dataType">
-            <el-select v-model="searchForm.file_type_id" clearable>
-              <el-option
-                v-for="option in typeOptions"
-                :key="option.id"
-                :label="option.name"
-                :value="option.id"
-              />
-            </el-select>
-          </el-form-item> -->
           <el-form-item prop="remark" :label="mylang.fileDescription">
             <el-input v-model="searchForm.remark" :placeholder="`请输入${mylang.fileDescription}`" clearable />
           </el-form-item>
@@ -82,27 +72,11 @@
           width="180"
         >
           <template slot-scope="scope">
-            <!-- <el-button
-              :size="$btnSize"
-              type="success"
-              @click="goDetailPage(scope.row)"
-            >{{ mylang.read }}</el-button> -->
             <el-button
               :size="$btnSize"
               type="primary"
               @click="handleDownload(scope.row)"
             >{{ mylang.downLoad }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="goEditPage(scope.row)"
-            >{{ mylang.modify }}</el-button> -->
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -113,7 +87,6 @@
 <script>
 import {
   getFileList, deleteFile
-  // getFileTypeSelect
 } from '@/api/equipmentInfo'
 import commonApi from '@/api/common/apiMap'
 import deleteCache from '@/mixins/deleteCache'
@@ -135,7 +108,6 @@ export default {
         remark: '',
         file_type_id: ''
       },
-      // typeOptions: [],
       realSearch: {},
       total: 0,
       listQuery: {
@@ -154,7 +126,6 @@ export default {
     }
   },
   created() {
-    // this.getTypeOptions()
     this.initTableData()
     this.$_deleteOtherView()
   },
@@ -304,29 +275,19 @@ export default {
       }
     },
     goDetailPage(row) {
-      // this.$router.push({
-      //   name: 'TechnologyInfoDetail',
-      //   query: {
-      //     id: row.id
-      //   }
-      // })
       const url = this.returnDownUrl(row, 'preview')
       if (row.file.type === 'pdf') {
-        // window.location.href = url
         window.open(url)
       } else if ((/png|gif|jpe?g/).test(row.file.type)) {
-        // window.location.href = url
         window.open(url)
       } else {
         const src = 'https://view.officeapps.live.com/op/view.aspx?src=' + url
-        // window.location.href = src
         window.open(src)
       }
     },
     handleDownload(row) {
       const url = this.returnDownUrl(row, 'down')
       window.location.href = url
-      // window.open(url)
     },
     returnDownUrl(row, type) {
       const mode = config.mode
@@ -339,12 +300,6 @@ export default {
       }
       return url
     }
-    // async getTypeOptions() {
-    //   const { code, data } = await getFileTypeSelect()
-    //   if (code === 200) {
-    //     this.typeOptions = data
-    //   }
-    // }
   }
 }
 </script>

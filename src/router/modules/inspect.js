@@ -34,55 +34,12 @@ const inspect = {
             noCache: false
           }
         }
-        // {
-        //   path: 'equipmentStatus',
-        //   name: 'EquipmentStatus',
-        //   component: () => import('@/views/Inspection/status/index'),
-        //   meta: {
-        //     level: '1-1-1',
-        //     title: '设备状态统计',
-        //     noCache: false
-        //   }
-        // },
-        // {
-        //   path: 'equipmentStatusDetail',
-        //   name: 'EquipmentStatusDetail',
-        //   component: () => import('@/views/Inspection/status/detail'),
-        //   hidden: true,
-        //   meta: {
-        //     level: '1-1-1-1',
-        //     title: '设备台账明细',
-        //     activeMenu: '/inspect/equipmentStatus',
-        //     noCache: true
-        //   }
-        // },
-        // {
-        //   path: 'equipmentAnalyse',
-        //   name: 'EquipmentAnalyse',
-        //   component: () => import('@/views/Inspection/equipment/analyse'),
-        //   meta: {
-        //     level: '1-1-2',
-        //     title: '设备管理分析',
-        //     noCache: false
-        //   }
-        // },
-        // {
-        //   path: 'workOrder',
-        //   name: 'WorkOrder',
-        //   component: () => import('@/views/Inspection/workOrder/index'),
-        //   meta: {
-        //     level: '1-1-3',
-        //     title: '工单统计',
-        //     noCache: false
-        //   }
-        // }
       ]
     },
     {
       path: 'maintainManage',
       name: 'MaintainManage',
       component: MainContainer,
-      // alwaysShow: true,
       meta: {
         level: '1-2',
         title: '设备维护管理',
@@ -248,29 +205,6 @@ const inspect = {
         }
       ]
     }
-    // {
-    //   path: 'equipmentAccount',
-    //   name: 'EquipmentAccount',
-    //   component: () => import('@/views/Inspection/equipment/index'),
-    //   meta: {
-    //     level: '1-4',
-    //     title: '设备台账',
-    //     icon: 'svg-role',
-    //     noCache: false
-    //   }
-    // },
-    // 故障类型暂时隐藏
-    // {
-    //   path: 'faultType',
-    //   name: 'FaultType',
-    //   component: () => import('@/views/Inspection/faultType/index'),
-    //   meta: {
-    //     level: '1-5',
-    //     title: '故障类型管理',
-    //     icon: 'svg-role',
-    //     noCache: false
-    //   }
-    // }
   ]
 
 }

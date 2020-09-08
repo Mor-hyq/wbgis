@@ -67,12 +67,6 @@
           <el-form-item prop="overhaul_mid" label="检修人员">
             <el-input v-model="searchForm.overhaul_mid" :placeholder="`请输入检修人员`" clearable />
           </el-form-item>
-          <!-- <el-form-item prop="title" :label="mylang.repairTitle">
-            <el-input v-model="searchForm.title" :placeholder="`请输入${mylang.repairTitle}`" clearable />
-          </el-form-item> -->
-          <!-- <el-form-item prop="field_value_id_2" :label="mylang.equipmentType">
-            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentType}`" clearable />
-          </el-form-item> -->
           <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
         </el-form>
       </template>
@@ -126,12 +120,7 @@
 
           label="报修时间"
         />
-        <!-- <el-table-column
-          align="center"
-          prop="useoverhaul_mid"
 
-          :label="mylang.orderMember"
-        /> -->
         <el-table-column
           align="center"
           prop="asset_num"
@@ -164,24 +153,7 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="goEditPage(scope.row)"
-            >{{ mylang.modify }}</el-button> -->
-            <!-- <el-button
-              v-if="+scope.row.state == 0"
-              type="primary"
-              :size="$btnSize"
-              @click="goDonePage(scope.row)"
-            >{{ mylang.finishRepaire }}</el-button> -->
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              style="margin-top:5px;"
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
+
           </template>
         </el-table-column>
       </el-table>
@@ -214,8 +186,6 @@ export default {
     return {
       searchForm: {
         pipe_id: '',
-        // title: '',
-        // field_value_id_2: '',
         equipment_id: '',
         state: '',
         start_time: '',
@@ -247,18 +217,12 @@ export default {
         this.getPipeOptions(false)
         // 如果是从工单跳转过来 且携带查询参数
         this.searchForm.pipe_id = this.$route.query.pipe_id
-        // this.searchForm.field_value_id_2 = this.$route.query.name
         this.$nextTick(() => {
           this.handleSearch()
         })
       } else {
-        // 从首页跳转来且携带了设备名称的查询参数
-        // if (this.$route.query.s_name) {
-        // this.searchForm.field_value_id_2 = this.$route.query.s_name
-        // }
         // 获取路由管道信息后 需要设置默认值
         this.getPipeOptions(true)
-        // this.initTableData()
       }
       this.$_deleteOtherView()
     } else {
@@ -271,9 +235,8 @@ export default {
     initTableData({
       page = 1,
       paginate = this.listQuery.limit,
-      // title = '',
+
       start_time = '',
-      // field_value_id_2 = '',
       equipment_id = '',
       pipe_id = '',
       state = '',
@@ -282,17 +245,17 @@ export default {
       this.listQuery.page = 1
       this.getList({
         page, paginate, pipe_id,
-        // title,
+
         start_time,
         state,
         overhaul_mid,
-        // field_value_id_2,
+
         equipment_id })
     },
     async getList({
-      // title = '',
+
       start_time = '',
-      // field_value_id_2 = '',
+
       equipment_id = '',
       overhaul_mid = '',
       pipe_id = '',
@@ -306,10 +269,10 @@ export default {
       try {
         const { code, data } = await getAssetServiceList({
           page, paginate,
-          // title,
+
           start_time: time,
           pipe_id, state,
-          // field_value_id_2,
+
           equipment_id,
           overhaul_mid
         })
@@ -327,9 +290,8 @@ export default {
       const search = this.$refs.mytable.handleSearch()
       this.realSearch = search
       this.initTableData({
-        // title: search.title,
+
         start_time: search.start_time,
-        // field_value_id_2: search.field_value_id_2,
         equipment_id: search.equipment_id,
         overhaul_mid: search.overhaul_mid,
         pipe_id: search.pipe_id,
@@ -341,9 +303,7 @@ export default {
       this.getList({
         page: data.page.page,
         paginate: data.page.limit,
-        // title: data.search.title,
         start_time: data.search.start_time,
-        // field_value_id_2: data.search.field_value_id_2,
         equipment_id: data.search.equipment_id,
         overhaul_mid: data.search.overhaul_mid,
         pipe_id: data.search.pipe_id,
@@ -501,9 +461,7 @@ export default {
           this.getList({
             page: this.listQuery.page,
             pageSize: this.listQuery.limit,
-            // title: this.realSearch.title,
             start_time: this.realSearch.start_time,
-            // field_value_id_2: this.realSearch.field_value_id_2,
             equipment_id: this.realSearch.equipment_id,
             overhaul_mid: this.realSearch.overhaul_mid,
             pipe_id: this.realSearch.pipe_id,
@@ -530,11 +488,8 @@ export default {
           }
         }
       }
-      // if (this.realSearch.field_value_id_2) {
-      //   requestUrl += '&field_id_2=2'
-      // }
+
       window.location.href = requestUrl
-      // window.open(requestUrl)
     },
     getPipeOptions(isCb) {
       if (this.$store.state.form.belongPipe.length < 1) {
@@ -546,7 +501,6 @@ export default {
               // 从首页跳转来且携带了设备名称的查询参数
               if (this.$route.query.s_name) {
                 this.getEquipmentOptions(this.pipeOptions[0].id, this.$route.query.s_name)
-                // this.searchForm.field_value_id_2 = this.$route.query.s_name
               } else {
                 this.getEquipmentOptions(this.pipeOptions[0].id)
                 this.handleSearch()
@@ -560,11 +514,9 @@ export default {
           if (this.pipeOptions.length > 0) {
             if (isCb) {
               this.searchForm.pipe_id = this.pipeOptions[0].id
-              // this.getEquipmentOptions(this.pipeOptions[0].id)
               // 从首页跳转来且携带了设备名称的查询参数
               if (this.$route.query.s_name) {
                 this.getEquipmentOptions(this.pipeOptions[0].id, this.$route.query.s_name)
-                // this.searchForm.field_value_id_2 = this.$route.query.s_name
               } else {
                 this.getEquipmentOptions(this.pipeOptions[0].id)
                 this.$nextTick(() => {
@@ -578,17 +530,6 @@ export default {
         }
       }
     },
-    // getPipeOptions() {
-    //   if (this.$store.state.form.belongPipe.length < 1) {
-    //     this.$store.dispatch('form/setBelongPipe').then(() => {
-    //       const pipeOptions = this.$store.state.form.belongPipe
-    //       this.getEquipmentOptions(pipeOptions[0].id)
-    //     })
-    //   } else {
-    //     const pipeOptions = this.$store.state.form.belongPipe
-    //     this.getEquipmentOptions(pipeOptions[0].id)
-    //   }
-    // },
     async getEquipmentOptions(id, name) {
       try {
         const { code, data } = await getAssetTypeState({

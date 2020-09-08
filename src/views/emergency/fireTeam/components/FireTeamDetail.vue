@@ -192,15 +192,11 @@ export default {
         const { code } = await addFireTeam(this.form)
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'FireTeam' })
           this.$message({
             type: 'success',
             message: '创建成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'FireTeam'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)
@@ -220,15 +216,11 @@ export default {
         const { code } = await editFireTeam({ id: this.id, ...this.form })
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'FireTeam' })
           this.$message({
             type: 'success',
             message: '修改成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'FireTeam'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)

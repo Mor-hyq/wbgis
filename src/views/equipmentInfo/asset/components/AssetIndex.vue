@@ -76,17 +76,6 @@
                     type="success"
                     @click="goDetailPage(scope.row)"
                   >{{ mylang.detail }}</el-button>
-                  <!-- <el-button
-                    :size="$btnSize"
-                    type="primary"
-                    @click="goEditPage(scope.row)"
-                  >{{ mylang.modify }}</el-button> -->
-                  <!-- <el-button
-                    :size="$btnSize"
-                    type="danger"
-                    plain
-                    @click="handleDeleteItem(scope.row)"
-                  >{{ mylang.delete }}</el-button> -->
                 </template>
               </el-table-column>
             </template>
@@ -201,8 +190,6 @@ export default {
         const { code, data } = await getEquipmentTypeAll()
         if (code === 200) {
           this.typeList = data
-          // this.equipment_id = this.typeList[0].id
-          // this.equipment_name = this.typeList[0].name
           if (+this.active < 1) {
             this.active = data[0].id + ''
           }
@@ -246,17 +233,6 @@ export default {
               title: '序号'
             })
             this.tableField = newData
-            // const arr = []
-            // const tableData = data.data
-            // tableData.forEach(v => {
-            //   const obj = {}
-            //   v.value.forEach(k => {
-            //     obj.asset_id = k.asset_id
-            //     obj[k.name] = k.value
-            //   })
-            //   arr.push(obj)
-            // })
-            // this.tableData = arr
             const tableData = data.data.map(v => {
               const obj = {
                 order: v.id

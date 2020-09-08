@@ -131,27 +131,6 @@
           prop="create_time"
           :label="mylang.registerTime"
         />
-        <!-- <el-table-column
-          v-if="!isDialog"
-          :label="mylang.actions"
-          align="center"
-          width="100"
-        >
-          <template slot-scope="scope">
-            <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="goEditPage(scope.row)"
-            >{{ mylang.modify }}</el-button>
-            <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              style="margin-top:5px;"
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
     </my-table>
   </div>
@@ -444,7 +423,6 @@ export default {
         }
       }
       window.location.href = requestUrl
-      // window.open(requestUrl)
     }
   }
 }

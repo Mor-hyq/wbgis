@@ -28,7 +28,6 @@ export function login({
   csrftoken,
   username,
   password
-  // sms_code
 } = {}) {
   return request({
     url: loginApi.login,
@@ -37,7 +36,6 @@ export function login({
       csrftoken,
       username,
       password
-      // sms_code
     }
   })
 }

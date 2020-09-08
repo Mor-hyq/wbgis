@@ -1,8 +1,5 @@
 import request from '@/utils/request'
 import api from './apiMap'
-// 当接口返回不显示toast时 params: { notShowToast: true }
-// 替换请求链接中的占位符的方法
-// import { replacePlaceHolder } from '@/utils/index'
 
 // 上传图片
 export function uploadImage({
@@ -130,12 +127,3 @@ export function getCheckMembers() {
     }
   })
 }
-// export function downFile(sha1) {
-//   return request({
-//     url: api.downFile,
-//     method: 'get',
-//     params: {
-//       sha1
-//     }
-//   })
-// }

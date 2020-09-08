@@ -69,11 +69,6 @@
           type="selection"
           width="55"
         />
-        <!-- <el-table-column
-          align="center"
-          prop="pipe_name"
-          :label="mylang.pipeName"
-        /> -->
         <el-table-column
           align="center"
           prop="equipment_name"
@@ -111,15 +106,6 @@
             >{{ mylang.export }}表单</el-button>
           </template>
         </el-table-column>
-        <!-- <el-table-column
-          align="center"
-          prop="name"
-          label="维护表单"
-        >
-          <template slot-scope="scope">
-            <span class="name" @click="goRecordDetail(scope.row)">{{ scope.row.name }}</span>
-          </template>
-        </el-table-column> -->
       </el-table>
     </my-table>
   </div>
@@ -161,7 +147,6 @@ export default {
   },
   created() {
     this.getPipeOptions()
-    // this.initTableData()
   },
   mounted() {
     this.handleSearch()

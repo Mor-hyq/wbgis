@@ -31,13 +31,9 @@ export default {
       'permission_routers',
       'sidebar'
     ]),
-    // routes() {
-    //   return this.$router.options.routes
-    // },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -50,7 +46,6 @@ export default {
       const { path } = route.matched[0]
       const sider = this.permission_routers.find(v => v.path === path)
       return sider ? [sider] : []
-      // return sider.children ? sider.children : []
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo

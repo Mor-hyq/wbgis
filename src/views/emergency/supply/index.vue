@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <TopLabel :label="$route.meta.title" /> -->
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane lazy :label="mylang.emergencyStaff" name="1">
         <staff-index ref="tab1" />

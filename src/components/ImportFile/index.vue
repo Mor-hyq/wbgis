@@ -100,7 +100,6 @@ export default {
     exportFile() {
       if (this.downFileUrl) {
         window.location.href = this.downFileUrl
-        // window.open(this.downFileUrl)
       } else {
         this.$message({
           type: 'error',

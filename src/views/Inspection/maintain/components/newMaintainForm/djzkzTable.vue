@@ -2,7 +2,6 @@
   <div style="padding-top: 20px;">
     <el-button type="primary" :size="$btnSize" @click="handlePrint()">{{ mylang.print }}</el-button>
     <table id="print-table" class="print-table" align="center" cellspacing="0" cellpadding="0">
-      <!-- <caption>{{ tableName }}</caption> -->
       <thead><th :colspan="12">{{ tableName }}</th></thead>
       <tbody>
         <tr>
@@ -103,7 +102,6 @@ export default {
         if (code === 200) {
           this.tableName = data.title
           this.tableList = data.list
-          // this.abnormalDeal = data.abnormal_deal
           this.remark = data.remark
           this.checkMember = data.check_member
           this.checkTime = data.check_time
@@ -113,7 +111,6 @@ export default {
       }
     },
     getName(type) {
-      // return +type === 1 ? '✔' : (type || '')
       if (+type === 1) {
         return '✔'
       } else if (+type) {

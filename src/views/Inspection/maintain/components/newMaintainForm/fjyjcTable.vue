@@ -2,7 +2,6 @@
   <div style="padding-top: 20px;">
     <el-button type="primary" :size="$btnSize" @click="handlePrint()">{{ mylang.print }}</el-button>
     <table id="print-table" class="print-table" align="center" cellspacing="0" cellpadding="0">
-      <!-- <caption>{{ tableName }}</caption> -->
       <thead><th :colspan="8">{{ tableName }}</th></thead>
       <tbody>
         <tr>

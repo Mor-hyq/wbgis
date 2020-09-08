@@ -13,7 +13,6 @@ const formApiMap = {
   deleteForm: '/admin/actTemplate/1?target=del'
 }
 
-// local模式接口添加 debug/cross
 if (mode === 'local') {
   for (const k in formApiMap) {
     if (formApiMap[k].indexOf('?') < 0) {

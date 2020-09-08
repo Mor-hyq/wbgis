@@ -10,41 +10,6 @@
       :style="{'padding-top': '15px'}"
       @handlePageChange="handleChange"
     >
-      <!-- <template slot="search">
-        <el-form ref="searchForm" :model="searchForm" :size="$btnSize" inline>
-          <el-form-item prop="pipe_id" :label="mylang.pipeName">
-            <el-select
-              v-model="searchForm.pipe_id"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="pipe in pipeOptions"
-                :key="pipe.id"
-                :value="pipe.id"
-                :label="pipe.name"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item prop="state" :label="mylang.repaireState">
-            <el-select v-model="searchForm.state" clearable>
-              <el-option
-                v-for="option in stateOptions"
-                :key="option.id"
-                :label="option.label"
-                :value="option.id"
-              />
-            </el-select>
-          </el-form-item>
-          <el-form-item prop="title" :label="mylang.repairTitle">
-            <el-input v-model="searchForm.title" :placeholder="`请输入${mylang.repairTitle}`" clearable />
-          </el-form-item>
-          <el-form-item prop="field_value_id_2" :label="mylang.equipmentName">
-            <el-input v-model="searchForm.field_value_id_2" :placeholder="`请输入${mylang.equipmentName}`" clearable />
-          </el-form-item>
-          <el-button type="primary" :size="$btnSize" style="margin-bottom:22px;" @click="handleSearch">{{ mylang.search }}</el-button>
-        </el-form>
-      </template> -->
       <el-table
         v-loading="tableLoading"
         :data="tableData"
@@ -53,11 +18,6 @@
         tooltip-effect="dark"
         @selection-change="handleSelectionChange"
       >
-        <!-- <el-table-column
-          align="center"
-          type="selection"
-          width="55"
-        /> -->
         <el-table-column
           align="center"
           prop="pipe_name"

@@ -78,8 +78,6 @@ export default {
       tableList: [],
       checkMember: '',
       checkTime: ''
-      // abnormalDeal: '',
-      // remark: ''
     }
   },
   created() {
@@ -95,8 +93,6 @@ export default {
         if (code === 200) {
           this.tableName = data.title
           this.tableList = data.list
-          // this.abnormalDeal = data.abnormal_deal
-          // this.remark = data.remark
           this.checkMember = data.check_member
           this.checkTime = data.check_time
         }

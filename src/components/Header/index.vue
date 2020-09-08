@@ -1,14 +1,6 @@
 <template>
   <div class="header">
     <div class="logo">
-      <!-- <router-link to="/">
-        <div class="img">
-          <img :src="logo" alt="">
-        </div>
-      </router-link>
-      <router-link to="/">
-        <i class="icon el-icon-s-home" />
-      </router-link>-->
       <router-link to="/"><img class="img" :src="logo" alt=""></router-link>
     </div>
     <!-- 顶部导航 -->
@@ -56,7 +48,6 @@ export default {
   background-size: cover;
   background-position: left bottom;
   display: flex;
-  // justify-content: space-between;
   .logo {
     color: #f4f4f5;
     display: flex;
@@ -64,7 +55,6 @@ export default {
     padding-left: 20px;
     .img {
       display: block;
-      // width: 280px;
       height: 36px;
       object-fit: contain;
     }

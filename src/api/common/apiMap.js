@@ -1,7 +1,3 @@
-// const Config = require('@/config')
-
-// const mode = Config.mode
-
 const api = {
   // // 上传图片接口
   uploadImage: 'admin/common/uploadImg',
@@ -34,16 +30,5 @@ const api = {
   // 获取检查人员列表
   getCheckMembers: 'admin/member'
 }
-
-// local模式接口添加 debug=cross
-// if (mode === 'local') {
-//   for (const k in api) {
-//     if (api[k].indexOf('?') < 0) {
-//       api[k] = `${api[k]}?debug=cross`
-//     } else {
-//       api[k] = `${api[k]}&debug=cross`
-//     }
-//   }
-// }
 
 export default api

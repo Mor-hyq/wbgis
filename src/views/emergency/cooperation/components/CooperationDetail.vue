@@ -195,15 +195,11 @@ export default {
         const { code } = await addCooperation(this.form)
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'Cooperation' })
           this.$message({
             type: 'success',
             message: '创建成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'Cooperation'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)
@@ -223,15 +219,11 @@ export default {
         const { code } = await editCooperation({ id: this.id, ...this.form })
         loading.close()
         if (code === 200) {
-          // this.$_deleteView({ name: 'Cooperation' })
           this.$message({
             type: 'success',
             message: '修改成功'
           })
           setTimeout(() => {
-            // this.$router.push({
-            //   name: 'Cooperation'
-            // })
             this.goBack()
           }, 500)
           this.$store.commit('app/TOGGLE_UPDATE', true)

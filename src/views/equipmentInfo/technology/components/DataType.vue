@@ -33,12 +33,6 @@
         :size="$btnSize"
         class="custom-class"
       >
-        <!-- <el-form-item
-          prop="pid"
-          :label="`${mylang.parentType}`"
-        >
-          <el-input v-model="form.pname" disabled clearable />
-        </el-form-item> -->
         <el-form-item prop="pid" :label="`${mylang.parentType}`">
           <el-cascader
             v-model="form.pid"
@@ -84,7 +78,6 @@ export default {
       },
       edtObj: { // 编辑时的父节点的数据
         pid: []
-        // pname: ''
       },
       cascaderOptions: {
         label: 'name',
@@ -97,7 +90,6 @@ export default {
       isEdit: false, // 是否编辑状态
       form: {
         pid: [],
-        // pname: '',
         name: ''
       },
       formRules: {
@@ -157,14 +149,11 @@ export default {
           }
         })
         this.edtObj.pid = arr
-        // this.edtObj.pid = currentObj.pid
-        // this.edtObj.pname = currentObj.pname
         this.$refs.typeTree.setChecked(currentObj.id, true)
       } else {
         this.checkObj.id = ''
         this.checkObj.name = ''
         this.edtObj.pid = []
-        // this.edtObj.pname = ''
       }
       this.$emit('checkChange', { data: this.checkObj.id })
     },
@@ -193,11 +182,8 @@ export default {
       }
       if (!this.checkObj.id) {
         this.form.pid = [0]
-        // this.form.pname = '根'
       } else {
         this.form.pid = this.edtObj.pid
-        // this.form.pid = this.checkObj.id
-        // this.form.pname = this.checkObj.name
       }
       // 新增
       this.isEdit = false
@@ -214,7 +200,6 @@ export default {
       }
       this.isEdit = true
       this.form.pid = this.edtObj.pid
-      // this.form.pname = this.edtObj.pname
       this.form.name = this.checkObj.name
       this.dialogTitle = this.mylang.modify + this.mylang.dataType
       this.showDialog()

@@ -15,20 +15,6 @@
           <el-form-item prop="name" :label="mylang.pipeName">
             <el-input v-model="searchForm.name" :placeholder="`请输入${mylang.pipeName}`" clearable />
           </el-form-item>
-          <!-- <el-form-item prop="name" :label="mylang.pipeName">
-            <el-select
-              v-model="searchForm.name"
-              clearable
-              filterable
-            >
-              <el-option
-                v-for="pipe in pipeOptions"
-                :key="pipe.name"
-                :value="pipe.name"
-                :label="pipe.name"
-              />
-            </el-select>
-          </el-form-item> -->
           <el-form-item prop="state" :label="mylang.workState">
             <el-select v-model="searchForm.state" placeholder="所有" clearable>
               <el-option
@@ -88,11 +74,6 @@
           prop="mileage"
           :label="`${mylang.mileage}(m)`"
         />
-        <!-- <el-table-column
-          align="center"
-          prop="length"
-          :label="`${mylang.pipeRealLength}(m)`"
-        /> -->
         <el-table-column
           align="center"
           prop="latitude_longtitude"
@@ -159,23 +140,12 @@
               type="success"
               @click="goDetailPage(scope.row)"
             >{{ mylang.detail }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="primary"
-              @click="goEditPage(scope.row)"
-            >{{ mylang.modify }}</el-button> -->
             <el-button
               :size="$btnSize"
               type="primary"
               style="margin-top:5px;"
               @click="handleSortShow(scope.row)"
             >{{ mylang.sort }}</el-button>
-            <!-- <el-button
-              :size="$btnSize"
-              type="danger"
-              plain
-              @click="handleDeleteItem(scope.row)"
-            >{{ mylang.delete }}</el-button> -->
           </template>
         </el-table-column>
       </el-table>
@@ -271,7 +241,6 @@ export default {
   },
   created() {
     this.getStateOptions()
-    // this.getPipeOptions()
     this.initTableData()
     this.$_deleteOtherView()
   },
@@ -515,7 +484,6 @@ export default {
         }
       }
       window.location.href = requestUrl
-      // window.open(requestUrl)
     },
     bulkImport() {
       // 批量导入发布会员信息

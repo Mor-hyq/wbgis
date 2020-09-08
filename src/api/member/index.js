@@ -203,7 +203,6 @@ export function updateAccount({
   phone && (data.phone = phone)
   real_name && (data.real_name = real_name)
   user_role_ids && (data.user_role_ids = user_role_ids)
-  // union_ids && (data.union_ids = union_ids)
   union_id && (data.union_id = union_id);
   (status || +status === 0) && (data.status = +status)
   lock !== '' && (lock || +lock === 0) && (data.lock = +lock)

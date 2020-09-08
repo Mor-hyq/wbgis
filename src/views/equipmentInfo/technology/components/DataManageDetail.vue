@@ -21,14 +21,6 @@
         prop="file_type_id"
         :label="mylang.fileType"
       >
-        <!-- <el-select v-model="form.file_type_id" clearable>
-          <el-option
-            v-for="option in typeOptions"
-            :key="option.id"
-            :label="option.name"
-            :value="option.id"
-          />
-        </el-select> -->
         <el-cascader
           v-model="form.file_type_id"
           :show-all-levels="false"
@@ -50,13 +42,6 @@
         </div>
         <el-input v-model="form.fileLen" style="display:none;" />
         <el-button type="primary" @click="handleChoose">选择附件</el-button>
-        <!-- <input
-          ref="fileId"
-          style="display:none;"
-          type="file"
-          accept="image/*,application/pdf"
-          @change="handleChange"
-        > -->
         <input
           ref="fileId"
           style="display:none;"
@@ -64,7 +49,6 @@
           @change="handleChange"
         >
       </el-form-item>
-      <!-- <el-button v-if="(isEdit || isRead) && form.fileLen" style="display:inline-block;" @click="downFile">下载附件</el-button> -->
       <el-form-item
         prop="remark"
         :label="mylang.remark"
@@ -87,13 +71,9 @@ import {
 import commonApi from '@/api/common/apiMap'
 import deleteCache from '@/mixins/deleteCache'
 import config from '@/config'
-// import Tinymce from '@/components/Tinymce'
 
 export default {
   name: 'DataManageDetail',
-  //   components: {
-  //     Tinymce
-  //   },
   mixins: [deleteCache],
   props: {
     isEdit: {

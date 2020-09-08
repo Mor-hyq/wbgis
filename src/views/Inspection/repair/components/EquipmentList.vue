@@ -50,19 +50,6 @@
             :prop="column.name"
             :label="column.title"
           />
-          <!-- <el-table-column
-            :label="mylang.actions"
-            align="center"
-            width="100"
-          >
-            <template slot-scope="scope">
-              <el-button
-                :size="$btnSize"
-                type="success"
-                @click="handleDetail(scope.row)"
-              >{{ mylang.detail }}</el-button>
-            </template>
-          </el-table-column> -->
         </template>
       </el-table>
     </my-table>
@@ -174,12 +161,6 @@ export default {
         field_value_id_2: data.search.field_value_id_2
       })
     },
-    // handleDetail(row) {
-    //   this.$refs.detailDialog.show({
-    //     asset_id: row.asset_id,
-    //     eid: this.equipmentId
-    //   })
-    // },
     // components函数
     setTableSelection() {
       // 设置表格数据为已选状态

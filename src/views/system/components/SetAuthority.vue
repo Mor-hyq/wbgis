@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <div v-if="!isRead" style="margin-bottom:10px;">
-      <el-button :type="checkedAll === 1 ? 'primary' : 'plain'" @click="handleChange(1)">全选</el-button>
-      <el-button :type="checkedAll === 2 ? 'primary' : 'plain'" @click="handleChange(2)">反选</el-button>
-    </div> -->
     <el-tree
       ref="roleTree"
       class="tree"
@@ -244,27 +240,6 @@ export default {
       return node.children
     },
     filterNode(value, data, node) {
-      // 筛选节点 不显示hide为1字段的节点及以下name的节点
-      // const hideFilter = [
-      //   'roleManage',
-      //   'roleCreate',
-      //   'roleDetail',
-      // ]
-      // // uid === 1时创建，编辑，查看都显示; uid !== 1时创建，编辑不显示，查看显示
-      // if (+this.userInfo.uid !== 1 && !this.isRead) {
-      //   if (+data.hide !== 0 || hideFilter.includes(data.name)) {
-      //     this.$nextTick(() => {
-      //       this.$refs.roleTree.remove(node)
-      //     })
-      //     return false
-      //   }
-      // }
-      // if (+data.hide !== 0) {
-      //   this.$nextTick(() => {
-      //     this.$refs.roleTree.remove(node)
-      //   })
-      //   return false
-      // }
       return true
     },
     checkChange(currentObj, treeStatus) {

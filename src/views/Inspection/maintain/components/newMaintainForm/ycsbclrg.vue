@@ -21,11 +21,6 @@
             :label="mylang.equipmentName"
           >{{ eqName || form.asset_name }}</el-form-item>
         </el-col>
-        <!-- <el-col :span="8">
-          <el-form-item
-            :label="mylang.equipmentNumber"
-          >{{ eqNum || form.code }}</el-form-item>
-        </el-col> -->
       </el-row>
       <el-divider content-position="left"><span class="t-blue">基本信息</span></el-divider>
       <el-row :gutter="10">
@@ -1672,9 +1667,6 @@ export default {
         remark: ''
       }
       this.form = form
-      // this.$nextTick(() => {
-      //   this.$refs.form.clearValidate()
-      // })
     },
     getCheckMember() {
       if (this.$store.state.form.checkMember.length < 1) {

@@ -77,14 +77,6 @@ export default {
         const topMoreArr = []
         // 通过fetchPermissionList获取到角色的路由 生成顶部路由表
         this.fetchPermissionList.forEach((item, index) => {
-        // let path = ''
-        // 判断当前路由设置是否为本地路由的外链
-        // if (/^(https?:|\/)/.test(item.path)) {
-        //   path = item.path
-        // } else {
-        //   // 本地路由外链则取子级下第一个
-        //   path = item.children[0].path
-        // }
           const obj = {
             name: (item.meta && item.meta.title) || item.name,
             path: item.path
@@ -92,9 +84,6 @@ export default {
           if (item.is_shortcut === 0) {
             topArr.push(obj)
           }
-        // else if (item.home === 1 && item.top === 0) {
-        //   topMoreArr.push(obj)
-        // }
         })
         let newArr = []
         if (topMoreArr.length > 0) {
